@@ -47,5 +47,6 @@ def setup(request, config):
 
     if request.session.testsfailed != before_failed:
         allure.attach(driver.get_screenshot_as_png(),
-                      name="Test failed", attachment_type=AttachmentType.PNG)
+                      name=request.function.__name__,
+                      attachment_type=AttachmentType.PNG)
     driver.quit()
