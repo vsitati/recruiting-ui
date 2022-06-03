@@ -1,5 +1,6 @@
 import logging
 import datetime
+from helpers.utils import create_folder
 from helpers.utils import get_config
 from selenium.webdriver.support.events import AbstractEventListener
 
@@ -7,6 +8,7 @@ from selenium.webdriver.support.events import AbstractEventListener
 class WebDriverListener(AbstractEventListener):
     config = get_config(config_path="config.json")
     log_path = config.get("log_path")
+    create_folder(log_path)
     log_filename = datetime.datetime.now().strftime("%Y%m%d")
     logging.basicConfig(
         filename=f"{log_path}/{log_filename}.log",

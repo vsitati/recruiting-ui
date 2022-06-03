@@ -15,6 +15,10 @@ class WebDriverExtended(EventFiringWebDriver):
 
     @staticmethod
     def locator_types():
+        """
+        A dictionary of all locator types.
+        :return: A dictionary of all locator types.
+        """
         return dict(
             id=By.ID,
             class_name=By.CLASS_NAME,
@@ -24,39 +28,29 @@ class WebDriverExtended(EventFiringWebDriver):
         )
 
     def open(self, url):
+        """
+        Open any given URL
+        :param url: The URL to be navigating too
+        """
         self.get(url)
 
     def find_element_by_locator(self, locator):
-        # valid_locator_types = ["id", "css_selector", "xpath", "name", "class_name"]
+        """
+        Determine if the selected element is present.
+        :param locator: Locator element.
+        :return: An instance of the selected element.
+        """
 
-        # if "[" and "]" in locator and "xpath=" not in locator:
-        #     locator_type = "xpath"
-        #     element = locator
-        # elif "xpath=" in locator:
-        #     locator_type, element = locator.split("xpath=")
-        #     locator_type = "xpath"
-        # elif "=" in locator:
-        #     locator_type, element = locator.split("=")
-        # elif "#" in locator:
-        #     locator_type, element = locator.split("#")
-        #     locator_type = "id"
-        # else:
-        #     try:
-        #         locator_type, element = locator  # (By.NAME, element)
-        #     except ValueError:
-        #         locator_type = "id"
-        #         element = locator
-
-        # by_locator_type = self.locator_types().get(locator_type)
         locator_type, element = locator
-        # try:
-        #     return self.find_element(locator_type, element)
-        # except Exception as e:
-        #     print(e)
         return WebDriverWait(self.driver, self.timeout, poll_frequency=self.poll_freq).until(
             ec.presence_of_element_located((locator_type, element)))
 
     def find_elements_by_locator(self, locator):
+        """
+        Determine if the selected element is present.
+        :param locator: Locator element.
+        :return: A list of the selected element instances.
+        """
         locator_type, element = locator
         return WebDriverWait(self.driver, self.timeout, poll_frequency=self.poll_freq).until(
             ec.presence_of_all_elements_located((locator_type, element)))
