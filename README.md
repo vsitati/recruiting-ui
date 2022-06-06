@@ -31,6 +31,7 @@ To deactivate the virtual environment, run:
     decativate
 
 ## Upgrade PIP(_Python package manager_)
+_Activate_ the python virtual environment the run,
 
     python -m pip install --upgrade pip
     
