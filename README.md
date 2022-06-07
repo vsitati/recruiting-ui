@@ -1,4 +1,5 @@
 # QA Automation for Recruiting UI #
+
 # Setup Guide
 
 ## Install Python 3:
