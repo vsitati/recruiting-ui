@@ -1,0 +1,8 @@
+{
+  "browser": "chrome",
+  "headless_mode": false,
+  "base_url": "https://qarecruiting01-openhire.silkroad-eng.com/",
+  "timeout": 20,
+  "poll_frequency": 0.5,
+  "log_path": "./logs"
+}

@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Log files
+logs
+*.log
+
+# Reporting
+reporting
+allure-report
+
+# Environments
+.venv
+venv/
+
+# Pytest cache
+.pytest_cache
+
+.idea
+.hypothesis/
