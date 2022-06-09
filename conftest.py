@@ -16,25 +16,6 @@ def config():
     return get_config(config_path=CONFIG_PATH)
 
 
-@pytest.fixture(scope="session")
-def browser_setup(config):
-    if "browser" not in config:
-        raise Exception('The config file does not contain "browser"')
-    elif config["browser"] not in SUPPORTED_BROWSERS:
-        raise Exception(f'"{config["browser"]}" is not a supported browser')
-    return config["browser"]
-
-
-@pytest.fixture(scope='session')
-def wait_time_setup(config):
-    return config['wait_time'] if 'wait_time' in config else DEFAULT_WAIT_TIME
-
-
-@pytest.fixture(scope='session')
-def url_setup(config):
-    return config["base_url"]
-
-
 @pytest.fixture()
 def setup(request, config):
     driver = Drivers.get_driver(config)
