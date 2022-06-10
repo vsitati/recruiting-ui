@@ -1,6 +1,5 @@
 import os
 import json
-from selenium.common.exceptions import StaleElementReferenceException
 
 
 def get_config(config_path):
@@ -11,17 +10,6 @@ def get_config(config_path):
     """
     config_file = open(config_path)
     return json.load(config_file)
-
-
-def do_click(element):
-    """
-    Perform a click on a given element.
-    :param element: The element to be clicked on.
-    """
-    try:
-        return element.click()
-    except StaleElementReferenceException:
-        pass
 
 
 def create_folder(folder_name):
