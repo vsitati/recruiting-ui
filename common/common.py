@@ -27,7 +27,8 @@ class Common:
         select = Select(self.driver.find_element_by_locator(locator))
         select.select_by_visible_text(text)
 
-    def do_click(self, element):
+    @staticmethod
+    def do_click(element):
         """
         Perform a click on a given element.
         :param element: The element to be clicked on.
