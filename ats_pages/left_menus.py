@@ -1,5 +1,4 @@
-import allure
-from helpers.utils import do_click
+from ats_pages.base import BasePage
 from selenium.webdriver.common.by import By
 
 
@@ -18,20 +17,21 @@ class Elements:
     view_job_offers = (By.ID, 'link_JobOffers-itemText')
 
 
-class LeftMenus(Elements):
+class LeftMenus(BasePage, Elements):
     def __init__(self, driver):
         self.driver = driver
 
     def open_menu(self):
         if not self.driver.find_element_by_locator(self.menu_text).is_displayed():
-            return do_click(self.driver.find_element_by_locator(self.menu_icon))
+            return self.do_click(self.driver.find_element_by_locator(self.menu_icon))
         return True
 
     def click_dashboard_jobs(self):
-        return do_click(self.driver.find_element_by_locator(self.dashboards_jobs))
+        return self.do_click(self.driver.find_element_by_locator(self.dashboards_jobs))
 
     def click_jobs(self):
-        return do_click(self.driver.find_element_by_locator(self.jobs))
+        return self.do_click(self.driver.find_element_by_locator(self.jobs))
     
     def click_jobs_advanced_search(self):
-        return do_click(self.driver.find_element_by_locator(self.jobs_advanced_search))
+        self.click_jobs()
+        return self.do_click(self.driver.find_element_by_locator(self.jobs_advanced_search))

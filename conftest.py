@@ -1,5 +1,3 @@
-import json
-
 import allure
 import pytest
 from allure_commons.types import AttachmentType
@@ -7,8 +5,6 @@ from helpers.utils import get_config
 from utils.drivers import Drivers
 
 CONFIG_PATH = "config.json"
-DEFAULT_WAIT_TIME = 10
-SUPPORTED_BROWSERS = ["chrome", "firefox", "edge"]
 
 
 @pytest.fixture(scope='session')
