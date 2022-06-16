@@ -11,7 +11,7 @@ class WebDriverExtended(EventFiringWebDriver):
         self.config = get_config(config_path='./config.json')
         self.timeout = self.config.get("timeout")
         self.poll_freq = self.config.get("poll_frequency")
-        self.driver = driver
+        self.driver = EventFiringWebDriver(driver, event_listener)
 
     @staticmethod
     def locator_types():

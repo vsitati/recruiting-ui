@@ -20,10 +20,10 @@ class WebDriverListener(AbstractEventListener):
         self.logger = logging.getLogger("selenium")
 
     def before_navigate_to(self, url, driver):
-        self.logger.info(f"Navigating to {url}")
+        self.logger.info(f"Navigating to URL: {url}")
 
     def after_navigate_to(self, url, driver):
-        self.logger.info(f"{url} opened")
+        self.logger.info(f"URL: {url} opened")
 
     def before_find(self, by, value, driver):
         self.logger.info(f"Searching for element by {by} {value}")
