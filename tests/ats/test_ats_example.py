@@ -14,7 +14,8 @@ class TestRecruitingAts:
         login.do_login(config)
 
         left_menu = LeftMenus(self.driver)
-        left_menu.click_jobs_advanced_search()
+        left_menu.click_left_nav(left_menu.Elements.Candidates, left_menu.Elements.Upload)
+        # left_menu.click_jobs_advanced_search()
 
         jobs_advanced_search = JobAdvancedSearch(self.driver)
         jobs_advanced_search.fileter_by_status("Open")

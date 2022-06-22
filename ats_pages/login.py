@@ -11,9 +11,7 @@ class Elements:
 class Login(BasePage, Elements):
     def __init__(self, driver):
         super().__init__(driver)
-        # self.driver = driver
 
-    # def do_login(self, username, password, config):
     def do_login(self, config):
         test_url = config["base_url"]
         username = "UFT_RM_01"

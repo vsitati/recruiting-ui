@@ -23,5 +23,5 @@ class JobAdvancedSearch(BasePage, Elements):
 
     def fileter_by_status(self, text):
         self.click_edit_search()
-        self.select_from_status_dropdown("Open")
+        self.select_from_status_dropdown(text)
         self.click_apply_filter_btn()
