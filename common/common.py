@@ -6,7 +6,6 @@ from selenium.common.exceptions import StaleElementReferenceException
 class Common:
     """ In the common class we define all common functionality """
     def __init__(self, driver):
-        # super().__init__(driver)
         self.driver = driver
 
     @allure.step("Opening main page")
