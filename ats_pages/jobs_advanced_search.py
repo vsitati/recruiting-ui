@@ -21,7 +21,7 @@ class JobAdvancedSearch(BasePage, Elements):
     def click_apply_filter_btn(self):
         return self.do_click(self.driver.find_element_by_locator(self.apply_filter_btn))
 
-    def fileter_by_status(self, text):
+    def filter_by_status(self, text):
         self.click_edit_search()
         self.select_from_status_dropdown(text)
         self.click_apply_filter_btn()
