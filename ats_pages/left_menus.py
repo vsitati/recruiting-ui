@@ -77,13 +77,3 @@ class LeftMenus(BasePage):
         if not self.driver.find_element_by_locator(self.Elements.menu_text).is_displayed():
             return self.do_click(self.driver.find_element_by_locator(self.Elements.menu_icon))
         return True
-
-    # def click_dashboard_jobs(self):
-    #     return self.do_click(self.driver.find_element_by_locator(self.dashboards_jobs))
-    #
-    # def click_jobs(self):
-    #     return self.do_click(self.driver.find_element_by_locator(self.jobs))
-    #
-    # def click_jobs_advanced_search(self):
-    #     self.click_jobs()
-    #     return self.do_click(self.driver.find_element_by_locator(self.jobs_advanced_search))
