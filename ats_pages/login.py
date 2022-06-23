@@ -13,7 +13,7 @@ class Login(BasePage, Elements):
         super().__init__(driver)
 
     def do_login(self, config):
-        test_url = config["base_url"]
+        test_url = config["base_ats_url"]
         username = "UFT_RM_01"
         password = "Gators2012"
         self.open(test_url)

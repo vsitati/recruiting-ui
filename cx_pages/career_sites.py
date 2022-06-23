@@ -13,7 +13,6 @@ class Elements:
 class CareerSites(Elements, BasePage):
     def __init__(self, driver):
         super().__init__(driver)
-        self.driver = driver
 
     def _get_career_sites(self, site_section):
 
