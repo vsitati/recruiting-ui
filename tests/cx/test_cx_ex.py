@@ -8,7 +8,6 @@ from cx_pages.base import BasePage
 
 @pytest.mark.usefixtures("setup")
 class TestCandidateExperience():
-    @pytest.mark.skip()
     @allure.title("CX Example Tests")
     @allure.description("Get Page Title")
     def test_get_page_title(self, config):
