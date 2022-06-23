@@ -14,7 +14,6 @@ class Elements:
 class JobSearch(Elements, BasePage):
     def __init__(self, driver):
         super().__init__(driver)
-        # self.driver = driver
 
     def get_last_page_index(self):
         page_number_range_elem = self.driver.find_element_by_locator(self.page_number)
