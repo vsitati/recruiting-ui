@@ -1,12 +1,12 @@
 import logging
 import datetime
 from helpers.utils import create_folder
-from helpers.utils import get_config
+from config import Config
 from selenium.webdriver.support.events import AbstractEventListener
 
 
 class WebDriverListener(AbstractEventListener):
-    config = get_config(config_path="config.json")
+    config = Config.env_config
     log_path = config.get("log_path")
     create_folder(log_path)
     log_filename = datetime.datetime.now().strftime("%Y%m%d")

@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from ats_pages.base import BasePage
+from test_data.test_data_details import TestData
 
 
 class Elements:
@@ -12,11 +13,12 @@ class Login(BasePage, Elements):
     def __init__(self, driver):
         super().__init__(driver)
 
-    def do_login(self, config):
-        test_url = config["base_ats_url"]
-        username = "UFT_RM_01"
-        password = "Gators2012"
-        self.open(test_url)
+    def do_login(self, env_info):
+        user_role = env_info.get("user_role")
+        company = env_info.get("company")
+        username, password = TestData.data[company]["users"][user_role]
+
+        self.open(self.get_env_url(info=env_info, app="ats"))
         self.driver.find_element_by_locator(self.username_id).send_keys(username)
         self.driver.find_element_by_locator(self.password_id).send_keys(password)
         return self.do_click(self.driver.find_element_by_locator(self.login_btn))
