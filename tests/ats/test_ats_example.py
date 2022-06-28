@@ -9,9 +9,9 @@ from ats_pages.left_menus import LeftMenus
 class TestRecruitingAts:
     @allure.title("ATS Example Tests")
     @allure.description("Edit Search Filter")
-    def test_edit_search_filter(self, config):
+    def test_edit_search_filter(self, get_test_info):
         login = Login(driver=self.driver)
-        login.do_login(config)
+        login.do_login(get_test_info)
 
         left_menu = LeftMenus(self.driver)
         left_menu.click_left_nav(left_menu.candidates)

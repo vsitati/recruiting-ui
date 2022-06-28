@@ -1,4 +1,4 @@
-from helpers.utils import get_config
+from config import Config
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
@@ -8,7 +8,7 @@ from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriv
 class WebDriverExtended(EventFiringWebDriver):
     def __init__(self, driver, event_listener):
         super().__init__(driver, event_listener)
-        self.config = get_config(config_path='./config.json')
+        self.config = Config.env_config
         self.timeout = self.config.get("timeout")
         self.poll_freq = self.config.get("poll_frequency")
         self.driver = EventFiringWebDriver(driver, event_listener)

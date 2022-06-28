@@ -1,4 +1,5 @@
 import allure
+from config import Config
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import StaleElementReferenceException
 
@@ -36,3 +37,17 @@ class Common:
             return element.click()
         except StaleElementReferenceException:
             pass
+
+    @staticmethod
+    def get_env_url(info, app):
+        endpoint = info.get(app)
+        company = info.get("company")
+        config = Config.env_config.get("env", {})
+        protocol = config[app]['url']['protocol']
+        domain = config[app]['url']['domain']
+        path = config[app]['endpoints'][endpoint]
+
+        if app == "cx":
+            return f"{protocol}://{domain}/{company}{path}"
+        else:
+            return f"{protocol}://{company}{domain}{path}"

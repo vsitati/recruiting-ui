@@ -10,17 +10,17 @@ from cx_pages.base import BasePage
 class TestCandidateExperience:
     @allure.title("CX Example Tests")
     @allure.description("Get Page Title")
-    def test_get_page_title(self, config):
+    def test_get_page_title(self, get_test_info):
         login = Login(driver=self.driver)
-        login.do_login(config)
+        login.do_login(env_info=get_test_info)
 
         basepage = BasePage(self.driver)
         assert basepage.get_title() == "Career Sites - QA Automation Only"
 
     @allure.description("Navigate to a Job Search Page for a given Job Portal")
-    def test_go_to_job_search_page(self, config):
+    def test_go_to_job_search_page(self, get_test_info):
         login = Login(driver=self.driver)
-        login.do_login(config)
+        login.do_login(env_info=get_test_info)
 
         cs = CareerSites(driver=self.driver)
         data = cs.get_career_sites(site_section="external")

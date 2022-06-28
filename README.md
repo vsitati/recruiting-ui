@@ -47,13 +47,25 @@ From the root of the repository run:
 ## Executing Tests:
 From the root of the repository, run for all tests:
 
+ The following arguments is now available:
+
+    --company(default value: qaautomationonly)   - Set the company where you want the tests to run on
+    --user_role(default value: rm)               - Set the user role you want to execute the tests with
+    --ats(default value: ats_login)              - Set the endpoint to "/" by using the tag "ats_login" or "openadmin"
+    --cx(default value: admin)                   - Set the endpoint to "/admin" by using the tag "admin"
+ 
+ _**NB:** All tests will run with the default values as seen above_
+
     pytest
 
 To specify a test, run:
 
     pytest -k <matching test name>
+    
 
 As an example: executing all CX test, run:
+
+_**NB:** The specified tests will run with the default values as seen above_
 
     pytest -k cx
 For a more detailed usage of the _-k_ argument, see _pytest --help_

@@ -1,9 +1,0 @@
-{
-  "browser": "chrome",
-  "headless_mode": false,
-  "base_ats_url": "https://qarecruiting01-openhire.silkroad-eng.com/",
-  "base_cx_url": "https://cx-qa.silkroad-eng.com/qaautomationonly/admin/",
-  "timeout": 20,
-  "poll_frequency": 0.5,
-  "log_path": "./logs"
-}
