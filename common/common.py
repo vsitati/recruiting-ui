@@ -2,9 +2,14 @@ import allure
 from config import Config
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import StaleElementReferenceException
+from selenium.webdriver.common.by import By
 
 
-class Common:
+class Elements:
+    quick_search = (By.ID, 'quick_search_input')
+
+
+class Common(Elements):
     """ In the common class we define all common functionality """
     def __init__(self, driver):
         self.driver = driver
@@ -51,3 +56,15 @@ class Common:
             return f"{protocol}://{domain}/{company}{path}"
         else:
             return f"{protocol}://{company}{domain}{path}"
+
+    def is_element_visible(self, locator):
+        try:
+            return self.driver.find_element_by_locator(locator) and True
+        except Exception as e:
+            return False
+
+    def get_text(self, locator):
+        try:
+            return self.driver.find_element_by_locator(locator).text
+        except Exception as e:
+            return "Text not found"
