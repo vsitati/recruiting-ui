@@ -8,6 +8,7 @@ class Elements:
     password_id = (By.ID, 'password')
     login_btn = (By.ID, 'btnLogin')
     login_error = (By.CSS_SELECTOR, '.sr-login-error')
+    forget_password_link = (By.ID, 'forgotPasswordLink')
 
 
 class Login(BasePage, Elements):
@@ -28,3 +29,7 @@ class Login(BasePage, Elements):
         self.driver.find_element_by_locator(self.username_id).send_keys(username)
         self.driver.find_element_by_locator(self.password_id).send_keys(password)
         return self.do_click(self.driver.find_element_by_locator(self.login_btn))
+
+    def click_forget_password(self):
+        return self.do_click(element=self.driver.find_element_by_locator(self.forget_password_link))
+

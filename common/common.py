@@ -68,3 +68,6 @@ class Common(Elements):
             return self.driver.find_element_by_locator(locator).text
         except Exception as e:
             return "Text not found"
+
+    def enter_text(self, element, text):
+        return self.driver.find_element_by_locator(element).send_keys(text)

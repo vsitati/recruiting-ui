@@ -1,7 +1,7 @@
 import pytest
 import allure
 from ats_pages.login import Login
-from ats_pages.left_menus import LeftMenus
+from ats_pages.forget_password import ForgetPassword
 from test_data.test_data_details import TestData
 
 
@@ -42,4 +42,40 @@ class TestRecruitingAts:
 
         error_msg = login.get_text(locator=login.login_error)
         assert error_msg == TestData.login_validation.get("inactive_login_error", "")
+
+    @allure.description("Can open the forget password link")
+    def test_can_open_forget_password_link(self, get_test_info):
+        login = Login(driver=self.driver)
+        ats_url = login.get_env_url(info=get_test_info, app="ats")
+        login.open(url=ats_url)
+        login.click_forget_password()
+        fp = ForgetPassword(driver=self.driver)
+        assert fp.forget_password_heading() == "Forgot your password?"
+        assert fp.verify_instruction_text() is True
+
+    @allure.description("Cannot submit with an empty username on forget password page")
+    def test_cannot_submit_with_empty_username_on_forget_password(self, get_test_info):
+        login = Login(driver=self.driver)
+        ats_url = login.get_env_url(info=get_test_info, app="ats")
+        login.open(url=ats_url)
+        login.click_forget_password()
+        fp = ForgetPassword(driver=self.driver)
+        fp.click_submit_btn()
+        assert fp.verify_empty_field_error_msg() == "This field is required."
+
+    @allure.description("Cannot submit with an empty username on forget password page")
+    def test_can_sumbit_a_valid_username(self, get_test_info):
+        user, *_ = TestData.data[get_test_info.get("company")]["users"]["rm"]
+        login = Login(driver=self.driver)
+        ats_url = login.get_env_url(info=get_test_info, app="ats")
+        login.open(url=ats_url)
+        login.click_forget_password()
+        fp = ForgetPassword(driver=self.driver)
+        fp.enter_text(element=fp.username, text=user)
+        fp.click_submit_btn()
+        assert fp.verify_account_verification_text() is True
+        # TODO Will add email verification on next PR
+
+
+
 
