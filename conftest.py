@@ -5,8 +5,6 @@ from helpers.utils import get_config
 from utils.drivers import Drivers
 from config import Config
 
-# CONFIG_PATH = "config.json"
-
 
 def pytest_addoption(parser):
     parser.addoption("--company", action="store", default="qaautomationonly", help="Company name")
@@ -24,11 +22,6 @@ def get_test_info(request):
         ats=request.config.getoption("--ats"),
         cx=request.config.getoption("--cx")
     )
-
-
-# @pytest.fixture(scope='session')
-# def config():
-#     return get_config(config_path=CONFIG_PATH)
 
 
 @pytest.fixture()

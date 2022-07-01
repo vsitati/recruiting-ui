@@ -64,7 +64,7 @@ class TestRecruitingAts:
         assert fp.verify_empty_field_error_msg() == "This field is required."
 
     @allure.description("Cannot submit with an empty username on forget password page")
-    def test_can_sumbit_a_valid_username(self, get_test_info):
+    def test_can_submit_a_valid_username(self, get_test_info):
         user, *_ = TestData.data[get_test_info.get("company")]["users"]["rm"]
         login = Login(driver=self.driver)
         ats_url = login.get_env_url(info=get_test_info, app="ats")
@@ -74,8 +74,10 @@ class TestRecruitingAts:
         fp.enter_text(element=fp.username, text=user)
         fp.click_submit_btn()
         assert fp.verify_account_verification_text() is True
-        # TODO Will add email verification on next PR
-
-
-
-
+        body = fp.read_mailbox(subject_search_text="Reset Your Password")
+        assert "UFT_RM_01" in body
+        assert "Username: UFT_RM_01" in body
+        assert "IP Address" in body
+        reset_password_url = fp.extract_url(body_content=body)
+        fp.open(url=reset_password_url)
+        # TODO Will continue with tests on reset password page
