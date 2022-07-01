@@ -3,6 +3,9 @@ from config import Config
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.by import By
+import requests
+from bs4 import BeautifulSoup
+import re
 
 
 class Elements:
@@ -13,6 +16,55 @@ class Common(Elements):
     """ In the common class we define all common functionality """
     def __init__(self, driver):
         self.driver = driver
+        self.headers = {"Content-Type": "application/json"}
+        self.regex = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
+
+    @staticmethod
+    def parse_email_body(inbox):
+        first_result, *_ = inbox
+        parsed_result = BeautifulSoup(first_result, "html.parser")
+
+        if parsed_result.find_all('html'):
+            html = parsed_result.find_all('html')
+        else:
+            html = parsed_result.find_all('pre')
+
+        data, *_ = html
+        text = data.get_text()
+        # TODO Need to see if I can improve HTML text output
+        return [x.strip() for x in text.split('\n') if x.strip()]
+
+    @staticmethod
+    def get_request(url, headers):
+        # TODO Add try except to catch auth or connection errors
+        r = requests.get(url, headers=headers)
+        return r.json()
+
+    @staticmethod
+    def get_mailbox_url():
+        config = Config.env_config["env"]["utility"]
+        env = config.get("env", "")
+        protocol = config['url']['protocol']
+        domain = config['url']['domain']
+        path = config['endpoints']['mailbox']
+
+        return f"{protocol}://{env}{domain}/{path}"
+
+    @allure.step("Reading Utility Mailbox")
+    def read_mailbox(self, subject_search_text):
+        response = self.get_request(url=self.get_mailbox_url(), headers=self.headers)
+
+        inbox = [x["body"] for x in response if
+                 subject_search_text in x["headers"]["Subject"].strip().replace("\r", "").replace("\n", "")]
+        body_content = self.parse_email_body(inbox=inbox)
+        return ' '.join(body_content)
+
+    def extract_url(self, body_content):
+        try:
+            url, *_ = re.findall(self.regex, body_content)
+            return url
+        except ValueError:
+            return ""
 
     @allure.step("Opening main page")
     def open(self, url):

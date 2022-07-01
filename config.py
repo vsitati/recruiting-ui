@@ -24,6 +24,16 @@ class Config:
                     "protocol": "https",
                     "domain": "cx-qa.silkroad-eng.com"
                 }
+            },
+            "utility": {
+                "env": "srerecruit01",
+                "endpoints": {
+                    "mailbox": "/mailbox/index/environment/sreqadevelop"
+                },
+                "url": {
+                    "protocol": "http",
+                    "domain": ".silkroad-eng.local"
+                }
             }
         }
     }
