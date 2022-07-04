@@ -75,6 +75,7 @@ class TestRecruitingAts:
         fp.click_submit_btn()
         assert fp.verify_account_verification_text() is True
         body = fp.read_mailbox(subject_search_text="Reset Your Password")
+        assert body != ''
         assert "UFT_RM_01" in body
         assert "Username: UFT_RM_01" in body
         assert "IP Address" in body
