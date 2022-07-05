@@ -11,7 +11,6 @@ import time
 
 class Elements:
     quick_search = (By.ID, 'quick_search_input')
-    richtext = (By.ID, 'tinymce')
 
 
 class Common(Elements):
@@ -105,12 +104,6 @@ class Common(Elements):
         except StaleElementReferenceException:
             pass
 
-    def click(self, locator):
-        try:
-            return self.driver.find_element_by_locator(locator).click()
-        except StaleElementReferenceException:
-            pass
-
     @staticmethod
     def get_env_url(info, app):
         endpoint = info.get(app)
@@ -137,28 +130,5 @@ class Common(Elements):
         except Exception as e:
             return "Text not found"
 
-    def enter_text(self, locator, text):
-        elm = self.driver.find_element_by_locator(locator)
-        elm.clear()
-        return elm.send_keys(text)
-
-    def enter_richtext(self, locator, text):
-        self.driver.switch_to.frame(locator[1])
-        elm = self.driver.find_element_by_locator(self.richtext)
-        elm.clear()
-        elm.send_keys(text)
-        self.driver.switch_to.default_content()
-
-    # isCheck: True: Check; False: UnCheck
-    def click_checkbox(self, locator, isCheck):
-        elm = self.driver.find_element_by_locator(locator)
-        if elm.is_selected() != isCheck:
-            elm.click()
-
-    # isYes: True: Yes; False: No
-    def click_radio(self, locator, isYes):
-        if isYes:
-            locator[1] = locator[1] + "1"
-        else:
-            locator[1] = locator[1]+ "0"
-        return self.click(locator)
+    def enter_text(self, element, text):
+        return self.driver.find_element_by_locator(element).send_keys(text)
