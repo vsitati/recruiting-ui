@@ -11,6 +11,8 @@ import time
 
 class Elements:
     quick_search = (By.ID, 'quick_search_input')
+    empty_field_validation_msg = (By.XPATH, ".//span[@class = 'help-block']")
+    submit_btn = (By.ID, "submitButton")
 
 
 class Common(Elements):
@@ -132,3 +134,9 @@ class Common(Elements):
 
     def enter_text(self, element, text):
         return self.driver.find_element_by_locator(element).send_keys(text)
+
+    def verify_empty_field_error_msg(self):
+        return self.driver.find_element_by_locator(self.empty_field_validation_msg).text
+
+    def click_submit_btn(self):
+        return self.do_click(self.driver.find_element_by_locator(self.submit_btn))
