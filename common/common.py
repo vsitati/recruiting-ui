@@ -170,4 +170,3 @@ class Common(Elements):
         else:
             locator[1] = locator[1]+ "0"
         return self.click(locator)
->>>>>>> bb5a5d639e238a37a836be4040754f89e10dda15

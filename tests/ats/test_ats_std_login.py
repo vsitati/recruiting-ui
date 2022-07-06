@@ -110,3 +110,13 @@ class TestRecruitingAts:
         cp.click_submit_btn()
         assert cp.verify_empty_field_error_msg() == "Please enter at least 8 characters."
 
+    def test_can_submit_new_passwords(self):
+        cp = ChangePassword(driver=self.driver)
+        body = cp.read_mailbox(subject_search_text="Reset Your Password")
+        assert body != ''
+        reset_password_url = cp.extract_url(body_content=body)
+        cp.open(url=reset_password_url)
+        cp.do_change_password(new_password="silk", confirm_password="sil")
+        cp.click_submit_btn()
+        assert cp.verify_empty_field_error_msg() == "Please enter at least 8 characters."
+
