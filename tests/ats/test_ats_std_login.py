@@ -71,7 +71,7 @@ class TestRecruitingAts:
         login.open(url=ats_url)
         login.click_forget_password()
         fp = ForgetPassword(driver=self.driver)
-        fp.enter_text(element=fp.username, text=user)
+        fp.enter_text(locator=fp.username, text=user)
         fp.click_submit_btn()
         assert fp.verify_account_verification_text() is True
         body = fp.read_mailbox(subject_search_text="Reset Your Password")

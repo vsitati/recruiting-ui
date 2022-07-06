@@ -40,9 +40,12 @@ class Common(Elements):
 
     @staticmethod
     def get_request(url, headers):
-        # TODO Add try except to catch auth or connection errors
-        r = requests.get(url, headers=headers)
-        return r.json()
+        # TODO Add try except to catch non json responses:  r.json()
+        try:
+            r = requests.get(url, headers=headers)
+            return r.json()
+        except requests.exceptions.ConnectionError:
+            raise requests.exceptions.ConnectionError("Connection error to the Utility app. Check network or VPN")
 
     @staticmethod
     def get_mailbox_url():
@@ -143,7 +146,8 @@ class Common(Elements):
         return elm.send_keys(text)
 
     def enter_richtext(self, locator, text):
-        self.driver.switch_to.frame(locator[1])
+        by, by_value = locator
+        self.driver.switch_to.frame(by_value)
         elm = self.driver.find_element_by_locator(self.richtext)
         elm.clear()
         elm.send_keys(text)
@@ -160,5 +164,5 @@ class Common(Elements):
         if isYes:
             locator[1] = locator[1] + "1"
         else:
-            locator[1] = locator[1]+ "0"
+            locator[1] = locator[1] + "0"
         return self.click(locator)
