@@ -81,14 +81,32 @@ class TestRecruitingAts:
     #     assert "Username: UFT_RM_01" in body
     #     assert "IP Address" in body
 
-    def test_cannot_submit_empty_new_password_fields(self):
+    # def test_cannot_submit_empty_new_password_fields(self):
+    #     cp = ChangePassword(driver=self.driver)
+    #     body = cp.read_mailbox(subject_search_text="Reset Your Password")
+    #     assert body != ''
+    #     reset_password_url = cp.extract_url(body_content=body)
+    #     cp.open(url=reset_password_url)
+    #     cp.click_submit_btn()
+    #     assert cp.verify_empty_field_error_msg() == "This field is required."
+
+    # def test_cannot_submit_mismatched_passwords(self):
+    #     cp = ChangePassword(driver=self.driver)
+    #     body = cp.read_mailbox(subject_search_text="Reset Your Password")
+    #     assert body != ''
+    #     reset_password_url = cp.extract_url(body_content=body)
+    #     cp.open(url=reset_password_url)
+    #     cp.do_change_password(new_password="silkroad2022", confirm_password="silkroad2")
+    #     cp.click_submit_btn()
+    #     assert cp.get_mismatched_text() == "Your passwords do not match."
+
+    def test_cannot_submit_passwords_with_length_less_than_eight_characters(self):
         cp = ChangePassword(driver=self.driver)
         body = cp.read_mailbox(subject_search_text="Reset Your Password")
         assert body != ''
         reset_password_url = cp.extract_url(body_content=body)
         cp.open(url=reset_password_url)
+        cp.do_change_password(new_password="silk", confirm_password="sil")
         cp.click_submit_btn()
-        assert cp.verify_empty_field_error_msg() == "This field is required."
-
-    def test_cannot_submit_mismatched_passwords(self):
+        assert cp.verify_empty_field_error_msg() == "Please enter at least 8 characters."
 

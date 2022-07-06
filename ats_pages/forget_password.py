@@ -31,7 +31,6 @@ class ForgetPassword(BasePage, Elements):
 
     def verify_account_verification_text(self):
         account_verification_text = self.driver.find_element_by_locator(self.account_verification_text).text
-        print("ACC: ", account_verification_text)
         test_data_text = TestData.account_verification_text
         return account_verification_text == test_data_text
 

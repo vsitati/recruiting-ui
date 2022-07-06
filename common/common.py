@@ -123,13 +123,13 @@ class Common(Elements):
     def is_element_visible(self, locator):
         try:
             return self.driver.find_element_by_locator(locator) and True
-        except Exception as e:
+        except Exception as e:  # TODO Need to add proper exception
             return False
 
     def get_text(self, locator):
         try:
             return self.driver.find_element_by_locator(locator).text
-        except Exception as e:
+        except Exception as e:  # TODO Need to add proper exception
             return "Text not found"
 
     def enter_text(self, element, text):
