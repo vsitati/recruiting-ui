@@ -8,7 +8,8 @@ class CompanyData:
                 "exec": ["UFT_EX_01", "Gators2012"],
                 "hm": ["UFT_HM_01", "Gators2012"],
                 "employee": ["UFT_EM_01", "Gators2012"],
-                "inactive": ["inactive", "Gators2012"]
+                "inactive": ["inactive", "Gators2012"],
+                "for_password_change": ["change_me", "Gators2012"]
             }
         }
     }
@@ -24,3 +25,6 @@ class CompanyData:
 
     account_verification_text = "A message has been sent to your email address. Please follow the instructions in the email message to complete the change password process." \
                                 "\nIf you have any questions, please contact your administrator."
+
+    change_password_success_msg = "Your password has been changed. A confirmation of this update has been emailed to you." \
+                                  "\nPlease remember to use your new password the next time you login."

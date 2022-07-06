@@ -146,7 +146,7 @@ class Common(Elements):
         return self.driver.find_element_by_locator(self.empty_field_validation_msg).text
 
     def click_submit_btn(self):
-        return self.do_click(self.driver.find_element_by_locator(self.submit_btn))
+        self.do_click(self.driver.find_element_by_locator(self.submit_btn))
 
     def enter_text(self, locator, text):
         elm = self.driver.find_element_by_locator(locator)

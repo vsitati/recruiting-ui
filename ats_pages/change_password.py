@@ -7,6 +7,7 @@ class Elements:
     new_password = (By.ID, "candidatepassword")
     confirm_new_password = (By.ID, "candidateconfirmpassword")
     mismatch_passwords = (By.CSS_SELECTOR, ".alert.alert-danger")
+    success_message = (By.CSS_SELECTOR, ".alert.alert-success")
 
 
 class ChangePassword(BasePage, Elements):
@@ -20,3 +21,6 @@ class ChangePassword(BasePage, Elements):
 
     def get_mismatched_text(self):
         return self.driver.find_element_by_locator(self.mismatch_passwords).text
+
+    def get_password_change_success_msg(self):
+        return self.driver.find_element_by_locator(self.success_message).text
