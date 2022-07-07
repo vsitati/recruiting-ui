@@ -10,7 +10,6 @@ class Elements:
     forget_password_instruction_text = (By.ID, "forgotPasswordInstructionText")
     heading = (By.TAG_NAME, "H3")
     empty_field_error = (By.ID, "username-error")
-    empty_field_validation_msg = (By.XPATH, ".//span[@class = 'help-block']")
     acc_verification_heading = (By.XPATH, ".//span[@class = 'sr-product-logo']")
     account_verification_text = (By.CSS_SELECTOR, ".alert.alert-info")
 
@@ -27,18 +26,11 @@ class ForgetPassword(BasePage, Elements):
     def forget_password_heading(self):
         return self.driver.find_element_by_locator(self.heading).text
 
-    def verify_empty_field_error_msg(self):
-        return self.driver.find_element_by_locator(self.empty_field_validation_msg).text
-
-    def click_submit_btn(self):
-        return self.do_click(self.driver.find_element_by_locator(self.submit_btn))
-
     def account_verification_heading(self):
         return self.driver.find_element_by_locator(self.acc_verification_heading).text
 
     def verify_account_verification_text(self):
         account_verification_text = self.driver.find_element_by_locator(self.account_verification_text).text
-        print("ACC: ", account_verification_text)
         test_data_text = TestData.account_verification_text
         return account_verification_text == test_data_text
 

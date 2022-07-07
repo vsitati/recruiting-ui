@@ -11,6 +11,8 @@ import time
 
 class Elements:
     quick_search = (By.ID, 'quick_search_input')
+    empty_field_validation_msg = (By.XPATH, ".//span[@class = 'help-block']")
+    submit_btn = (By.ID, "submitButton")
     richtext = (By.ID, 'tinymce')
 
 
@@ -131,14 +133,20 @@ class Common(Elements):
     def is_element_visible(self, locator):
         try:
             return self.driver.find_element_by_locator(locator) and True
-        except Exception as e:
+        except Exception as e:  # TODO Need to add proper exception
             return False
 
     def get_text(self, locator):
         try:
             return self.driver.find_element_by_locator(locator).text
-        except Exception as e:
+        except Exception as e:  # TODO Need to add proper exception
             return "Text not found"
+
+    def verify_empty_field_error_msg(self):
+        return self.driver.find_element_by_locator(self.empty_field_validation_msg).text
+
+    def click_submit_btn(self):
+        self.do_click(self.driver.find_element_by_locator(self.submit_btn))
 
     def enter_text(self, locator, text):
         elm = self.driver.find_element_by_locator(locator)

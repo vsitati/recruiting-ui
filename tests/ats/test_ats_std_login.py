@@ -2,6 +2,7 @@ import pytest
 import allure
 from ats_pages.login import Login
 from ats_pages.forget_password import ForgetPassword
+from ats_pages.change_password import ChangePassword
 from test_data.test_data_details import TestData
 
 
@@ -65,7 +66,7 @@ class TestRecruitingAts:
 
     @allure.description("Cannot submit with an empty username on forget password page")
     def test_can_submit_a_valid_username(self, get_test_info):
-        user, *_ = TestData.data[get_test_info.get("company")]["users"]["rm"]
+        user, *_ = TestData.data[get_test_info.get("company")]["users"]["for_password_change"]
         login = Login(driver=self.driver)
         ats_url = login.get_env_url(info=get_test_info, app="ats")
         login.open(url=ats_url)
@@ -76,9 +77,47 @@ class TestRecruitingAts:
         assert fp.verify_account_verification_text() is True
         body = fp.read_mailbox(subject_search_text="Reset Your Password")
         assert body != ''
-        assert "UFT_RM_01" in body
-        assert "Username: UFT_RM_01" in body
+        assert "change_me" in body
+        assert "Username: change_me" in body
         assert "IP Address" in body
-        reset_password_url = fp.extract_url(body_content=body)
-        fp.open(url=reset_password_url)
-        # TODO Will continue with tests on reset password page
+
+    @allure.description("Cannot submit with an empty new password field")
+    def test_cannot_submit_empty_new_password_fields(self):
+        cp = ChangePassword(driver=self.driver)
+        body = cp.read_mailbox(subject_search_text="Reset Your Password")
+        assert body != ''
+        reset_password_url = cp.extract_url(body_content=body)
+        cp.open(url=reset_password_url)
+        cp.click_submit_btn()
+        assert cp.verify_empty_field_error_msg() == "This field is required."
+
+    @allure.description("Cannot submit with mismatched passwords")
+    def test_cannot_submit_mismatched_passwords(self):
+        cp = ChangePassword(driver=self.driver)
+        body = cp.read_mailbox(subject_search_text="Reset Your Password")
+        assert body != ''
+        reset_password_url = cp.extract_url(body_content=body)
+        cp.open(url=reset_password_url)
+        cp.do_change_password(new_password="silkroad2022", confirm_password="silkroad2")
+        assert cp.get_mismatched_text() == "Your passwords do not match."
+
+    @allure.description("Cannot submit where the password characters length are less than 8")
+    def test_cannot_submit_passwords_with_length_less_than_eight_characters(self):
+        cp = ChangePassword(driver=self.driver)
+        body = cp.read_mailbox(subject_search_text="Reset Your Password")
+        assert body != ''
+        reset_password_url = cp.extract_url(body_content=body)
+        cp.open(url=reset_password_url)
+        cp.do_change_password(new_password="silk", confirm_password="sil")
+        assert cp.verify_empty_field_error_msg() == "Please enter at least 8 characters."
+
+    @allure.description("Can submit new password")
+    def test_can_submit_new_passwords(self):
+        cp = ChangePassword(driver=self.driver)
+        body = cp.read_mailbox(subject_search_text="Reset Your Password")
+        assert body != ''
+        reset_password_url = cp.extract_url(body_content=body)
+        cp.open(url=reset_password_url)
+        # TODO Must add a random name generator
+        cp.do_change_password(new_password="Silkroad2022", confirm_password="silkroad2022")
+        assert cp.get_password_change_success_msg() == TestData.change_password_success_msg
