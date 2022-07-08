@@ -6,7 +6,8 @@ from selenium.webdriver.common.by import By
 import requests
 from bs4 import BeautifulSoup
 import re
-import time
+from time import sleep
+from selenium.webdriver import Keys
 
 
 class Elements:
@@ -14,6 +15,8 @@ class Elements:
     empty_field_validation_msg = (By.XPATH, ".//span[@class = 'help-block']")
     submit_btn = (By.ID, "submitButton")
     richtext = (By.ID, 'tinymce')
+    auto_complete = (By.CSS_SELECTOR, "[role='listbox'] [class='ui-corner-all']")
+    datepicker = (By.CSS_SELECTOR, "[id='ui-datepicker-div'] [class^='ui-datepicker-close']")
 
 
 class Common(Elements):
@@ -71,7 +74,7 @@ class Common(Elements):
             if inbox:
                 body_content = self.parse_email_body(inbox=inbox)
                 return ' '.join(body_content)
-            time.sleep(increment)
+            sleep(increment)
         return ""
 
     def extract_url(self, body_content):
@@ -110,7 +113,7 @@ class Common(Elements):
         except StaleElementReferenceException:
             pass
 
-    def click(self, locator):
+    def go_click(self, locator):
         try:
             return self.driver.find_element_by_locator(locator).click()
         except StaleElementReferenceException:
@@ -161,11 +164,17 @@ class Common(Elements):
         elm.send_keys(text)
         self.driver.switch_to.default_content()
 
+    def enter_richtext_integer(self, locator, text):
+        elm = self.driver.find_element_by_locator(locator)
+        elm.send_keys(Keys.CONTROL + "a")
+        elm.send_keys(Keys.DELETE)
+        return elm.send_keys(text)
+
     # isCheck: True: Check; False: UnCheck
     def click_checkbox(self, locator, isCheck):
         elm = self.driver.find_element_by_locator(locator)
         if elm.is_selected() != isCheck:
-            elm.click()
+            self.do_click(elm)
 
     # isYes: True: Yes; False: No
     def click_radio(self, locator, isYes):
@@ -173,4 +182,20 @@ class Common(Elements):
             locator[1] = locator[1] + "1"
         else:
             locator[1] = locator[1] + "0"
-        return self.click(locator)
+        return self.go_click(locator)
+
+    def click_auto_complete(self, locator, text):
+        elm = self.driver.find_element_by_locator(locator)
+        elm.clear()
+        elm.send_keys(text)
+        sleep(0.5)
+        elms = self.driver.find_elements_by_locator(self.auto_complete)
+        for elm in elms:
+            if text in elm.text:
+                self.do_click(elm)
+                break
+
+    def pick_datepicker(self, locator, text):
+        self.enter_text(locator, text)
+        sleep(0.5)
+        return self.go_click(self.datepicker)
