@@ -6,5 +6,5 @@ class TestData(CompanyData):
     pass
 
 
-class TestData_Job(JobData):
+class TestDataJob(JobData):
     pass
