@@ -65,7 +65,7 @@ class LeftMenus(BasePage, Elements):
 
     def click_left_nav(self, element):
         self.open_menu()
-        time.sleep(1)
+        time.sleep(1)   # TODO: find a better way to wait
         elm = self.driver.find_element_by_locator(element)
         if elm.get_attribute(self.left_nav_attr) == "false":
             return self.do_click(self.driver.find_element_by_locator(element))

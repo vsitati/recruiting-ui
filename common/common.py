@@ -102,6 +102,12 @@ class Common(Elements):
         select = Select(self.driver.find_element_by_locator(locator))
         select.select_by_visible_text(text)
 
+    def select_multiselect_list(self, locator, text):
+        elm = self.driver.find_element_by_locator(locator)
+        my_select = Select(elm)
+        for my_text in text:
+            my_select.select_by_visible_text(my_text)
+
     @staticmethod
     def do_click(element):
         """
@@ -171,24 +177,31 @@ class Common(Elements):
         return elm.send_keys(text)
 
     # isCheck: True: Check; False: UnCheck
-    def click_checkbox(self, locator, isCheck):
+    def check_checkbox(self, locator, isCheck):
         elm = self.driver.find_element_by_locator(locator)
         if elm.is_selected() != isCheck:
             self.do_click(elm)
 
     # isYes: True: Yes; False: No
-    def click_radio(self, locator, isYes):
+    def click_radio_yes_no(self, locator, isYes):
         if isYes:
             locator[1] = locator[1] + "1"
         else:
             locator[1] = locator[1] + "0"
         return self.go_click(locator)
 
-    def click_auto_complete(self, locator, text):
+    def click_radio_list(self, locator, text):
+        elms = self.driver.find_elements_by_locator(locator)
+        for elm in elms:
+            if text in elm.accessible_name:
+                self.do_click(elm)
+                break
+
+    def select_auto_complete(self, locator, text):
         elm = self.driver.find_element_by_locator(locator)
         elm.clear()
         elm.send_keys(text)
-        sleep(0.5)
+        sleep(1)
         elms = self.driver.find_elements_by_locator(self.auto_complete)
         for elm in elms:
             if text in elm.text:
