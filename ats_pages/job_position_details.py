@@ -1,5 +1,6 @@
 from ats_pages.base import BasePage
 from selenium.webdriver.common.by import By
+from test_data.test_data_details import JobData
 
 
 class Elements:
@@ -81,105 +82,105 @@ class JobPositionDetails(BasePage, Elements):
 
     def fill_out_minimum(self):
         # Job Administration
-        self.select_dropdown_element(self.assigned_recruiter, "assigned_recruiter")
+        self.select_from_dropdown(self.assigned_recruiter, JobData.job_data.get("assigned_recruiter"))
 
         # Job Information
-        self.enter_text_element(self.internal_job_title, "internal_job_title")
-        self.enter_text_element(self.posted_job_title, "posted_job_title")
-        self.enter_text_element(self.tracking_code, "tracking_code")
+        self.enter_text(self.internal_job_title, JobData.job_data.get("internal_job_title"))
+        self.enter_text(self.posted_job_title, JobData.job_data.get("posted_job_title"))
+        self.enter_text(self.tracking_code, JobData.job_data.get("tracking_code"))
 
         # Location Details
-        self.select_dropdown_element(self.country, "country")
-        self.enter_text_element(self.address_line_1, "address_line_1")
-        self.enter_text_element(self.address_line_2, "address_line_2")
-        self.enter_text_element(self.city, "city")
-        self.select_dropdown_element(self.state, "state")
-        self.enter_text_element(self.zip_postal_code, "zip_postal_code")
+        self.select_from_dropdown(self.country, JobData.job_data.get("country"))
+        self.enter_text(self.address_line_1, JobData.job_data.get("address_line_1"))
+        self.enter_text(self.address_line_2, JobData.job_data.get("address_line_2"))
+        self.enter_text(self.city, JobData.job_data.get("city"))
+        self.select_from_dropdown(self.state, JobData.job_data.get("state"))
+        self.enter_text(self.zip_postal_code, JobData.job_data.get("zip_postal_code"))
 
         # Compliance
         # Position Requirements
 
         # EmployeeReferrals.com
-        self.enter_richtext_integer_element(self.referral_bonus, "referral_bonus")
-        self.enter_richtext_integer_element(self.referral_points, "referral_points")
+        self.enter_richtext_integer(self.referral_bonus, JobData.job_data.get("referral_bonus"))
+        self.enter_richtext_integer(self.referral_points, JobData.job_data.get("referral_points"))
 
         # Description/Skills
-        self.enter_richtext_element(self.job_description, "job_description")
+        self.enter_richtext(self.job_description, JobData.job_data.get("job_description"))
 
         # Custom Fields
-        self.select_dropdown_element(self.exemption_status, "exemption_status")
-        self.select_dropdown_element(self.collect_eeo_for_this_job, "collect_eeo_for_this_job")
+        self.select_from_dropdown(self.exemption_status, JobData.job_data.get("exemption_status"))
+        self.select_from_dropdown(self.collect_eeo_for_this_job, JobData.job_data.get("collect_eeo_for_this_job"))
 
         # Buttons
         self.go_click(self.continue_btn)
 
     def fill_out_all(self):
         # Job Administration
-        self.select_dropdown_element(self.recruiting_manager, "recruiting_manager")
-        self.select_dropdown_element(self.assigned_recruiter, "assigned_recruiter")
-        self.select_dropdown_element(self.replies_emailed_to, "replies_emailed_to")
+        self.select_from_dropdown(self.recruiting_manager, JobData.job_data.get("recruiting_manager"))
+        self.select_from_dropdown(self.assigned_recruiter, JobData.job_data.get("assigned_recruiter"))
+        self.select_from_dropdown(self.replies_emailed_to, JobData.job_data.get("replies_emailed_to"))
 
         # Job Information
-        # self.select_auto_complete_element(self.job_template, "job_template")
-        self.select_dropdown_element(self.hiring_workflow, "hiring_workflow")
-        self.click_radio_yes_no_element(self.evergreen_job, "evergreen_job")
-        self.enter_text_element(self.internal_job_title, "internal_job_title")
-        self.enter_text_element(self.posted_job_title, "posted_job_title")
-        self.enter_text_element(self.tracking_code, "tracking_code")
-        self.enter_richtext_integer_element(self.number_of_positions, "number_of_positions")
-        self.click_radio_yes_no_element(self.require_eForm_submission, "require_eForm_submission")
-        self.select_dropdown_element(self.status, "status")
-        self.select_dropdown_element(self.position_type, "position_type")
-        self.select_dropdown_element(self.job_level, "job_level")
-        self.select_dropdown_element(self.job_duration, "job_duration")
-        self.pck_datepicker_element(self.expected_start_date, "expected_start_date")
+        # self.select_auto_complete(self.job_template, JobData.job_data.get("job_template"))
+        self.select_from_dropdown(self.hiring_workflow, JobData.job_data.get("hiring_workflow"))
+        self.click_radio_yes_no(self.evergreen_job, JobData.job_data.get("evergreen_job"))
+        self.enter_text(self.internal_job_title, JobData.job_data.get("internal_job_title"))
+        self.enter_text(self.posted_job_title, JobData.job_data.get("posted_job_title"))
+        self.enter_text(self.tracking_code, JobData.job_data.get("tracking_code"))
+        self.enter_richtext_integer(self.number_of_positions, JobData.job_data.get("number_of_positions"))
+        self.click_radio_yes_no(self.require_eForm_submission, JobData.job_data.get("require_eForm_submission"))
+        self.select_from_dropdown(self.status, JobData.job_data.get("status"))
+        self.select_from_dropdown(self.position_type, JobData.job_data.get("position_type"))
+        self.select_from_dropdown(self.job_level, JobData.job_data.get("job_level"))
+        self.select_from_dropdown(self.job_duration, JobData.job_data.get("job_duration"))
+        self.pick_datepicker(self.expected_start_date, JobData.job_data.get("expected_start_date"))
 
         # Location Details
-        # self.select_auto_complete_element(self.job_location_code, "job_location_code")
-        self.select_dropdown_element(self.country, "country")
-        self.enter_text_element(self.address_line_1, "address_line_1")
-        self.enter_text_element(self.address_line_2, "address_line_2")
-        self.enter_text_element(self.city, "city")
-        self.select_dropdown_element(self.state, "state")
-        self.enter_text_element(self.zip_postal_code, "zip_postal_code")
-        self.select_auto_complete_element(self.additional_locations, "additional_locations")
+        # self.select_auto_complete(self.job_location_code, JobData.job_data.get("job_location_code"))
+        self.select_from_dropdown(self.country, JobData.job_data.get("country"))
+        self.enter_text(self.address_line_1, JobData.job_data.get("address_line_1"))
+        self.enter_text(self.address_line_2, JobData.job_data.get("address_line_2"))
+        self.enter_text(self.city, JobData.job_data.get("city"))
+        self.select_from_dropdown(self.state, JobData.job_data.get("state"))
+        self.enter_text(self.zip_postal_code, JobData.job_data.get("zip_postal_code"))
+        self.select_auto_complete(self.additional_locations, JobData.job_data.get("additional_locations"))
 
         # Compliance
-        self.select_dropdown_element(self.eeo1_job_category, "eeo1_job_category")
-        self.select_dropdown_element(self.aap_job_group, "aap_job_group")
-        self.select_dropdown_element(self.talent_assessment, "talent_assessment")
-        self.check_checkbox_element(self.do_not_display_assessment_on_job_portal, "do_not_display_assessment_on_job_portal")
+        self.select_from_dropdown(self.eeo1_job_category, JobData.job_data.get("eeo1_job_category"))
+        self.select_from_dropdown(self.aap_job_group, JobData.job_data.get("aap_job_group"))
+        self.select_from_dropdown(self.talent_assessment, JobData.job_data.get("talent_assessment"))
+        self.check_checkbox(self.do_not_display_assessment_on_job_portal, JobData.job_data.get("do_not_display_assessment_on_job_portal"))
 
         # Position Requirements
-        self.select_dropdown_element(self.travel, "travel")
-        self.click_radio_yes_no_element(self.per_diem_included, "per_diem_included")
-        self.enter_text_element(self.minimum_salary, "minimum_salary")
-        self.enter_text_element(self.maximum_salary, "maximum_salary")
-        self.select_dropdown_element(self.salary_type, "salary_type")
-        self.select_dropdown_element(self.salary_currency, "salary_currency")
-        self.select_dropdown_element(self.level_of_education, "level_of_education")
-        self.select_dropdown_element(self.years_of_experience, "years_of_experience")
+        self.select_from_dropdown(self.travel, JobData.job_data.get("travel"))
+        self.click_radio_yes_no(self.per_diem_included, JobData.job_data.get("per_diem_included"))
+        self.enter_text(self.minimum_salary, JobData.job_data.get("minimum_salary"))
+        self.enter_text(self.maximum_salary, JobData.job_data.get("maximum_salary"))
+        self.select_from_dropdown(self.salary_type, JobData.job_data.get("salary_type"))
+        self.select_from_dropdown(self.salary_currency, JobData.job_data.get("salary_currency"))
+        self.select_from_dropdown(self.level_of_education, JobData.job_data.get("level_of_education"))
+        self.select_from_dropdown(self.years_of_experience, JobData.job_data.get("years_of_experience"))
 
         # EmployeeReferrals.com
-        self.click_radio_yes_no_element(self.list_on_employeeReferralscom, "list_on_employeeReferralscom")
-        self.enter_richtext_integer_element(self.referral_bonus, "referral_bonus")
-        self.enter_richtext_integer_element(self.referral_points, "referral_points")
-        self.enter_text_element(self.keywords, "keywords")
-        self.enter_text_element(self.negative_keywords, "negative_keywords")
-        self.click_radio_yes_no_element(self.hot_job, "hot_job")
+        self.click_radio_yes_no(self.list_on_employeeReferralscom, JobData.job_data.get("list_on_employeeReferralscom"))
+        self.enter_richtext_integer(self.referral_bonus, JobData.job_data.get("referral_bonus"))
+        self.enter_richtext_integer(self.referral_points, JobData.job_data.get("referral_points"))
+        self.enter_text(self.keywords, JobData.job_data.get("keywords"))
+        self.enter_text(self.negative_keywords, JobData.job_data.get("negative_keywords"))
+        self.click_radio_yes_no(self.hot_job, JobData.job_data.get("hot_job"))
 
         # Description/Skills
-        self.enter_richtext_element(self.job_description, "job_description")
-        self.enter_richtext_element(self.required_skills, "required_skills")
-        self.enter_richtext_element(self.required_experience, "required_experience")
-        self.enter_richtext_element(self.skills_candidate_should_possess, "skills_candidate_should_possess")
-        self.enter_richtext_element(self.notes_on_position, "notes_on_position")
+        self.enter_richtext(self.job_description, JobData.job_data.get("job_description"))
+        self.enter_richtext(self.required_skills, JobData.job_data.get("required_skills"))
+        self.enter_richtext(self.required_experience, JobData.job_data.get("required_experience"))
+        self.enter_richtext(self.skills_candidate_should_possess, JobData.job_data.get("skills_candidate_should_possess"))
+        self.enter_richtext(self.notes_on_position, JobData.job_data.get("notes_on_position"))
 
         # Custom Fields
-        self.enter_text_element(self.job_grade, "job_grade")
-        self.select_dropdown_element(self.exemption_status, "exemption_status")
-        self.pck_datepicker_element(self.newdate, "newdate")
-        self.select_dropdown_element(self.collect_eeo_for_this_job, "collect_eeo_for_this_job")
+        self.enter_text(self.job_grade, JobData.job_data.get("job_grade"))
+        self.select_from_dropdown(self.exemption_status, JobData.job_data.get("exemption_status"))
+        self.pick_datepicker(self.newdate, JobData.job_data.get("newdate"))
+        self.select_from_dropdown(self.collect_eeo_for_this_job, JobData.job_data.get("collect_eeo_for_this_job"))
 
         # Buttons
         self.go_click(self.continue_btn)

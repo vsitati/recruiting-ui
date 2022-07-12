@@ -1,5 +1,6 @@
 from ats_pages.base import BasePage
 from selenium.webdriver.common.by import By
+from test_data.test_data_details import JobData
 
 
 class Elements:
@@ -31,21 +32,21 @@ class JobDepartmentBudget(BasePage, Elements):
 
     def fill_out_all(self):
         # Department Information
-        self.select_dropdown_element(self.business_unit, "business_unit")
-        self.select_auto_complete_element(self.department, "department")
-        self.select_auto_complete_element(self.hiring_manager, "hiring_manager")
-        self.select_auto_complete_element(self.recruiting_team, "recruiting_team")
-        self.select_dropdown_element(self.industry, "industry")
-        self.select_dropdown_element(self.business_function, "business_function")
-        self.enter_richtext_integer_element(self.budgeted_salary, "budgeted_salary")
-        self.select_dropdown_element(self.budgeted_currency, "budgeted_currency")
-        self.select_dropdown_element(self.budgeted_quarter, "budgeted_quarter")
-        self.select_dropdown_element(self.budgeted_year, "budgeted_year")
+        self.select_from_dropdown(self.business_unit, JobData.job_data.get("business_unit"))
+        self.select_auto_complete(self.department, JobData.job_data.get("department"))
+        self.select_auto_complete(self.hiring_manager, JobData.job_data.get("hiring_manager"))
+        self.select_auto_complete(self.recruiting_team, JobData.job_data.get("recruiting_team"))
+        self.select_from_dropdown(self.industry, JobData.job_data.get("industry"))
+        self.select_from_dropdown(self.business_function, JobData.job_data.get("business_function"))
+        self.enter_richtext_integer(self.budgeted_salary, JobData.job_data.get("budgeted_salary"))
+        self.select_from_dropdown(self.budgeted_currency, JobData.job_data.get("budgeted_currency"))
+        self.select_from_dropdown(self.budgeted_quarter, JobData.job_data.get("budgeted_quarter"))
+        self.select_from_dropdown(self.budgeted_year, JobData.job_data.get("budgeted_year"))
 
         # Fee Agency
         self.go_click(self.select_all)
         self.go_click(self.deselect_all)
-        self.select_multiselect_list_element(self.select_fee_agency, "select_fee_agency")
+        self.select_multiselect_list(self.select_fee_agency, JobData.job_data.get("select_fee_agency"))
 
         # Buttons
         self.go_click(self.reset_btn)

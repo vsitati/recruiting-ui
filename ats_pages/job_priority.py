@@ -1,5 +1,6 @@
 from ats_pages.base import BasePage
 from selenium.webdriver.common.by import By
+from test_data.test_data_details import JobData
 
 
 class Elements:
@@ -19,9 +20,9 @@ class JobPriority(BasePage, Elements):
 
     def fill_out(self):
         # Priority
-        self.select_dropdown_element(self.time_measurement, "time_measurement")
-        self.enter_text_element(self.no_more_than, "no_more_than")
-        self.enter_text_element(self.no_less_than, "no_less_than")
+        self.select_from_dropdown(self.time_measurement, JobData.job_data.get("time_measurement"))
+        self.enter_text(self.no_more_than, JobData.job_data.get("no_more_than"))
+        self.enter_text(self.no_less_than, JobData.job_data.get("no_less_than"))
 
         # Buttons
         self.go_click(self.save_btn)

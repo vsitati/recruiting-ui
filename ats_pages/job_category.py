@@ -1,5 +1,6 @@
 from ats_pages.base import BasePage
 from selenium.webdriver.common.by import By
+from test_data.test_data_details import JobData
 
 
 class Elements:
@@ -17,7 +18,7 @@ class JobCategory(BasePage, Elements):
 
     def select_one(self):
         # Category
-        self.click_radio_list_element(self.radio_list, "radio_list")
+        self.click_radio_list(self.radio_list, JobData.job_data.get("radio_list"))
 
         # Button
         self.go_click(self.save_btn)

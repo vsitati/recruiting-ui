@@ -6,6 +6,7 @@ from ats_pages.job_position_details import JobPositionDetails
 from ats_pages.job_department_budget import JobDepartmentBudget
 from ats_pages.job_priority import JobPriority
 from ats_pages.job_category import JobCategory
+from ats_pages.job_attachments import JobAttachments
 
 
 @pytest.mark.usefixtures("setup")
@@ -32,6 +33,9 @@ class TestATSCreateJob:
 
         job_category = JobCategory(self.driver)
         job_category.select_one()
+
+        job_attachments = JobAttachments(self.driver)
+        job_attachments.upload_a_file()
 
         pass
 
