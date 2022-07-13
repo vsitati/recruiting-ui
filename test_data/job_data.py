@@ -67,6 +67,26 @@ class JobData:
         "newdate": "7/12/2022",
         "collect_eeo_for_this_job": "Yes",
 
-        # Department & Budget Details
-        "business_unit": ""
+        # Department Information
+        "business_unit": "Lucee QA 01",
+        "department": "Department001",
+        "hiring_manager": "Lucee HiringManager",
+        "recruiting_team": "Jason Recruiting Team",
+        "industry": "Agriculture",
+        "business_function": "Legal",
+        "budgeted_salary": 99999,
+        "budgeted_currency": "USD (US Dollar)",
+        "budgeted_quarter": "2nd Quarter",
+        "budgeted_year": "2022",
+
+        # Fee Agency
+        "select_fee_agency": ["Apple One", "Ashto L", "QA Fee Agency"],
+
+        # Priority
+        "time_measurement": "Month(s)",
+        "no_more_than": "100",
+        "no_less_than": "10",
+
+        # Category
+        "radio_list": "Call Center Representative"
     }
