@@ -36,7 +36,7 @@ _Activate_ the python virtual environment the run,
 
     python -m pip install --upgrade pip
     
-## Download drivers:
+## Driver management:
 The drivers are all manage by the framework.
     
 ## Install Required Python Packages:
@@ -45,16 +45,16 @@ From the root of the repository run:
     pip install -r requirements.txt
     
 ## Executing Tests:
-From the root of the repository, run for all tests:
+From the root of the repository, to run all tests:
 
- The following arguments is now available:
+ The following arguments are now available:
 
-    --company(default value: qaautomationonly)   - Set the company where you want the tests to run on
-    --user_role(default value: rm)               - Set the user role you want to execute the tests with
-    --ats(default value: ats_login)              - Set the endpoint to "/" by using the tag "ats_login" or "openadmin"
-    --cx(default value: admin)                   - Set the endpoint to "/admin" by using the tag "admin"
+    --company(default value: qaautomationonly)   - Set the company to run tests against
+    --user_role(default value: rm)               - Set the user role to execute the tests with
+    --ats(default value: ats_login)              - Set the endpoint path to "/" by using the tag "ats_login" or "openadmin"
+    --cx(default value: admin)                   - Set the endpoint path to "/admin" by using the tag "admin"
  
- _**NB:** All tests will run with the default values as seen above_
+ _**NB:** All tests will run with the above default values_
 
     pytest
 
@@ -63,7 +63,7 @@ To specify a test, run:
     pytest -k <matching test name>
     
 
-As an example: executing all CX test, run:
+As an example: to executing all CX test, run:
 
 _**NB:** The specified tests will run with the default values as seen above_
 
