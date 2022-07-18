@@ -86,8 +86,7 @@ class Common(Elements):
             return ""
 
     @allure.step("Opening main page")
-    def open(self, url):
-        # TODO: change it to open_url, and relevants
+    def open_url(self, url):
         """
         Opens any valid URL
         :param url: The url you navigating too

@@ -1,6 +1,6 @@
 import pytest
 import allure
-from ats_pages.jobs_advanced_search import JobAdvancedSearch
+from ats_pages.job_advanced_search import JobAdvancedSearch
 from ats_pages.login import Login
 from ats_pages.left_menus import LeftMenus
 
@@ -16,7 +16,6 @@ class TestRecruitingAts:
         left_menu = LeftMenus(self.driver)
         left_menu.click_left_nav(left_menu.candidates)
         left_menu.click_left_nav_sub(left_menu.upload)
-        # left_menu.click_jobs_advanced_search()
 
-        # jobs_advanced_search = JobAdvancedSearch(self.driver)
-        # jobs_advanced_search.filter_by_status("Open")
+        job_advanced_search = JobAdvancedSearch(self.driver)
+        job_advanced_search.filter_by_status("Open")

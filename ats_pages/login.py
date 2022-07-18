@@ -25,7 +25,7 @@ class Login(BasePage, Elements):
             if cred.get("password", ""):
                 password = cred.get("password", "")
 
-        self.open(self.get_env_url(info=env_info, app="ats"))
+        self.open_url(self.get_env_url(info=env_info, app="ats"))
         self.driver.find_element_by_locator(self.username_id).send_keys(username)
         self.driver.find_element_by_locator(self.password_id).send_keys(password)
         return self.do_click(self.driver.find_element_by_locator(self.login_btn))
