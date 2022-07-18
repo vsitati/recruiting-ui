@@ -10,6 +10,7 @@ class Elements:
     no_less_than = (By.ID, "lessday")
 
     # Buttons
+    continue_btn = (By.CSS_SELECTOR, "[type='submit']")
     save_btn = (By.ID, "submitModalPriority")
     close_btn = (By.ID, "priorityDialogModalClose")
 
@@ -18,11 +19,11 @@ class JobPriority(BasePage, Elements):
     def __init__(self, driver):
         super().__init__(driver)
 
-    def fill_out(self):
+    def setup_priority(self):
         # Priority
         self.select_from_dropdown(self.time_measurement, JobData.job_data.get("time_measurement"))
         self.enter_text(self.no_more_than, JobData.job_data.get("no_more_than"))
         self.enter_text(self.no_less_than, JobData.job_data.get("no_less_than"))
 
         # Buttons
-        self.go_click(self.save_btn)
+        self.go_click(self.continue_btn)

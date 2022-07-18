@@ -88,5 +88,11 @@ class JobData:
         "no_less_than": "10",
 
         # Category
-        "radio_list": "Call Center Representative"
-    }
+        "radio_list": "Call Center Representative",
+
+        # Attachments
+        "upload_file": "C:\\Work\\Recruiting\\Sample Files\\Resume_001.docx",
+
+        # Evaluation Questions
+        "cqe": "CQE - Jason Test"
+}

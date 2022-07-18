@@ -14,6 +14,8 @@ class CompanyData:
         }
     }
 
+    sleep_time = 1
+
     login_validation = {
         "credentials_error": "You have used an incorrect Username and or Password. Please review this information and try again. Or, contact your system administrator.",
         "inactive_login_error": "Your user account has been deactivated. Please contact your SilkRoad Recruiting administrator."

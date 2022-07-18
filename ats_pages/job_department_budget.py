@@ -1,6 +1,8 @@
 from ats_pages.base import BasePage
 from selenium.webdriver.common.by import By
 from test_data.test_data_details import JobData
+from test_data.test_data_details import CompanyData
+from time import sleep
 
 
 class Elements:
@@ -49,4 +51,5 @@ class JobDepartmentBudget(BasePage, Elements):
         self.select_multiselect_list(self.select_fee_agency, JobData.job_data.get("select_fee_agency"))
 
         # Buttons
-        self.go_click(self.reset_btn)
+        sleep(CompanyData.sleep_time)
+        self.go_click(self.continue_btn)

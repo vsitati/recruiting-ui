@@ -1,6 +1,8 @@
 from ats_pages.base import BasePage
 from selenium.webdriver.common.by import By
 from test_data.test_data_details import JobData
+from test_data.test_data_details import CompanyData
+from time import sleep
 
 
 class Elements:
@@ -183,4 +185,5 @@ class JobPositionDetails(BasePage, Elements):
         self.select_from_dropdown(self.collect_eeo_for_this_job, JobData.job_data.get("collect_eeo_for_this_job"))
 
         # Buttons
+        sleep(CompanyData.sleep_time)
         self.go_click(self.continue_btn)
