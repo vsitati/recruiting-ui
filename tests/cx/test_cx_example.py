@@ -26,7 +26,7 @@ class TestCandidateExperience:
         data = cs.get_career_sites(site_section="external")
         result = cs.filter_career_site(data=data, site_name="Corporate Career Portal - Indeed Apply")
         name, portal, settings = result
-        cs.open(portal)
+        cs.open_url(portal)
         assert cs.get_title() == "IzWNco KGme SXqHaSGYF XxUZVhtg ISnQN - zrKhMUy VfaqafzMu HJDjVKrGF gy CLn ce PkyxIlRrp zs"
 
         js = JobSearch(driver=self.driver)

@@ -48,7 +48,7 @@ class TestRecruitingAts:
     def test_can_open_forget_password_link(self, get_test_info):
         login = Login(driver=self.driver)
         ats_url = login.get_env_url(info=get_test_info, app="ats")
-        login.open(url=ats_url)
+        login.open_url(url=ats_url)
         login.click_forget_password()
         fp = ForgetPassword(driver=self.driver)
         assert fp.forget_password_heading() == "Forgot your password?"
@@ -58,7 +58,7 @@ class TestRecruitingAts:
     def test_cannot_submit_with_empty_username_on_forget_password(self, get_test_info):
         login = Login(driver=self.driver)
         ats_url = login.get_env_url(info=get_test_info, app="ats")
-        login.open(url=ats_url)
+        login.open_url(url=ats_url)
         login.click_forget_password()
         fp = ForgetPassword(driver=self.driver)
         fp.click_submit_btn()
@@ -69,7 +69,7 @@ class TestRecruitingAts:
         user, *_ = TestData.data[get_test_info.get("company")]["users"]["for_password_change"]
         login = Login(driver=self.driver)
         ats_url = login.get_env_url(info=get_test_info, app="ats")
-        login.open(url=ats_url)
+        login.open_url(url=ats_url)
         login.click_forget_password()
         fp = ForgetPassword(driver=self.driver)
         fp.enter_text(locator=fp.username, text=user)
@@ -87,7 +87,7 @@ class TestRecruitingAts:
         body = cp.read_mailbox(subject_search_text="Reset Your Password")
         assert body != ''
         reset_password_url = cp.extract_url(body_content=body)
-        cp.open(url=reset_password_url)
+        cp.open_url(url=reset_password_url)
         cp.click_submit_btn()
         assert cp.verify_empty_field_error_msg() == "This field is required."
 
@@ -97,7 +97,7 @@ class TestRecruitingAts:
         body = cp.read_mailbox(subject_search_text="Reset Your Password")
         assert body != ''
         reset_password_url = cp.extract_url(body_content=body)
-        cp.open(url=reset_password_url)
+        cp.open_url(url=reset_password_url)
         cp.do_change_password(new_password="silkroad2022", confirm_password="silkroad2")
         assert cp.get_mismatched_text() == "Your passwords do not match."
 
@@ -107,7 +107,7 @@ class TestRecruitingAts:
         body = cp.read_mailbox(subject_search_text="Reset Your Password")
         assert body != ''
         reset_password_url = cp.extract_url(body_content=body)
-        cp.open(url=reset_password_url)
+        cp.open_url(url=reset_password_url)
         cp.do_change_password(new_password="silk", confirm_password="sil")
         assert cp.verify_empty_field_error_msg() == "Please enter at least 8 characters."
 
@@ -117,7 +117,7 @@ class TestRecruitingAts:
         body = cp.read_mailbox(subject_search_text="Reset Your Password")
         assert body != ''
         reset_password_url = cp.extract_url(body_content=body)
-        cp.open(url=reset_password_url)
+        cp.open_url(url=reset_password_url)
         # TODO Must add a random name generator
         cp.do_change_password(new_password="Silkroad2022", confirm_password="silkroad2022")
         assert cp.get_password_change_success_msg() == TestData.change_password_success_msg

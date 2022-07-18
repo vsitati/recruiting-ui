@@ -19,7 +19,7 @@ class Login(BasePage, Elements):
         user_role = env_info.get("user_role")
         company = env_info.get("company")
         username, password = TestData.data[company]["users"][user_role]
-        self.open(self.get_env_url(info=env_info, app="cx"))
+        self.open_url(self.get_env_url(info=env_info, app="cx"))
 
         self.driver.find_element_by_locator(self.username_id).send_keys(username)
         self.driver.find_element_by_locator(self.password_id).send_keys(password)
