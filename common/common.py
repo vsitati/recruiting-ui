@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 import re
 from time import sleep
 from selenium.webdriver import Keys
+from test_data.test_data_details import CompanyData
 
 
 class Elements:
@@ -86,6 +87,7 @@ class Common(Elements):
 
     @allure.step("Opening main page")
     def open(self, url):
+        # TODO: change it to open_url, and relevants
         """
         Opens any valid URL
         :param url: The url you navigating too
@@ -154,6 +156,7 @@ class Common(Elements):
     def verify_empty_field_error_msg(self):
         return self.driver.find_element_by_locator(self.empty_field_validation_msg).text
 
+    # TODO: could just use do_click
     def click_submit_btn(self):
         self.do_click(self.driver.find_element_by_locator(self.submit_btn))
 
@@ -180,7 +183,8 @@ class Common(Elements):
     def check_checkbox(self, locator, isCheck):
         elm = self.driver.find_element_by_locator(locator)
         if elm.is_selected() != isCheck:
-            self.do_click(elm)
+            return self.do_click(elm)
+        return
 
     # isYes: True: Yes; False: No
     def click_radio_yes_no(self, locator, isYes):
@@ -194,21 +198,21 @@ class Common(Elements):
         elms = self.driver.find_elements_by_locator(locator)
         for elm in elms:
             if text in elm.accessible_name:
-                self.do_click(elm)
-                break
+                return self.do_click(elm)
+        return
 
     def select_auto_complete(self, locator, text):
         elm = self.driver.find_element_by_locator(locator)
         elm.clear()
         elm.send_keys(text)
-        sleep(1)
+        sleep(CompanyData.sleep_time)   # TODO: find a better way to wait
         elms = self.driver.find_elements_by_locator(self.auto_complete)
         for elm in elms:
             if text in elm.text:
-                self.do_click(elm)
-                break
+                return self.do_click(elm)
+        return
 
     def pick_datepicker(self, locator, text):
         self.enter_text(locator, text)
-        sleep(0.5)
+        sleep(CompanyData.sleep_time)
         return self.go_click(self.datepicker)
