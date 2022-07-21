@@ -48,7 +48,7 @@ class JobData:
 
         # EmployeeReferrals.com
         "list_on_employeeReferralscom": True,
-        "referral_bonus": 7777,
+        "referral_bonus": "7,777",
         "referral_points": 66,
         "keywords": "my keywords",
         "negative_keywords": "my negative keywords",
@@ -74,7 +74,7 @@ class JobData:
         "recruiting_team": "Jason Recruiting Team",
         "industry": "Agriculture",
         "business_function": "Legal",
-        "budgeted_salary": 99999,
+        "budgeted_salary": "99,999",
         "budgeted_currency": "USD (US Dollar)",
         "budgeted_quarter": "2nd Quarter",
         "budgeted_year": "2022",
@@ -94,5 +94,12 @@ class JobData:
         "upload_file": "C:\\Work\\Recruiting\\Sample Files\\Resume_001.docx",
 
         # Evaluation Questions
-        "cqe": "CQE - Jason Test"
+        "cqe": "CQE - Jason Test",
+
+        # Add Internal Notes
+        "add_note": "This is a test internal note.",
+    
+        # Job Search Result page
+        "saved_job_search_name": "Jason Jobs",
+        "filter_label": "Applied Filters Summary"
     }

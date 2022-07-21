@@ -8,7 +8,7 @@ class Elements:
     search_text = (By.ID, 'quick_search_input')
 
 
-class Header(BasePage, Elements):
+class PageHeader(BasePage, Elements):
     def __init__(self, driver):
         super().__init__(driver)
 
