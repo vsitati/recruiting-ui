@@ -20,7 +20,7 @@ class JobCategory(BasePage, Elements):
 
     def select_a_category(self):
         # Category
-        self.click_radio_list(self.radio_list_create, JobData.job_data.get("radio_list"))
+        self.click_radio_list(self.radio_list_create, JobData.job_data.get("category_radio_list"))
 
         # Button
         self.go_click(self.continue_btn)
