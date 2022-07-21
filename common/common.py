@@ -9,6 +9,7 @@ import re
 from time import sleep
 from selenium.webdriver import Keys
 from test_data.test_data_details import CompanyData
+from helpers.webdriver_listener import WebDriverListener
 
 
 class Elements:
@@ -26,6 +27,8 @@ class Common(Elements):
         self.driver = driver
         self.headers = {"Content-Type": "application/json"}
         self.regex = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
+
+    sr_logger = WebDriverListener()
 
     @staticmethod
     def parse_email_body(inbox):
