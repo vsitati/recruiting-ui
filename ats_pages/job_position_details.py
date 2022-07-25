@@ -151,7 +151,8 @@ class JobPositionDetails(BasePage, Elements):
         self.select_from_dropdown(self.eeo1_job_category, JobData.job_data.get("eeo1_job_category"))
         self.select_from_dropdown(self.aap_job_group, JobData.job_data.get("aap_job_group"))
         self.select_from_dropdown(self.talent_assessment, JobData.job_data.get("talent_assessment"))
-        self.check_checkbox(self.do_not_display_assessment_on_job_portal, JobData.job_data.get("do_not_display_assessment_on_job_portal"))
+        self.check_checkbox(self.do_not_display_assessment_on_job_portal,
+                            JobData.job_data.get("do_not_display_assessment_on_job_portal"))
 
         # Position Requirements
         self.select_from_dropdown(self.travel, JobData.job_data.get("travel"))
@@ -175,7 +176,8 @@ class JobPositionDetails(BasePage, Elements):
         self.enter_richtext(self.job_description, JobData.job_data.get("job_description"))
         self.enter_richtext(self.required_skills, JobData.job_data.get("required_skills"))
         self.enter_richtext(self.required_experience, JobData.job_data.get("required_experience"))
-        self.enter_richtext(self.skills_candidate_should_possess, JobData.job_data.get("skills_candidate_should_possess"))
+        self.enter_richtext(self.skills_candidate_should_possess,
+                            JobData.job_data.get("skills_candidate_should_possess"))
         self.enter_richtext(self.notes_on_position, JobData.job_data.get("notes_on_position"))
 
         # Custom Fields

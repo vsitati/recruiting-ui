@@ -32,6 +32,6 @@ class JobSearchResult(BasePage, Elements):
 
     def __comparing(self, source, target):
         if source == target:
-            self.sr_logger.logger.info(f"-- {source} is correct --")
+            self.sr_logger.logger.info(f"-- {source} is correct")
         else:
-            self.sr_logger.logger.error(f"@@ {source} is NOT correct @@")
+            self.sr_logger.logger.error(f"@@ {source} is NOT correct")
