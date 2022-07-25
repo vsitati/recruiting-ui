@@ -10,7 +10,7 @@ class Elements:
 
 class JobAdvancedSearch(BasePage, Elements):
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
 
     def click_edit_search(self):
         return self.do_click(self.driver.find_element_by_locator(self.edit_search))

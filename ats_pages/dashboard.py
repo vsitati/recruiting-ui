@@ -9,7 +9,7 @@ class Elements:
 
 class Dashboard(BasePage, Elements):
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
 
     def is_hiring_chart_visible(self):
         return self.driver.find_element_by_locator(self.hiring_stages_chart)
