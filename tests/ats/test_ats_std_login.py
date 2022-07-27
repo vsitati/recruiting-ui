@@ -114,7 +114,7 @@ class TestRecruitingAts:
 
     @allure.description("Can submit new password")
     @pytest.mark.dependency(depends=["TestRecruitingAts::test_can_submit_a_valid_username"])
-    def test_can_submit_new_passwords(self, get_test_info):
+    def test_can_submit_new_passwords(self):
         cp = ChangePassword(driver=self.driver)
         body = cp.read_mailbox(subject_search_text="Reset Your Password")
         assert body != ''
