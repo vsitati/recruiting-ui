@@ -8,8 +8,16 @@ class CompanyData:
                 "exec": ["UFT_EX_01", "Gators2012"],
                 "hm": ["UFT_HM_01", "Gators2012"],
                 "employee": ["UFT_EM_01", "Gators2012"],
-                "inactive": ["inactive", "Gators2012"],
-                "for_password_change": ["change_me", "Gators2012"]
+                "inactive": ["inactive", "Silkroad@2022"],
+                "for_password_change": ["change_me", "Silkroad@2022"]
+            }
+        },
+
+        "luceeqa02": {
+            "users": {
+                "rm": ["auto_rm_01", "Silkroad@1"],
+                "inactive": ["inactive", "Silkroad@2022"],
+                "for_password_change": ["change_me", "Silkroad@2022"]
             }
         }
     }
@@ -30,3 +38,6 @@ class CompanyData:
 
     change_password_success_msg = "Your password has been changed. A confirmation of this update has been emailed to you." \
                                   "\nPlease remember to use your new password the next time you login."
+
+    changed_password_success_email_body_text = "Hello {user} test, Your password has been changed in SilkRoad Recruiting using the \"Forgot Your Password\" feature." \
+                                               " Thank you."
