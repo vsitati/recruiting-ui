@@ -1,7 +1,6 @@
 import allure
 import pytest
 from allure_commons.types import AttachmentType
-from helpers.utils import get_config
 from utils.drivers import Drivers
 from config import Config
 
