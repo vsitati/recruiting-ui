@@ -2,7 +2,7 @@ class CompanyData:
     data = {
         "qaautomationonly": {
             "users": {
-                "rm": ["UFT_RM_01", "Gators2012"],
+                "rm": ["auto_rm_01", "Silkroad@1"],
                 "rec": ["UFT_REC_01", "Gators2012"],
                 "admin": ["UFT_AD_01", "Gators2012"],
                 "exec": ["UFT_EX_01", "Gators2012"],
