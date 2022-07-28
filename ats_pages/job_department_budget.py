@@ -1,7 +1,6 @@
 from ats_pages.base import BasePage
 from selenium.webdriver.common.by import By
 from test_data.test_data_details import JobData
-from test_data.test_data_details import CompanyData
 from time import sleep
 
 
@@ -32,9 +31,9 @@ class JobDepartmentBudget(BasePage, Elements):
     def __init__(self, driver):
         super().__init__(driver)
 
-    def fill_out_all(self):
+    def fill_out_all_job_departments_fields(self):
         # Department Information
-        self.select_from_dropdown(self.business_unit, JobData.job_data.get("business_unit"))
+        # self.select_from_dropdown(self.business_unit, JobData.job_data.get("business_unit"))
         self.select_auto_complete(self.department, JobData.job_data.get("department"))
         self.select_auto_complete(self.hiring_manager, JobData.job_data.get("hiring_manager"))
         self.select_auto_complete(self.recruiting_team, JobData.job_data.get("recruiting_team"))
@@ -51,5 +50,5 @@ class JobDepartmentBudget(BasePage, Elements):
         self.select_multiselect_list(self.select_fee_agency, JobData.job_data.get("select_fee_agency"))
 
         # Buttons
-        sleep(CompanyData.sleep_time)
+        sleep(self.sleep_time)
         self.go_click(self.continue_btn)

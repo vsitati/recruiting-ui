@@ -1,7 +1,6 @@
 from ats_pages.base import BasePage
 from selenium.webdriver.common.by import By
 import time
-from test_data.test_data_details import CompanyData
 
 
 class Elements:
@@ -66,7 +65,7 @@ class LeftMenus(BasePage, Elements):
 
     def click_left_nav(self, element):
         self.open_menu()
-        time.sleep(CompanyData.sleep_time)   # TODO: find a better way to wait
+        time.sleep(self.sleep_time)   # TODO: find a better way to wait
         elm = self.driver.find_element_by_locator(element)
         if elm.get_attribute(self.left_nav_attr) == "false":
             return self.do_click(self.driver.find_element_by_locator(element))

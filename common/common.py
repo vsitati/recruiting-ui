@@ -8,7 +8,6 @@ from bs4 import BeautifulSoup
 import re
 from time import sleep
 from selenium.webdriver import Keys
-from test_data.test_data_details import CompanyData
 from helpers.webdriver_listener import WebDriverListener
 
 
@@ -183,15 +182,15 @@ class Common(Elements):
         return elm.send_keys(text)
 
     # isCheck: True: Check; False: UnCheck
-    def check_checkbox(self, locator, isCheck):
+    def check_checkbox(self, locator, is_check):
         elm = self.driver.find_element_by_locator(locator)
-        if elm.is_selected() != isCheck:
+        if elm.is_selected() != is_check:
             return self.do_click(elm)
         return
 
     # isYes: True: Yes; False: No
-    def click_radio_yes_no(self, locator, isYes):
-        if isYes:
+    def click_radio_yes_no(self, locator, is_yes):
+        if is_yes:
             locator[1] = locator[1] + "1"
         else:
             locator[1] = locator[1] + "0"
@@ -208,7 +207,7 @@ class Common(Elements):
         elm = self.driver.find_element_by_locator(locator)
         elm.clear()
         elm.send_keys(text)
-        sleep(CompanyData.sleep_time)   # TODO: find a better way to wait
+        sleep(self.sleep_time)   # TODO: find a better way to wait
         elms = self.driver.find_elements_by_locator(self.auto_complete)
         for elm in elms:
             if text in elm.text:
@@ -217,5 +216,5 @@ class Common(Elements):
 
     def pick_datepicker(self, locator, text):
         self.enter_text(locator, text)
-        sleep(CompanyData.sleep_time)
+        sleep(self.sleep_time)
         return self.go_click(self.datepicker)

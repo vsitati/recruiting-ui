@@ -14,7 +14,7 @@ class Elements:
     job_category = (By.ID, "jobCategoryColonLabelValue")
     job_template = (By.ID, "")
     eeoc_job_category = (By.ID, "eEOCJobCategoryColonLabelValue")
-    status = (By.ID, 'statusColonLabelValue')
+    status = (By.ID, 'jobStatusColonLabelValue')
     number_of_positions = (By.ID, "numberofPositionsColonLabelValue")
     number_of_positions_filled = (By.ID, "numberofPositionsFilledColonLabelValue")
     job_id = (By.ID, "jobIdColonLabelValue")
@@ -167,15 +167,15 @@ class JobPositionDetailsView(BasePage, Elements):
                          JobData.job_data.get("budgeted_salary"))
         self.__comparing(self.driver.find_element_by_locator(self.budgeted_quarter).text,
                          JobData.job_data.get("budgeted_quarter"))
-        self.__comparing(self.driver.find_element_by_locator(self.talent_assessment).text,
-                         JobData.job_data.get("talent_assessment"))
-        self.__comparing(self.driver.find_element_by_locator(self.do_not_display_assessment_on_job_portal).text,
-                         JobData.job_data.get("do_not_display_assessment_on_job_portal"))
+        # self.__comparing(self.driver.find_element_by_locator(self.talent_assessment).text,
+        #                  JobData.job_data.get("talent_assessment"))
+        # self.__comparing(self.driver.find_element_by_locator(self.do_not_display_assessment_on_job_portal).text,
+        #                  JobData.job_data.get("do_not_display_assessment_on_job_portal"))
 
         self.enter_text(self.add_note, JobData.job_data.get("add_note"))
         # self.go_click(self.add_note_btn)    # TODO: not correct
 
-        self.driver.find_element_by_locator((By.LINK_TEXT, "CX Redirect Testing")).click()
+        # self.driver.find_element_by_locator((By.LINK_TEXT, "CX Link")).click()
 
         self.go_click(self.cancel_btn)
 
