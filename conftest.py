@@ -9,7 +9,7 @@ def pytest_addoption(parser):
     parser.addoption("--company", action="store", default="qaautomationonly", help="Company name")
     parser.addoption("--user_role", action="store", default="rm", help="User Role")
     parser.addoption("--ats", action="store", default="ats_login", help="Choices for ATS: ['ats.ats_login', "
-                                                                             "'ats.admin'(openadmin)]")
+                                                                        "'ats.admin'(openadmin)]")
     parser.addoption("--cx", action="store", default="admin", help="cx.admin(admin page)")
 
 
