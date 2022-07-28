@@ -1,24 +1,33 @@
 class JobData:
     job_data = {
         # Job Administration
-        "recruiting_manager": "Jason Zhuang",
-        "assigned_recruiter": "Jason Recruiter",
-        "replies_emailed_to": "jason.zhuang@silkroad.com",
+        "recruiting_manager": "auto_rm_01 Silkroad",
+        "assigned_recruiter": "Susan Harris",
+        "replies_emailed_to": "auto_rm_01@silkroad.com",
+        "replies_emailed_to_edit": "susan@worldco.com",
 
         # Job Information
-        "job_template": "Lucee Test",
+        "job_template": "Software Engineer",
+        "closed_date": "6/6/2030",
         "hiring_workflow": "Full-Time Workflow",    # "Part-Time / Hourly Workflow",
         "evergreen_job": True,
+        "evergreen_job_edit": False,
         "internal_job_title": "Auto_Internal_Job",
+        "internal_job_title_edit": "Auto_Internal_Job_Edit",
         "posted_job_title": "Auto_Posted_Job",
+        "posted_job_title_edit": "Auto_Posted_Job_Edit",
         "tracking_code": "AutoTrackingCode",
         "number_of_positions": 3,
-        "require_eForm_submission": True,
+        # "require_eForm_submission": True,
         "status": "Normal - Int./Ext. Applicants",
+        "status_edit": "External",
         "position_type": "Full-Time/Regular",
+        "position_type_edit": "Part-Time",
         "job_level": "Management",
         "job_duration": "Longer than 1 year",
-        "expected_start_date": "7/6/2022",
+        "job_duration_edit": "One Year",
+        "expected_start_date": "11/6/2022",
+        "expected_start_date_edit": "12/6/2022",
 
         # Location Details
         "job_location_code": "Boston",
@@ -32,9 +41,9 @@ class JobData:
 
         # Compliance
         "eeo1_job_category": "Professionals",
-        "aap_job_group": "AAP Group Jason",
-        "talent_assessment": "SHL",
-        "do_not_display_assessment_on_job_portal": True,
+        "aap_job_group": "Professionals",
+        # "talent_assessment": "SHL",
+        # "do_not_display_assessment_on_job_portal": True,
 
         # Position Requirements
         "travel": "Up to 25%",
@@ -64,14 +73,14 @@ class JobData:
         # Custom Fields
         "job_grade": "6",
         "exemption_status": "exempt",
-        "newdate": "7/12/2022",
+        # "newdate": "12/12/2022",
         "collect_eeo_for_this_job": "Yes",
 
         # Department Information
-        "business_unit": "Lucee QA 01",
-        "department": "Department001",
-        "hiring_manager": "Lucee HiringManager",
-        "recruiting_team": "Jason Recruiting Team",
+        # "business_unit": "Lucee QA 01",
+        "department": "Audit",
+        "hiring_manager": "Michael Baxter",
+        "recruiting_team": "Monica Edwards",
         "industry": "Agriculture",
         "business_function": "Legal",
         "budgeted_salary": "99,999",
@@ -80,7 +89,7 @@ class JobData:
         "budgeted_year": "2022",
 
         # Fee Agency
-        "select_fee_agency": ["Apple One", "Ashto L", "QA Fee Agency"],
+        "select_fee_agency": ["Apple One", "Kelly Services", "Staffing Solutions"],
 
         # Priority
         "time_measurement": "Month(s)",
@@ -91,15 +100,15 @@ class JobData:
         "category_radio_list": "Call Center Representative",
 
         # Attachments
-        "upload_file": "C:\\Work\\Recruiting\\Sample Files\\Resume_001.docx",
+        "upload_file": "\\\\srefs01.silkroad-eng.local\\Openhire_QA\\Documents\\Resume-Offer-Samples\\Resume_001.docx",
 
         # Evaluation Questions
-        "cqe": "CQE - Jason Test",
+        "cqe": "Interview - HR",
 
         # Add Internal Notes
         "add_note": "This is a test internal note.",
     
         # Job Search Result page
-        "saved_job_search_name": "Jason Jobs",
+        "saved_job_search_name": "Jobs",
         "filter_label": "Applied Filters Summary"
     }

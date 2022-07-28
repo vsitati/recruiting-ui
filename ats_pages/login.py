@@ -32,4 +32,3 @@ class Login(BasePage, Elements):
 
     def click_forget_password(self):
         return self.do_click(element=self.driver.find_element_by_locator(self.forget_password_link))
-
