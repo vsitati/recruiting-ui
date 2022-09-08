@@ -74,3 +74,7 @@ For a more detailed usage of the _-k_ argument, see _pytest --help_
   To view the report, run:
   
     allure serve reporting
+
+## CI/CD Flowchart:
+
+![CDCD Flowchart](./support/CDCD_Flowchart.png)
