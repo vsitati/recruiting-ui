@@ -76,16 +76,17 @@ class TestRecruitingAts:
         fp.enter_text(locator=fp.username, text=user)
         fp.click_submit_btn()
         assert fp.verify_account_verification_text() is True
-        body = fp.read_mailbox(subject_search_text="Reset Your Password")
+        body, attachments = fp.read_mailbox(subject_search_text="Reset Your Password")
         assert body != ''
         assert "change_me" in body
         assert "Username: change_me" in body
         assert "IP Address" in body
+        assert attachments == []
 
     @allure.description("Cannot submit with an empty new password field")
     def test_cannot_submit_empty_new_password_fields(self):
         cp = ChangePassword(driver=self.driver)
-        body = cp.read_mailbox(subject_search_text="Reset Your Password")
+        body, *_ = cp.read_mailbox(subject_search_text="Reset Your Password")
         assert body != ''
         reset_password_url = cp.extract_url(body_content=body)
         cp.open_url(url=reset_password_url)
@@ -95,7 +96,7 @@ class TestRecruitingAts:
     @allure.description("Cannot submit with mismatched passwords")
     def test_cannot_submit_mismatched_passwords(self):
         cp = ChangePassword(driver=self.driver)
-        body = cp.read_mailbox(subject_search_text="Reset Your Password")
+        body, *_ = cp.read_mailbox(subject_search_text="Reset Your Password")
         assert body != ''
         reset_password_url = cp.extract_url(body_content=body)
         cp.open_url(url=reset_password_url)
@@ -105,7 +106,7 @@ class TestRecruitingAts:
     @allure.description("Cannot submit where the password characters length are less than 8")
     def test_cannot_submit_passwords_with_length_less_than_eight_characters(self):
         cp = ChangePassword(driver=self.driver)
-        body = cp.read_mailbox(subject_search_text="Reset Your Password")
+        body, *_ = cp.read_mailbox(subject_search_text="Reset Your Password")
         assert body != ''
         reset_password_url = cp.extract_url(body_content=body)
         cp.open_url(url=reset_password_url)
@@ -116,14 +117,15 @@ class TestRecruitingAts:
     @pytest.mark.dependency(depends=["TestRecruitingAts::test_can_submit_a_valid_username"])
     def test_can_submit_new_passwords(self):
         cp = ChangePassword(driver=self.driver)
-        body = cp.read_mailbox(subject_search_text="Reset Your Password")
+        body, *_ = cp.read_mailbox(subject_search_text="Reset Your Password")
         assert body != ''
         reset_password_url = cp.extract_url(body_content=body)
         cp.open_url(url=reset_password_url)
         # TODO Must add a random name generator
         cp.do_change_password(new_password="Silkroad2022", confirm_password="silkroad2022")
         assert cp.get_password_change_success_msg() == TestData.change_password_success_msg
-        body = cp.read_mailbox(subject_search_text="SilkRoad Recruiting password changed successfully")
+        body, attachments = cp.read_mailbox(subject_search_text="SilkRoad Recruiting password changed successfully")
         assert body != ''
         assert "change_me" in body
         assert TestData.changed_password_success_email_body_text.format(user="change_me") in body
+        assert attachments == []

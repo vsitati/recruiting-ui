@@ -6,6 +6,8 @@ from selenium.webdriver.common.by import By
 import requests
 from bs4 import BeautifulSoup
 import re
+import os
+import base64
 from time import sleep
 from selenium.webdriver import Keys
 from helpers.webdriver_listener import WebDriverListener
@@ -22,6 +24,7 @@ class Elements:
 
 class Common(Elements):
     """ In the common class we define all common functionality """
+
     def __init__(self, driver):
         self.driver = driver
         self.headers = {"Content-Type": "application/json"}
@@ -31,21 +34,10 @@ class Common(Elements):
     sleep_time = 1
 
     @staticmethod
-    def parse_email_body(inbox):
-        if inbox:
-            first_result, *_ = inbox
-            parsed_result = BeautifulSoup(first_result, "html.parser")
-
-            if parsed_result.find_all('html'):
-                html = parsed_result.find_all('html')
-            else:
-                html = parsed_result.find_all('pre')
-
-            data, *_ = html
-            text = data.get_text()
-            # TODO Need to see if I can improve HTML text output
-            return [x.strip() for x in text.split('\n') if x.strip()]
-        return []  # if no results are found
+    def parse_email_body(body):
+        parsed_result = BeautifulSoup(body, "html.parser")
+        text = parsed_result.get_text()
+        return [x.strip() for x in text.split('\n') if x.strip()]
 
     @staticmethod
     def get_request(url, headers):
@@ -67,19 +59,37 @@ class Common(Elements):
         return f"{protocol}://{env}{domain}/{path}"
 
     @allure.step("Reading Utility Mailbox")
-    def read_mailbox(self, subject_search_text, timeout=2):
+    def read_mailbox(self, subject_search_text, timeout=2, email_index=0):
         increment = 0.5
         total_time = timeout / increment
         for i in range(int(total_time)):
             response = self.get_request(url=self.get_mailbox_url(), headers=self.headers)
 
-            inbox = [x["body"] for x in response if
-                     subject_search_text in x["headers"]["Subject"].strip().replace("\r", "").replace("\n", "")]
-            if inbox:
-                body_content = self.parse_email_body(inbox=inbox)
-                return ' '.join(body_content)
+            emails = [x for x in response if
+                      subject_search_text in x["headers"]["Subject"].strip().replace("\r", "").replace("\n", "")]
+
+            if emails:
+                view_link = emails[email_index].get("viewLink", "")
+                view_link_response = self.get_request(url=view_link, headers=self.headers)
+                email_body = view_link_response.get("body", "")
+                body_content = self.parse_email_body(body=email_body)
+                return ' '.join(body_content), view_link_response.get("attachments", [])
             sleep(increment)
-        return ""
+        return "", []
+
+    @staticmethod
+    def encoding_file(file_name):
+        with open(file_name, 'rb') as binary_file:
+            binary_file_data = binary_file.read()
+            base64_encoded_data = base64.b64encode(binary_file_data)
+            return base64_encoded_data.decode('utf-8')
+
+    def compare_email_attachment(self, attachments, file_name):
+        base_name = os.path.basename(file_name)
+        for attachment in attachments:
+            if base_name == attachment.get("fileName", ""):
+                return attachment.get("content", "") == self.encoding_file(file_name=file_name)
+        return False
 
     def extract_url(self, body_content):
         try:
@@ -207,7 +217,7 @@ class Common(Elements):
         elm = self.driver.find_element_by_locator(locator)
         elm.clear()
         elm.send_keys(text)
-        sleep(self.sleep_time)   # TODO: find a better way to wait
+        sleep(self.sleep_time)  # TODO: find a better way to wait
         elms = self.driver.find_elements_by_locator(self.auto_complete)
         for elm in elms:
             if text in elm.text:
