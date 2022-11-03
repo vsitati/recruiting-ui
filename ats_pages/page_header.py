@@ -1,4 +1,4 @@
-from ats_pages.base import BasePage
+from common.common import Common
 from selenium.webdriver.common.by import By
 from selenium.webdriver import Keys
 
@@ -14,7 +14,7 @@ class Elements:
                                      ">[class='richTextValidatorIgnore']")
 
 
-class PageHeader(BasePage, Elements):
+class PageHeader(Common, Elements):
     def __init__(self, driver):
         super().__init__(driver)
 
