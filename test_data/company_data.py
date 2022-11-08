@@ -9,7 +9,9 @@ class CompanyData:
                 "hm": ["UFT_HM_01", "Gators2012"],
                 "employee": ["UFT_EM_01", "Gators2012"],
                 "inactive": ["inactive", "Silkroad@2022"],
-                "for_password_change": ["change_me", "Silkroad@2022"]
+                "for_password_change": ["change_me", "Silkroad@2022"],
+                "invalid_username": ["invalid_username", "Silkroad@1"],
+                "invalid_password": ["auto_rm_01", "invalid_password"]
             }
         },
 
@@ -17,7 +19,9 @@ class CompanyData:
             "users": {
                 "rm": ["auto_rm_01", "Silkroad@1"],
                 "inactive": ["inactive", "Silkroad@2022"],
-                "for_password_change": ["change_me", "Silkroad@2022"]
+                "for_password_change": ["change_me", "Silkroad@2022"],
+                "invalid_username": ["invalid_username", "Silkroad@1"],
+                "invalid_password": ["auto_rm_01", "invalid_password"]
             }
         }
     }
