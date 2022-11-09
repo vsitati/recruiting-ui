@@ -11,7 +11,8 @@ class CompanyData:
                 "inactive": ["inactive", "Silkroad@2022"],
                 "for_password_change": ["change_me", "Silkroad@2022"],
                 "invalid_username": ["invalid_username", "Silkroad@1"],
-                "invalid_password": ["auto_rm_01", "invalid_password"]
+                "invalid_password": ["auto_rm_01", "invalid_password"],
+                "open_admin": ["ohqaadmin", "xW8hW8rZ"]
             }
         },
 

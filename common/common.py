@@ -20,6 +20,7 @@ class Elements:
     richtext = (By.ID, 'tinymce')
     auto_complete = (By.CSS_SELECTOR, "[role='listbox'] [class='ui-corner-all']")
     datepicker = (By.CSS_SELECTOR, "[id='ui-datepicker-div'] [class^='ui-datepicker-close']")
+    openadmin_banner = (By.CLASS_NAME, 'ui-layout-banner')
 
 
 class Common(Elements):
@@ -231,3 +232,6 @@ class Common(Elements):
         self.enter_text(locator, text)
         sleep(self.sleep_time)
         return self.go_click(self.datepicker)
+
+    def switch_tab(self, locator):
+        self.driver.switch_to.window(self.driver.window_handles[1])
