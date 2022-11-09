@@ -3,7 +3,6 @@ import allure
 from cx_pages.career_sites import CareerSites
 from cx_pages.jobs_search import JobSearch
 from cx_pages.login import Login
-from cx_pages.base import BasePage
 
 
 @pytest.mark.usefixtures("setup")
