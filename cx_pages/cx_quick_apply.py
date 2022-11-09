@@ -14,14 +14,14 @@ class QuickApply(BasePage):
 
     def test_main(self):
         useridentifier = self.find_element(By.CSS_SELECTOR, "#SuperAdmin_AdminLogin_EmailAddress")
-        useridentifier.send_keys("vsitati")
+        useridentifier.send_keys("auto_rm_01")
 
         #  Click 'Password' and input password
         password = self.find_element(By.CSS_SELECTOR, "#SuperAdmin_AdminLogin_Password")
         password.click()
 
         password = self.find_element(By.CSS_SELECTOR, "#SuperAdmin_AdminLogin_Password")
-        password.send_keys("@w3b4dm25N")
+        password.send_keys("@Silkroad@1")
 
         # Click 'SuperAdmin_AdminLogin_SubmitButton'
         superadmin_adminlogin_submitbutton = self.find_element(By.CSS_SELECTOR, "#SuperAdmin_AdminLogin_SubmitButton")
