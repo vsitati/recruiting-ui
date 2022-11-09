@@ -1,12 +1,11 @@
-from cx_pages.base import BasePage
-from selenium.webdriver.common.by import By
+from common.common import Common
 
 
 class Elements:
     pass
 
 
-class CXJobDetails(Elements, BasePage):
+class CXJobDetails(Elements, Common):
     def __init__(self, driver):
         super().__init__(driver)
 

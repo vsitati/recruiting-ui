@@ -1,4 +1,4 @@
-from ats_pages.base import BasePage
+from common.common import Common
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.relative_locator import locate_with
 from test_data.test_data_details import JobData
@@ -11,7 +11,7 @@ class Elements:
     return_to_job_lists_btn = ".lifesuite__button.lifesuite__float-right"
 
 
-class JobEvaluationQuestions(BasePage, Elements):
+class JobEvaluationQuestions(Common, Elements):
     def __init__(self, driver):
         super().__init__(driver)
 

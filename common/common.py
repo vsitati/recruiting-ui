@@ -139,6 +139,9 @@ class Common(Elements):
         except StaleElementReferenceException:
             pass
 
+    def get_title(self):
+        return self.driver.title
+
     @staticmethod
     def get_env_url(info, app):
         endpoint = info.get(app)
