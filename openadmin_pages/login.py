@@ -1,7 +1,6 @@
 from selenium.webdriver.common.by import By
-from openadmin_pages.base import BasePage
 from test_data.test_data_details import TestData
-
+from common.common import Common
 
 class Elements:
     username_id = (By.ID, 'login')
@@ -9,7 +8,7 @@ class Elements:
     login_btn = (By.CLASS_NAME, 'ui-btn')
 
 
-class Login(BasePage, Elements):
+class Login(Common, Elements):
     def __init__(self, driver):
         super().__init__(driver)
 

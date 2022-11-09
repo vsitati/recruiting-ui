@@ -5,7 +5,7 @@ from test_data.test_data_details import TestData
 
 
 @pytest.mark.usefixtures("setup")
-class TestATSStandardLogin:
+class TestAtsStandardLogin:
     @allure.title("C753 - ATS Standard Login Tests")
     @allure.description(" Scenario Login with an Active User with valid credentials")
     def test_can_login_with_active_rm_user(self, get_test_info):

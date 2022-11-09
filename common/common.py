@@ -233,5 +233,5 @@ class Common(Elements):
         sleep(self.sleep_time)
         return self.go_click(self.datepicker)
 
-    def switch_tab(self, locator):
-        self.driver.switch_to.window(self.driver.window_handles[1])
+    def switch_tab(self, locator, index=1):
+        self.driver.switch_to.window(self.driver.window_handles[index])
