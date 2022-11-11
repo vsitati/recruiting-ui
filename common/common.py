@@ -235,3 +235,8 @@ class Common(Elements):
 
     def switch_tab(self, locator, index=1):
         self.driver.switch_to.window(self.driver.window_handles[index])
+
+    def click_link(self, locator):
+        elems = self.driver.find_elements_by_xpath("//a[@href]")
+        elem, *_ = elems
+        return self.do_click(elem)
