@@ -1,9 +1,8 @@
 class ValidationData:
-
     login_validation = {
         "credentials_error": "You have used an incorrect Username and or Password. Please review this information and try again. Or, contact your system administrator.",
         "inactive_login_error": "Your user account has been deactivated. Please contact your SilkRoad Recruiting administrator.",
-        "invalid_username_password_error": "You have used an incorrect Username and or Password. Please review this information and try again. Or, contact your system administrator."
+        "invalid_username_password_error": "You have used an incorrect Username and or Password. Please review this information and try again. Or, contact your system administrator.",
     }
 
     forget_password_text = "You have requested to update your SilkRoad Recruiting password. Please provide us with the following information, so we may process your request. Once you have completed the form below and clicked the \"Submit\" button, we will send a message to the email address on file for the username provided. Please follow the directions in the message to update your password." \
@@ -18,3 +17,7 @@ class ValidationData:
 
     changed_password_success_email_body_text = "Hello {user} test, Your password has been changed in SilkRoad Recruiting using the \"Forgot Your Password\" feature." \
                                                " Thank you."
+    sso_validation = {
+        "sso_invalid_username_error": "You were not authenticated locally so SSO will not be attempted.",
+        "sso_inactive_user_error": "Session Unknown"
+    }
