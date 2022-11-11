@@ -12,7 +12,6 @@ class Elements:
     sso_link = (By.ID, 'ssoLink')
     sso_username_id = (By.NAME, 'user_name')
     sso_login_btn = (By.NAME, 'login')
-    sso_session_lnk = (By.XPATH, '/html/body/a')
     sso_login_error = (By.ID, 'errMsg')
 
 

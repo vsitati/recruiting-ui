@@ -13,7 +13,7 @@ class TestAtsSsoLogin:
         sso_credentials = dict(password=password, username=username)
         login = Login(driver=self.driver)
         login.do_login(get_test_info, cred=sso_credentials, sso=True)
-        login.do_click(login.driver.find_element_by_locator(login.sso_session_lnk))
+        login.click_link(self)
         login.switch_tab(self)
 
         assert login.is_element_visible(locator=login.quick_search) is True
@@ -57,4 +57,3 @@ class TestAtsSsoLogin:
 
         error_msg = login.get_text(locator=login.sso_login_error)
         assert error_msg == TestData.sso_validation.get("sso_inactive_user_error", "")
-        
