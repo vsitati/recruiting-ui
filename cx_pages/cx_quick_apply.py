@@ -5,7 +5,18 @@ import pytest
 
 
 class Elements:
-    applicationurl = "{domain}"
+    AdminLogin = (By.ID, 'SuperAdmin_AdminLogin_EmailAddress')
+    password = (By.ID, 'SuperAdmin_AdminLogin_Password')
+    lucee_site = (By.ID, 'SuperAdmin_CustomerLogin-luceeqa01')
+    qa_visibility = (By.CLASS_NAME, 'sr-career-site-list-banner')
+    job_list = (By.ID, 'Jobs_PagedJobList_Job-171786')
+    apply_link = (By.ID, 'Jobs_JobDetail_ApplyLink')
+    pre_submission = (By.ID, 'Apply_ApplyToJob_PresubmissionText_Accept')
+    firstname = (By.ID, 'Apply_ApplyToJob_FirstName')
+    lastname = (By.ID, 'Apply_ApplyToJob_LastName')
+    email = (By.ID, 'Apply_ApplyToJob_Email')
+    uploadBtn = (By.ID, 'Apply_ApplyToJob_File')
+    submit_btn = (By.ID, 'Apply_ApplyToJob_SubmitButton')
 
 
 class QuickApply(BasePage):
