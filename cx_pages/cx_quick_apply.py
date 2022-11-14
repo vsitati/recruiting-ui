@@ -39,7 +39,7 @@ class QuickApply(BasePage, Elements):
     @allure.step('Job List')
     def select_job_to_apply(self):
         self.driver.find_element_by_locator(self.job_list).click()
-s
+
     @allure.step('Click apply')
     def select_click_apply(self):
         self.driver.find_element_by_locator(self.apply_link).click()
