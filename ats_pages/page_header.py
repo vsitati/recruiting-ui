@@ -46,8 +46,11 @@ class PageHeader(Common, Elements):
         elm.send_keys(search_input)
         elm.send_keys(Keys.ENTER)
 
-    def select_ellipses_menu(self, ellipses_menu: EllipsesMenu):
-        self.go_click(self.ellipses_menu_btn_on_job_details)
+    def select_ellipses_menu(self, ellipses_menu: EllipsesMenu, flg = "job_details"):
+        if flg == "job_details":
+            self.go_click(self.ellipses_menu_btn_on_job_details)
+        else:
+            self.go_click(self.ellipses_menu_btn_on_job_edit)
 
         elm_link = self.driver.find_element_by_locator((By.LINK_TEXT, ellipses_menu))
         self.do_click(elm_link)
