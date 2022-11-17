@@ -1,4 +1,4 @@
-from ats_pages.base import BasePage
+from common.common import Common
 from selenium.webdriver.common.by import By
 
 
@@ -7,7 +7,7 @@ class Elements:
     top_sources_chart = (By.ID, 'topSourcesChart')
 
 
-class Dashboard(BasePage, Elements):
+class Dashboard(Common, Elements):
     def __init__(self, driver):
         super().__init__(driver)
 

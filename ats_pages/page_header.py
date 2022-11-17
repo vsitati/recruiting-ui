@@ -1,4 +1,4 @@
-from ats_pages.base import BasePage
+from common.common import Common
 from selenium.webdriver.common.by import By
 from selenium.webdriver import Keys
 
@@ -14,7 +14,7 @@ class Elements:
                                      ">[class='richTextValidatorIgnore']")
 
 
-class PageHeader(BasePage, Elements):
+class PageHeader(Common, Elements):
     def __init__(self, driver):
         super().__init__(driver)
 
@@ -46,8 +46,11 @@ class PageHeader(BasePage, Elements):
         elm.send_keys(search_input)
         elm.send_keys(Keys.ENTER)
 
-    def select_ellipses_menu(self, ellipses_menu: EllipsesMenu):
-        self.go_click(self.ellipses_menu_btn_on_job_details)
+    def select_ellipses_menu(self, ellipses_menu: EllipsesMenu, flg = "job_details"):
+        if flg == "job_details":
+            self.go_click(self.ellipses_menu_btn_on_job_details)
+        else:
+            self.go_click(self.ellipses_menu_btn_on_job_edit)
 
         elm_link = self.driver.find_element_by_locator((By.LINK_TEXT, ellipses_menu))
         self.do_click(elm_link)

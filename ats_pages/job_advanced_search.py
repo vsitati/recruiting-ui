@@ -1,5 +1,5 @@
 from selenium.webdriver.common.by import By
-from ats_pages.base import BasePage
+from common.common import Common
 
 
 class Elements:
@@ -8,7 +8,7 @@ class Elements:
     apply_filter_btn = (By.ID, "applyFiltersLabel")
 
 
-class JobAdvancedSearch(BasePage, Elements):
+class JobAdvancedSearch(Common, Elements):
     def __init__(self, driver):
         super().__init__(driver)
 

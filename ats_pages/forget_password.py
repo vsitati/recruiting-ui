@@ -1,5 +1,5 @@
 from selenium.webdriver.common.by import By
-from ats_pages.base import BasePage
+from common.common import Common
 from test_data.test_data_details import TestData
 
 
@@ -14,7 +14,7 @@ class Elements:
     account_verification_text = (By.CSS_SELECTOR, ".alert.alert-info")
 
 
-class ForgetPassword(BasePage, Elements):
+class ForgetPassword(Common, Elements):
     def __init__(self, driver):
         super().__init__(driver)
 

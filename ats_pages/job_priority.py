@@ -1,4 +1,4 @@
-from ats_pages.base import BasePage
+from common.common import Common
 from selenium.webdriver.common.by import By
 from test_data.test_data_details import JobData
 
@@ -15,7 +15,7 @@ class Elements:
     close_btn = (By.ID, "priorityDialogModalClose")
 
 
-class JobPriority(BasePage, Elements):
+class JobPriority(Common, Elements):
     def __init__(self, driver):
         super().__init__(driver)
 

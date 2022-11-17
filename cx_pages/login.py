@@ -1,5 +1,5 @@
 import allure
-from cx_pages.base import BasePage
+from common.common import Common
 from selenium.webdriver.common.by import By
 from test_data.test_data_details import TestData
 
@@ -10,7 +10,7 @@ class Elements:
     sign_in_btn = (By.ID, 'Admin_AdminLogin_SubmitButton')
 
 
-class Login(BasePage, Elements):
+class Login(Common, Elements):
     def __init__(self, driver):
         super().__init__(driver)
 

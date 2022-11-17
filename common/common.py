@@ -20,6 +20,7 @@ class Elements:
     richtext = (By.ID, 'tinymce')
     auto_complete = (By.CSS_SELECTOR, "[role='listbox'] [class='ui-corner-all']")
     datepicker = (By.CSS_SELECTOR, "[id='ui-datepicker-div'] [class^='ui-datepicker-close']")
+    openadmin_banner = (By.CLASS_NAME, 'ui-layout-banner')
 
 
 class Common(Elements):
@@ -139,6 +140,9 @@ class Common(Elements):
         except StaleElementReferenceException:
             pass
 
+    def get_title(self):
+        return self.driver.title
+
     @staticmethod
     def get_env_url(info, app):
         endpoint = info.get(app)
@@ -228,3 +232,11 @@ class Common(Elements):
         self.enter_text(locator, text)
         sleep(self.sleep_time)
         return self.go_click(self.datepicker)
+
+    def switch_tab(self, locator, index=1):
+        self.driver.switch_to.window(self.driver.window_handles[index])
+
+    def click_link(self, locator):
+        elems = self.driver.find_elements_by_xpath("//a[@href]")
+        elem, *_ = elems
+        return self.do_click(elem)
