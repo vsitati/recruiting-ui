@@ -1,7 +1,6 @@
 from common.common import Common
 from selenium.webdriver.common.by import By
 from test_data.test_data_details import JobData
-from test_data.test_data_details import CompanyData
 from time import sleep
 
 
@@ -13,6 +12,7 @@ class Elements:
 
     # Job Information
     job_template = (By.ID, "job_template_id_label")
+    closed_date = (By.ID, 'closeddate')
     hiring_workflow = (By.ID, 'workflowId')
     evergreen_job = [By.ID, 'isEvergreen_']
     internal_job_title = (By.ID, 'job_title')
@@ -77,12 +77,15 @@ class Elements:
     continue_btn = (By.ID, "jobform1_submit")
     reset_btn = (By.ID, "jobform1_reset")
 
+    save_btn = (By.CSS_SELECTOR, "button.lifesuite__float-right:nth-child(1)")
+    cancel_btn = (By.CSS_SELECTOR, "button.lifesuite__float-right:nth-child(2)")
+
 
 class JobPositionDetails(Common, Elements):
     def __init__(self, driver):
         super().__init__(driver)
 
-    def fill_out_minimum(self):
+    def fill_out_minimum_job_details_fields(self):
         # Job Administration
         self.select_from_dropdown(self.assigned_recruiter, JobData.job_data.get("assigned_recruiter"))
 
@@ -116,7 +119,7 @@ class JobPositionDetails(Common, Elements):
         # Buttons
         self.go_click(self.continue_btn)
 
-    def fill_out_all(self):
+    def fill_out_all_job_details_fields(self):
         # Job Administration
         self.select_from_dropdown(self.recruiting_manager, JobData.job_data.get("recruiting_manager"))
         self.select_from_dropdown(self.assigned_recruiter, JobData.job_data.get("assigned_recruiter"))
@@ -130,7 +133,7 @@ class JobPositionDetails(Common, Elements):
         self.enter_text(self.posted_job_title, JobData.job_data.get("posted_job_title"))
         self.enter_text(self.tracking_code, JobData.job_data.get("tracking_code"))
         self.enter_richtext_integer(self.number_of_positions, JobData.job_data.get("number_of_positions"))
-        self.click_radio_yes_no(self.require_eForm_submission, JobData.job_data.get("require_eForm_submission"))
+        # self.click_radio_yes_no(self.require_eForm_submission, JobData.job_data.get("require_eForm_submission"))
         self.select_from_dropdown(self.status, JobData.job_data.get("status"))
         self.select_from_dropdown(self.position_type, JobData.job_data.get("position_type"))
         self.select_from_dropdown(self.job_level, JobData.job_data.get("job_level"))
@@ -150,9 +153,9 @@ class JobPositionDetails(Common, Elements):
         # Compliance
         self.select_from_dropdown(self.eeo1_job_category, JobData.job_data.get("eeo1_job_category"))
         self.select_from_dropdown(self.aap_job_group, JobData.job_data.get("aap_job_group"))
-        self.select_from_dropdown(self.talent_assessment, JobData.job_data.get("talent_assessment"))
-        self.check_checkbox(self.do_not_display_assessment_on_job_portal,
-                            JobData.job_data.get("do_not_display_assessment_on_job_portal"))
+        # self.select_from_dropdown(self.talent_assessment, JobData.job_data.get("talent_assessment"))
+        # self.check_checkbox(self.do_not_display_assessment_on_job_portal,
+        #                     JobData.job_data.get("do_not_display_assessment_on_job_portal"))
 
         # Position Requirements
         self.select_from_dropdown(self.travel, JobData.job_data.get("travel"))
@@ -183,9 +186,49 @@ class JobPositionDetails(Common, Elements):
         # Custom Fields
         self.enter_text(self.job_grade, JobData.job_data.get("job_grade"))
         self.select_from_dropdown(self.exemption_status, JobData.job_data.get("exemption_status"))
-        self.pick_datepicker(self.newdate, JobData.job_data.get("newdate"))
+        # self.pick_datepicker(self.newdate, JobData.job_data.get("newdate"))
         self.select_from_dropdown(self.collect_eeo_for_this_job, JobData.job_data.get("collect_eeo_for_this_job"))
 
         # Buttons
-        sleep(CompanyData.sleep_time)
+        sleep(self.sleep_time)
         self.go_click(self.continue_btn)
+
+    def edit_job_details_fields(self):
+        # Job Administration
+        self.select_from_dropdown(self.replies_emailed_to, JobData.job_data.get("replies_emailed_to_edit"))
+
+        # Job Information
+        self.pick_datepicker(self.closed_date, JobData.job_data.get("closed_date"))
+        self.click_radio_yes_no(self.evergreen_job, JobData.job_data.get("evergreen_job_edit"))
+        self.enter_text(self.internal_job_title, JobData.job_data.get("internal_job_title_edit"))
+        self.enter_text(self.posted_job_title, JobData.job_data.get("posted_job_title_edit"))
+        self.select_from_dropdown(self.status, JobData.job_data.get("status_edit"))
+        self.select_from_dropdown(self.position_type, JobData.job_data.get("position_type_edit"))
+        self.select_from_dropdown(self.job_duration, JobData.job_data.get("job_duration_edit"))
+        self.pick_datepicker(self.expected_start_date, JobData.job_data.get("expected_start_date_edit"))
+
+        # Job Location
+        self.enter_text(self.city, JobData.job_data.get("city_edit"))
+        self.select_from_dropdown(self.state, JobData.job_data.get("state_edit"))
+        self.select_auto_complete(self.additional_locations, JobData.job_data.get("additional_locations_edit"))
+
+        # Compliance
+        # Position Requirements
+        self.select_from_dropdown(self.travel, JobData.job_data.get("travel_edit"))
+        self.select_from_dropdown(self.salary_type, JobData.job_data.get("salary_type_edit"))
+
+        # EmployeeReferrals.com
+        self.enter_richtext_integer(self.referral_bonus, JobData.job_data.get("referral_bonus_edit"))
+        self.click_radio_yes_no(self.hot_job, JobData.job_data.get("hot_job_edit"))
+
+        # Description/Skills
+        self.enter_richtext(self.required_skills, JobData.job_data.get("required_skills_edit"))
+        self.enter_richtext(self.required_experience, JobData.job_data.get("required_experience_edit"))
+
+        # Custom Fields
+        self.enter_text(self.job_grade, JobData.job_data.get("job_grade_edit"))
+        self.select_from_dropdown(self.collect_eeo_for_this_job, JobData.job_data.get("collect_eeo_for_this_job_edit"))
+
+        self.go_click(self.save_btn)
+
+        return

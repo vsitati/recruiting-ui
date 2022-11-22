@@ -18,9 +18,16 @@ class JobCategory(Common, Elements):
     def __init__(self, driver):
         super().__init__(driver)
 
-    def select_a_category(self):
+    def select_category(self):
         # Category
         self.click_radio_list(self.radio_list_create, JobData.job_data.get("category_radio_list"))
 
         # Button
         self.go_click(self.continue_btn)
+
+    def update_category(self):
+        # Category
+        self.click_radio_list(self.radio_list_edit, JobData.job_data.get("category_radio_list_edit"))
+
+        # Button
+        self.go_click(self.save_btn)
