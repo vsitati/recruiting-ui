@@ -26,12 +26,8 @@ class JobSearchResult(Common, Elements):
         elm = self.driver.find_element_by_locator(self.result_sheet)
         elms = elm.find_elements(By.CSS_SELECTOR, "[data-page='1']>tr>td")
         assert len(elms) != 0, "Job Search returns 0 result."
-        for elm in elms:
-            if elm.text == internal_job_title:
-                self.do_click(elm)
-                return
-        else:
-            assert False, "Job Search results does NOT have {0}".format(internal_job_title)
+        elm = elm.find_element(By.LINK_TEXT, internal_job_title)
+        self.do_click(elm)
 
     def __comparing(self, source, target):
         if source == target:
