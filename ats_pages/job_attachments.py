@@ -8,7 +8,8 @@ class Elements:
     remove_selected_btn = (By.ID, "removeButton")
     check_all_files = (By.ID, "checkAll")
     continue_btn = (By.CSS_SELECTOR, "[type='submit']")
-    cancel_btn = (By.CSS_SELECTOR, "div.ui-button-group:nth-child(3) > button:nth-child(1)")
+    cancel_btn = (By.XPATH, "//span[.='Cancel']")
+    # cancel_btn = (By.CSS_SELECTOR, "div.ui-button-group:nth-child(3) > button:nth-child(1)")
 
     # Upload Attachments dialog box
     file = (By.ID, "selectedFile")
