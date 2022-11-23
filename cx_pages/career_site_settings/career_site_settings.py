@@ -1,4 +1,5 @@
 import allure
+from helpers.utils import BaseError
 from functools import partial
 from common.common import Common
 from selenium.webdriver.common.by import By
@@ -19,8 +20,8 @@ class CareerSiteSettings(Elements, Common):
                         if href_elem.get_attribute("title") == setting]
         return setting_link
 
-    def open_setting(self):
-        return dict(
+    def open_setting(self, setting):
+        settings = dict(
             general=partial(self.open_url, self.get_career_site_setting_link(setting="General")),
             colors=partial(self.open_url, self.get_career_site_setting_link(setting="Colors")),
             font=partial(self.open_url, self.get_career_site_setting_link(setting="Font")),
@@ -41,6 +42,11 @@ class CareerSiteSettings(Elements, Common):
             languages=partial(self.open_url, self.get_career_site_setting_link(setting="Languages")),
             gdpr=partial(self.open_url, self.get_career_site_setting_link(setting="GDPR"))
         )
+
+        try:
+            return settings.get(setting)()
+        except TypeError:
+            raise BaseError(f"Valid Settings: {list(settings.keys())}")
 
 
 

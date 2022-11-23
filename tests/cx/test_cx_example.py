@@ -3,7 +3,8 @@ import allure
 from common.common import Common
 from cx_pages.career_sites import CareerSites
 from cx_pages.jobs_search import JobSearch
-from cx_pages.career_site_settings import CareerSiteSettings
+from cx_pages.career_site_settings.career_site_settings import CareerSiteSettings
+from cx_pages.career_site_settings.manage_languages import ManageLanguages
 from cx_pages.login import Login
 
 
@@ -65,4 +66,6 @@ class TestCandidateExperience:
         assert cs.get_h2_tag_name() == "Career Site Settings"
 
         css = CareerSiteSettings(driver=self.driver)
-        css.open_setting().get("fee_agency_job_details_page")()
+        css.open_setting(setting="languages")
+        ml = ManageLanguages(driver=self.driver)
+        ml.enable_language(language="english", enable=True)

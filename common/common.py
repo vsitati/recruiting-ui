@@ -200,7 +200,22 @@ class Common(Elements):
     # isCheck: True: Check; False: UnCheck
     def check_checkbox(self, locator, is_check):
         elm = self.driver.find_element_by_locator(locator)
+        self.driver.execute_script("arguments[0].scrollIntoView();", elm)
         if elm.is_selected() != is_check:
+            return self.do_click(elm)
+        return
+
+    # isCheck: True: Check; False: UnCheck
+    def check_checkbox_custom(self, locator, is_check):
+        boolean_dict = dict(
+            true=True,
+            false=False
+        )
+
+        elm = self.driver.find_element_by_locator(locator)
+        self.driver.execute_script("arguments[0].scrollIntoView();", elm)
+        checked = boolean_dict.get(elm.get_attribute("aria-checked"))
+        if checked != is_check:
             return self.do_click(elm)
         return
 
