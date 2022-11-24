@@ -23,8 +23,6 @@ class CandidateAdvancedSearch(Common, Elements):
         return self.open_url(self.get_all_hrefs(specific_href=resume_id))
 
     def open_job_title(self, candidate_name):
-        print(f"CANDIDATE NAME: {candidate_name}")
-
         elem = self.get_check_box_elem(candidate_name=candidate_name)
         job_id = elem.get_attribute("data-jobid")
         return self.open_url(self.get_all_hrefs(specific_href=job_id))
