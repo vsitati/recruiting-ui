@@ -1,8 +1,8 @@
 import pytest
 import allure
-from ats_pages.login import Login
-from ats_pages.forget_password import ForgetPassword
-from ats_pages.change_password import ChangePassword
+from ats_pages.login.login import Login
+from ats_pages.login.forget_password import ForgetPassword
+from ats_pages.login.change_password import ChangePassword
 from test_data.test_data_details import TestData
 
 

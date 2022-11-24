@@ -1,7 +1,7 @@
 import pytest
 import allure
-from ats_pages.job_advanced_search import JobAdvancedSearch
-from ats_pages.login import Login
+from ats_pages.jobs.job_advanced_search import JobAdvancedSearch
+from ats_pages.login.login import Login
 from ats_pages.left_menus import LeftMenus
 
 
