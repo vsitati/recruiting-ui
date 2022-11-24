@@ -20,3 +20,7 @@ def create_folder(folder_name):
     if not os.path.exists(folder_name):
         return os.makedirs(folder_name)
     return True
+
+
+class BaseError(Exception):
+    pass

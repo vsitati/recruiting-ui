@@ -21,6 +21,8 @@ class Elements:
     auto_complete = (By.CSS_SELECTOR, "[role='listbox'] [class='ui-corner-all']")
     datepicker = (By.CSS_SELECTOR, "[id='ui-datepicker-div'] [class^='ui-datepicker-close']")
     openadmin_banner = (By.CLASS_NAME, 'ui-layout-banner')
+    cx_apply_btn = (By.ID, "Base_BackToJobs_ApplyLink")
+    all_hrefs = (By.XPATH, "//a[@href]")
 
 
 class Common(Elements):
@@ -198,7 +200,22 @@ class Common(Elements):
     # isCheck: True: Check; False: UnCheck
     def check_checkbox(self, locator, is_check):
         elm = self.driver.find_element_by_locator(locator)
+        self.driver.execute_script("arguments[0].scrollIntoView();", elm)
         if elm.is_selected() != is_check:
+            return self.do_click(elm)
+        return
+
+    # isCheck: True: Check; False: UnCheck
+    def check_checkbox_custom(self, locator, is_check):
+        boolean_dict = dict(
+            true=True,
+            false=False
+        )
+
+        elm = self.driver.find_element_by_locator(locator)
+        self.driver.execute_script("arguments[0].scrollIntoView();", elm)
+        checked = boolean_dict.get(elm.get_attribute("aria-checked"))
+        if checked != is_check:
             return self.do_click(elm)
         return
 
@@ -233,10 +250,11 @@ class Common(Elements):
         sleep(self.sleep_time)
         return self.go_click(self.datepicker)
 
-    def switch_tab(self, locator, index=1):
+    def switch_tab(self, index=1):
         self.driver.switch_to.window(self.driver.window_handles[index])
 
-    def click_link(self, locator):
-        elems = self.driver.find_elements_by_xpath("//a[@href]")
-        elem, *_ = elems
-        return self.do_click(elem)
+    def get_all_hrefs(self):
+        return self.driver.find_elements_by_locator(self.all_hrefs)
+
+    def get_h2_tag_name(self):
+        return self.driver.find_element_by_tag_name("h2").text

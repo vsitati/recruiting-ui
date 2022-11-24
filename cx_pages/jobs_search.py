@@ -1,3 +1,5 @@
+import random
+
 from common.common import Common
 from selenium.webdriver.common.by import By
 
@@ -18,14 +20,20 @@ class JobSearch(Elements, Common):
         page_number_range_elem = self.driver.find_element_by_locator(self.page_number)
         return int(page_number_range_elem.text.split(" ")[-1])
 
-    def find_job(self, title):
+    def find_job(self, title="", random_job=False):
         last_page = self.get_last_page_index()
 
-        def get_title_elem(_title):
+        def get_title_elem(_title="", _random=False):
             title_elems = self.driver.find_elements_by_locator(self.job_titles)
+            if _random:
+                title_elem = random.choice([title_elem for title_elem in title_elems])
+                return title_elem, title_elem.text
             return [title_elem for title_elem in title_elems if title_elem.text == _title]
 
-        result = get_title_elem(_title=title)
+        if random_job:
+            return get_title_elem(_random=True)
+        else:
+            result = get_title_elem(_title=title)
 
         if not result:
             for i in range(last_page):
@@ -34,7 +42,10 @@ class JobSearch(Elements, Common):
                 result = get_title_elem(_title=title)
                 if result:
                     return result[0]
-        return result[0]
+        try:
+            return result[0]
+        except IndexError:
+            return ""
 
     def open_job(self, job_elem):
         return self.driver.execute_script("arguments[0].click();", job_elem)
