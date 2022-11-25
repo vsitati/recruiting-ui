@@ -20,7 +20,7 @@ class Elements:
     view_job_offers = (By.ID, 'link_JobOffers-itemText')
 
     candidates = [By.ID, 'link_Candidates']
-    candidates_Advanced_Search = (By.ID, 'link_CandidateSearch-itemText')
+    candidates_advanced_search = (By.ID, 'link_CandidateSearch-itemText')
     eeo_aa_info = [By.ID, 'link_EEOAAInfo']
     employee_referrals = [By.ID, "link_EmployeeReferrals-itemText"]
     folders = [By.ID, "link_Folders-itemText"]
@@ -66,10 +66,8 @@ class LeftMenus(Common, Elements):
     def click_left_nav(self, element):
         self.open_menu()
         time.sleep(self.sleep_time)   # TODO: find a better way to wait
-        elm = self.driver.find_element_by_locator(element)
-        if elm.get_attribute(self.left_nav_attr) == "false":
-            return self.do_click(self.driver.find_element_by_locator(element))
-        return False
+        return self.do_click(self.driver.find_element_by_locator(element))
+        # return False
 
     def click_left_nav_sub(self, element):
         return self.do_click(self.driver.find_element_by_locator(element))

@@ -1,5 +1,7 @@
 import os
 import json
+import random
+import randominfo
 
 
 def get_config(config_path):
@@ -24,3 +26,19 @@ def create_folder(folder_name):
 
 class BaseError(Exception):
     pass
+
+
+def get_random_person_info():
+    domains = ["gmail", "yahoo", "hotmail", "express", "yandex", "nexus", "online", "omega", "institute", "finance",
+               "company", "corporation", "community"]
+    extensions = ['com', 'in', 'jp', 'us', 'uk', 'org', 'edu', 'au', 'de', 'co', 'me', 'biz', 'dev', 'ngo', 'site',
+                  'xyz', 'zero', 'tech']
+
+    first_name = randominfo.get_first_name()
+    last_name = randominfo.get_last_name()
+
+    return dict(
+        first_name=first_name,
+        last_name=last_name,
+        email=f"{first_name}.{last_name}@{random.choice(domains)}.{random.choice(extensions)}"
+    )

@@ -253,8 +253,17 @@ class Common(Elements):
     def switch_tab(self, index=1):
         self.driver.switch_to.window(self.driver.window_handles[index])
 
-    def get_all_hrefs(self):
-        return self.driver.find_elements_by_locator(self.all_hrefs)
+    def get_all_hrefs(self, specific_href=""):
+        href_elms = self.driver.find_elements_by_locator(self.all_hrefs)
+        if specific_href:
+            for href_elm in href_elms:
+                if specific_href in href_elm.get_attribute("href"):
+                    return href_elm.get_attribute("href")
+            return ""
+        return href_elms
 
     def get_h2_tag_name(self):
         return self.driver.find_element_by_tag_name("h2").text
+
+    def click_cx_job_apply_btn(self):
+        return self.do_click(self.driver.find_element_by_locator(self.cx_apply_btn))

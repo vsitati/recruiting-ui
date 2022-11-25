@@ -23,4 +23,8 @@ class QuickApply(Common, Elements):
         self.driver.find_element_by_locator(self.firstname).send_keys(firstname)
         self.driver.find_element_by_locator(self.lastname).send_keys(lastname)
         self.driver.find_element_by_locator(self.email).send_keys(email)
-        return self.driver.find_element_by_locator(self.choose_file_btn).send_keys(file_path)
+        self.driver.find_element_by_locator(self.choose_file_btn).send_keys(file_path)
+        apply_elem = self.driver.find_element_by_locator(self.apply_btn)
+        self.driver.execute_script("arguments[0].scrollIntoView();", apply_elem)
+        self.do_click(apply_elem)
+

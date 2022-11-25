@@ -1,6 +1,6 @@
 import pytest
 import allure
-from ats_pages.login import Login
+from ats_pages.login.login import Login
 from test_data.test_data_details import TestData
 
 
