@@ -9,6 +9,7 @@ from test_data.test_data_details import TestData
 from ats_pages.left_menus import LeftMenus
 from ats_pages.candidates.advanced_search import CandidateAdvancedSearch
 from ats_pages.candidates.candidate_resume_profile import CandidateResumeProfile
+from helpers.utils import get_basename_from_file_path
 
 
 @pytest.mark.usefixtures("setup")
@@ -50,4 +51,9 @@ class TestQuickApplyExternal:
 
         crp = CandidateResumeProfile(driver=self.driver)
         assert crp.verify_candidate_name(candidate_name=candidate_name) is True
-        assert crp.verify_candidate_email(candidate_email=form_details.get('email')) is True
+        assert crp.verify_candidate_email(candidate_email=form_details.get("email")) is True
+
+        crp.open_attachment_tab()
+        crp.get_attachment_names()
+        attachments = crp.get_attachment_names()
+        assert get_basename_from_file_path(file_path=form_details.get("file_path")) in attachments
