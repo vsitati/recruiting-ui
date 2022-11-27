@@ -37,3 +37,7 @@ class ManageGeneralSettings(Elements, Common):
         except TypeError:
             raise BaseError(f"Valid languages: {list(language.keys())}")
 
+    def click_cx_settings_save_btn(self):
+        elem = self.driver.find_element_by_locator(self.save_btn)
+        self.driver.execute_script("arguments[0].scrollIntoView();", elem)
+        return self.do_click(elem)
