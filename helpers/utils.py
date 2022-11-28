@@ -42,3 +42,7 @@ def get_random_person_info():
         last_name=last_name,
         email=f"{first_name}.{last_name}@{random.choice(domains)}.{random.choice(extensions)}"
     )
+
+
+def get_basename_from_file_path(file_path):
+    return os.path.basename(file_path)
