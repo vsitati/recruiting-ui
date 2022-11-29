@@ -10,6 +10,7 @@ class Elements:
     next_page = (By.ID, 'Jobs_PagedJobList_NextLink')
     prev_page = (By.ID, 'Jobs_PagedJobList_PrevPageLink')
     job_titles = (By.CSS_SELECTOR, ".sr-panel__title")
+    submit_resume_message = (By.ID, "Jobs_PagedJobList_OpenSubmission")
 
 
 class JobSearch(Elements, Common):
@@ -49,3 +50,10 @@ class JobSearch(Elements, Common):
 
     def open_job(self, job_elem):
         return self.driver.execute_script("arguments[0].click();", job_elem)
+
+    def get_job_search_input_placeholder_text(self):
+        elem = self.driver.find_element_by_locator(self.job_search_input_box)
+        return elem.get_attribute("placeholder")
+
+    def get_submit_resume_message(self):
+        return self.driver.find_element_by_locator(self.submit_resume_message).text

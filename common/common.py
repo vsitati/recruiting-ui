@@ -23,6 +23,7 @@ class Elements:
     openadmin_banner = (By.CLASS_NAME, 'ui-layout-banner')
     cx_apply_btn = (By.ID, "Base_BackToJobs_ApplyLink")
     all_hrefs = (By.XPATH, "//a[@href]")
+    cx_settings_back_btn = (By.ID, "Admin_BackLink")
 
 
 class Common(Elements):
@@ -267,3 +268,8 @@ class Common(Elements):
 
     def click_cx_job_apply_btn(self):
         return self.do_click(self.driver.find_element_by_locator(self.cx_apply_btn))
+
+    def click_cx_settings_back_btn(self):
+        elem = self.driver.find_element_by_locator(self.cx_settings_back_btn)
+        self.driver.execute_script("arguments[0].scrollIntoView();", elem)
+        return self.do_click(elem)
