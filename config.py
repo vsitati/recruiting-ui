@@ -5,6 +5,7 @@ class Config:
         "timeout": 20,
         "poll_frequency": 0.5,
         "log_path": "./logs",
+        "path_to_resumes": "test_data/resumes",
         "env": {
             "ats": {
                 "endpoints": {
