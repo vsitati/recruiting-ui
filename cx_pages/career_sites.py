@@ -14,11 +14,12 @@ class CareerSites(Elements, Common):
     def __init__(self, driver):
         super().__init__(driver)
 
-    def _get_career_sites(self, site_section):
+    def get_career_sites(self, site_section):
 
         if site_section == "external":
             career_sites_parent, *_ = self.driver.find_elements_by_locator(self.board_lists)
         else:
+            # External
             *_, career_sites_parent = self.driver.find_elements_by_locator(self.board_lists)
 
         # Career Site URL
@@ -34,9 +35,6 @@ class CareerSites(Elements, Common):
         career_site_titles = [career_site_title.text for career_site_title in career_site_title_elems]
         return list(zip(career_site_titles, career_sites, career_sites_settings))
 
-    def get_career_sites(self, site_section):
-        return self._get_career_sites(site_section=site_section)
-
     @staticmethod
     def filter_career_site(data, site_name="", visible=True):
         if not data:
@@ -51,4 +49,5 @@ class CareerSites(Elements, Common):
             # ('UFT Auto - ZDNRwcfLjQ', None,
             # 'https://cx-qa.silkroad-eng.com/qaautomationonly/admin/JobBoards/Edit?portalId=0&portalCode=1605')
             return [info for info in data if info[1] is None]
+            # TODO Need to add site name here, to publish a specific portal
 
