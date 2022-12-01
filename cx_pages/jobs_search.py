@@ -26,10 +26,18 @@ class JobSearch(Elements, Common):
         last_page = self.get_last_page_index()
 
         def get_title_elem(_title="", _random=False):
-            title_elems = self.driver.find_elements_by_locator(self.job_titles)
+
             if _random:
+                page_numbers = list(range(1, last_page + 1))
+                random_page_number = random.choice(page_numbers[1:])
+                # [1:] Skipping the first page, this is the most used page
+                current_url = self.driver.current_url
+                self.open_url(f"{current_url}?page={random_page_number}")
+                title_elems = self.driver.find_elements_by_locator(self.job_titles)
                 title_elem = random.choice([title_elem for title_elem in title_elems])
                 return title_elem, title_elem.text
+
+            title_elems = self.driver.find_elements_by_locator(self.job_titles)
             return [title_elem for title_elem in title_elems if title_elem.text == _title]
 
         if random_job:
