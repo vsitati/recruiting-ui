@@ -22,6 +22,7 @@ class JobSearch(Elements, Common):
         return int(page_number_range_elem.text.split(" ")[-1])
 
     def find_job(self, title="", random_job=False):
+        # TODO Need to enhance random Job apply to page through all pages and not only take a job from the first page
         last_page = self.get_last_page_index()
 
         def get_title_elem(_title="", _random=False):

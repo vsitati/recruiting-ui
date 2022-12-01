@@ -16,8 +16,8 @@ class CareerSiteSettings(Elements, Common):
     def get_career_site_setting_link(self, setting):
         all_href_elems = self.get_all_hrefs()
         setting_link, *_ = [href_elem.get_attribute("href")
-                        for href_elem in all_href_elems
-                        if href_elem.get_attribute("title") == setting]
+                            for href_elem in all_href_elems
+                            if href_elem.get_attribute("title") == setting]
         return setting_link
 
     def open_setting(self, setting):

@@ -39,6 +39,7 @@ class CandidateAdvancedSearch(Common, Elements):
                     return result
 
         if not result:
+            # TODO need to add logging
             raise BaseError(f"Candidate Name: {candidate_name} not found.")
         return result
 
