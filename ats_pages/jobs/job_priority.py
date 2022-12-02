@@ -27,3 +27,10 @@ class JobPriority(Common, Elements):
 
         # Buttons
         self.go_click(self.continue_btn)
+
+    def update_priority(self):
+        # Priority
+        self.select_from_dropdown(self.time_measurement, JobData.job_data.get("time_measurement_edit"))
+
+        # Buttons
+        self.go_click(self.save_btn)
