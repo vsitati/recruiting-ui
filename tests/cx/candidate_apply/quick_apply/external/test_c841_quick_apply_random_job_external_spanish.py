@@ -73,8 +73,8 @@ class TestQuickApplyRandomJobExternalSpanish:
         cas.open_candidate_profile(candidate_name=candidate_name)
 
         crp = CandidateResumeProfile(driver=self.driver)
-        assert crp.verify_candidate_name(candidate_name=candidate_name) is True
-        assert crp.verify_candidate_email(candidate_email=form_details.get("email")) is True
+        assert crp.verify_candidate_name() == candidate_name
+        assert crp.verify_candidate_email() == f"{form_details.get('email')}"
 
         crp.open_attachment_tab()
         crp.get_attachment_names()

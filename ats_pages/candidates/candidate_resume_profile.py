@@ -16,11 +16,11 @@ class CandidateResumeProfile(Common, Elements):
     def __init__(self, driver):
         super().__init__(driver)
 
-    def verify_candidate_name(self, candidate_name):
-        return self.driver.find_element_by_locator(self.candidate_name).text == candidate_name
+    def verify_candidate_name(self):
+        return self.driver.find_element_by_locator(self.candidate_name).text
 
-    def verify_candidate_email(self, candidate_email):
-        return self.driver.find_element_by_locator(self.candidate_email).text == candidate_email
+    def verify_candidate_email(self):
+        return self.driver.find_element_by_locator(self.candidate_email).text
 
     def open_attachment_tab(self):
         return self.do_click(self.driver.find_element_by_locator(self.attachment_tab))
