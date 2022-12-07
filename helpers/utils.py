@@ -57,7 +57,7 @@ def get_resumes(parent_folder, specify_resume="", file_ext=""):
     :param specify_resume: Specify a specific resume
     :param file_ext: Specify a specific files extension
     """
-
+    print("Parent folder:", parent_folder)
     resume_folders = glob(os.path.abspath(f"{parent_folder}/[!_]*"))
     # [!_]: This is a regex to filter out any folder starting with an (_), for ex. __init__.py
     resume_files = list(chain.from_iterable([glob(f"{resume_folder}/[!_]*") for resume_folder in resume_folders]))
