@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 from common.common import Common
-from test_data.test_data_details import TestingData
+from test_data.test_data_details import SrTestData
 
 class Elements:
         auto_rm_01_login = (By.ID, 'loginAs992286')

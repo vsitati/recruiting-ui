@@ -1,7 +1,7 @@
 import pytest
 import allure
 from ats_pages.login.login import Login
-from test_data.test_data_details import TestingData
+from test_data.test_data_details import SrTestData
 
 
 @pytest.mark.usefixtures("setup")
@@ -16,30 +16,30 @@ class TestAtsStandardLogin:
 
     @allure.description("Scenario Login with an Inactive User with valid credentials")
     def test_cannot_login_with_an_inactive_user(self, get_test_info):
-        username, password = TestingData.data[get_test_info.get("company")]["users"]["inactive"]
+        username, password = SrTestData.data[get_test_info.get("company")]["users"]["inactive"]
         invalid_credentials = dict(password=password, username=username)
         login = Login(driver=self.driver)
         login.do_login(get_test_info, cred=invalid_credentials)
 
         error_msg = login.get_text(locator=login.login_error)
-        assert error_msg == TestingData.login_validation.get("inactive_login_error", "")
+        assert error_msg == SrTestData.login_validation.get("inactive_login_error", "")
 
     @allure.description("Scenario Login with an Active User with an invalid username")
     def test_cannot_login_with_an_invalid_username(self, get_test_info):
-        username, password = TestingData.data[get_test_info.get("company")]["users"]["invalid_username"]
+        username, password = SrTestData.data[get_test_info.get("company")]["users"]["invalid_username"]
         invalid_credentials = dict(password=password, username=username)
         login = Login(driver=self.driver)
         login.do_login(get_test_info, cred=invalid_credentials)
 
         error_msg = login.get_text(locator=login.login_error)
-        assert error_msg == TestingData.login_validation.get("invalid_username_password_error", "")
+        assert error_msg == SrTestData.login_validation.get("invalid_username_password_error", "")
 
     @allure.description("Scenario Login with an Active User with an invalid password")
     def test_cannot_login_with_an_invalid_password(self, get_test_info):
-        username, password = TestingData.data[get_test_info.get("company")]["users"]["invalid_password"]
+        username, password = SrTestData.data[get_test_info.get("company")]["users"]["invalid_password"]
         invalid_credentials = dict(password=password, username=username)
         login = Login(driver=self.driver)
         login.do_login(get_test_info, cred=invalid_credentials)
 
         error_msg = login.get_text(locator=login.login_error)
-        assert error_msg == TestingData.login_validation.get("invalid_username_password_error", "")
+        assert error_msg == SrTestData.login_validation.get("invalid_username_password_error", "")

@@ -6,7 +6,7 @@ from cx_pages.login import Login
 from config import Config
 from ats_pages.login.login import Login as AtsLogin
 from cx_pages.cx_quick_apply import QuickApply
-from test_data.test_data_details import TestingData
+from test_data.test_data_details import SrTestData
 from ats_pages.left_menus import LeftMenus
 from ats_pages.candidates.advanced_search import CandidateAdvancedSearch
 from ats_pages.candidates.candidate_resume_profile import CandidateResumeProfile
@@ -46,7 +46,7 @@ class TestQuickApplyRandomJobExternalGerman:
         cs.open_url(portal_url)
 
         js = JobSearch(driver=self.driver)
-        text_data = TestingData.cx_portal_language_text.get(language, "")
+        text_data = SrTestData.cx_portal_language_text.get(language, "")
         assert text_data.get("search_input_placeholder_text") == js.get_job_search_input_placeholder_text()
         assert text_data.get("submit_resume_message") == js.get_submit_resume_message()
 
@@ -55,7 +55,7 @@ class TestQuickApplyRandomJobExternalGerman:
         assert job_title in js.get_title()
 
         qa = QuickApply(driver=self.driver)
-        td = TestingData()
+        td = SrTestData()
         form_details = td.get_quick_apply_form_data(parent_folder=Config.env_config["path_to_resumes"])
         qa.click_cx_job_apply_btn()
         qa.fill_in_quick_apply_form(**form_details)

@@ -2,7 +2,7 @@ import pytest
 import allure
 from openadmin_pages.login import Login
 from openadmin_pages.user_management import UserManagement
-from test_data.test_data_details import TestingData
+from test_data.test_data_details import SrTestData
 
 
 @pytest.mark.usefixtures("setup")
