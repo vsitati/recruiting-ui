@@ -24,7 +24,7 @@ class CandidateAdvancedSearch(Common, Elements):
                     return check_box_elem
 
         result = find_candidate_name(_candidate_name=candidate_name)
-
+        # TODO OPen submission and Same name
         if not result:
             pagination_parent_elem = self.driver.find_element_by_locator(self.pagination_parent)
             pagination_parent_elems = pagination_parent_elem.find_elements(*self.pagination_tags)

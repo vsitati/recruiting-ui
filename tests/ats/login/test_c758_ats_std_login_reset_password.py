@@ -3,7 +3,7 @@ import allure
 from ats_pages.login.login import Login
 from ats_pages.login.forget_password import ForgetPassword
 from ats_pages.login.change_password import ChangePassword
-from test_data.test_data_details import TestData
+from test_data.test_data_details import TestingData
 
 
 @pytest.mark.usefixtures("setup")
@@ -12,7 +12,7 @@ class TestAtsStdLoginResetPasswordTests:
     @allure.description("Can submit a valid username")
     @pytest.mark.dependency()
     def test_can_submit_a_valid_username(self, get_test_info):
-        user, *_ = TestData.data[get_test_info.get("company")]["users"]["for_password_change"]
+        user, *_ = TestingData.data[get_test_info.get("company")]["users"]["for_password_change"]
         login = Login(driver=self.driver)
         ats_url = login.get_env_url(info=get_test_info, app="ats")
         login.open_url(url=ats_url)
@@ -21,7 +21,7 @@ class TestAtsStdLoginResetPasswordTests:
         fp.enter_text(locator=fp.username, text=user)
         fp.click_submit_btn()
         assert fp.verify_account_verification_text() is True
-        body, attachments = fp.read_mailbox(subject_search_text="Reset Your Password")
+        body, attachments = fp.read_mailbox(sent_to="changeme@test.com")
         assert body != ''
         assert "change_me" in body
         assert "Username: change_me" in body
@@ -68,9 +68,9 @@ class TestAtsStdLoginResetPasswordTests:
         cp.open_url(url=reset_password_url)
         # TODO Must add a random name generator
         cp.do_change_password(new_password="Silkroad2022", confirm_password="silkroad2022")
-        assert cp.get_password_change_success_msg() == TestData.change_password_success_msg
+        assert cp.get_password_change_success_msg() == TestingData.change_password_success_msg
         body, attachments = cp.read_mailbox(subject_search_text="SilkRoad Recruiting password changed successfully")
         assert body != ''
         assert "change_me" in body
-        assert TestData.changed_password_success_email_body_text.format(user="change_me") in body
+        assert TestingData.changed_password_success_email_body_text.format(user="change_me") in body
         assert attachments == []

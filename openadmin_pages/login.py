@@ -1,5 +1,5 @@
 from selenium.webdriver.common.by import By
-from test_data.test_data_details import TestData
+from test_data.test_data_details import TestingData
 from common.common import Common
 
 class Elements:
@@ -14,7 +14,7 @@ class Login(Common, Elements):
 
     def do_login(self, env_info, cred=None):
         company = env_info.get("company")
-        username, password = TestData.data[company]["users"]["open_admin"]
+        username, password = TestingData.data[company]["users"]["open_admin"]
         if cred:
             if cred.get("username", ""):
                 username = cred.get("username", "")

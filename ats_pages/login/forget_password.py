@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 from common.common import Common
-from test_data.test_data_details import TestData
+from test_data.test_data_details import TestingData
 
 
 class Elements:
@@ -20,7 +20,7 @@ class ForgetPassword(Common, Elements):
 
     def verify_instruction_text(self):
         instruction_text = self.get_text(self.forget_password_instruction_text)
-        test_data_text = TestData.forget_password_text
+        test_data_text = TestingData.forget_password_text
         return instruction_text == test_data_text
 
     def forget_password_heading(self):
@@ -31,6 +31,6 @@ class ForgetPassword(Common, Elements):
 
     def verify_account_verification_text(self):
         account_verification_text = self.driver.find_element_by_locator(self.account_verification_text).text
-        test_data_text = TestData.account_verification_text
+        test_data_text = TestingData.account_verification_text
         return account_verification_text == test_data_text
 

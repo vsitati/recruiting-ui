@@ -63,14 +63,20 @@ class Common(Elements):
         return f"{protocol}://{env}{domain}/{path}"
 
     @allure.step("Reading Utility Mailbox")
-    def read_mailbox(self, subject_search_text, timeout=2, email_index=0):
+    def read_mailbox(self, subject_search_text="", sent_to="", timeout=2, email_index=0):
+        # TODO Search by Sent_to
         increment = 0.5
+        emails = []
         total_time = timeout / increment
+
         for i in range(int(total_time)):
             response = self.get_request(url=self.get_mailbox_url(), headers=self.headers)
 
-            emails = [x for x in response if
-                      subject_search_text in x["headers"]["Subject"].strip().replace("\r", "").replace("\n", "")]
+            if subject_search_text:
+                emails = [x for x in response if
+                          subject_search_text in x["headers"]["Subject"].strip().replace("\r", "").replace("\n", "")]
+            if sent_to:
+                emails = [x for x in response if x["headers"]["To"] == sent_to]
 
             if emails:
                 view_link = emails[email_index].get("viewLink", "")
