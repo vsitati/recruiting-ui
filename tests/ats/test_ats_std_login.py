@@ -3,7 +3,7 @@ import allure
 from ats_pages.login.login import Login
 from ats_pages.login.forget_password import ForgetPassword
 from ats_pages.login.change_password import ChangePassword
-from test_data.test_data_details import TestData
+from test_data.test_data_details import SrTestData
 
 
 @pytest.mark.usefixtures("setup")
@@ -23,7 +23,7 @@ class TestRecruitingAts:
         login.do_login(get_test_info, cred=invalid_credentials)
 
         error_msg = login.get_text(locator=login.login_error)
-        assert error_msg == TestData.login_validation.get("credentials_error", "")
+        assert error_msg == SrTestData.login_validation.get("credentials_error", "")
 
     @allure.description("Cannot login with an invalid password")
     def test_cannot_login_with_an_invalid_password(self, get_test_info):
@@ -32,17 +32,17 @@ class TestRecruitingAts:
         login.do_login(get_test_info, cred=invalid_credentials)
 
         error_msg = login.get_text(locator=login.login_error)
-        assert error_msg == TestData.login_validation.get("credentials_error", "")
+        assert error_msg == SrTestData.login_validation.get("credentials_error", "")
 
     @allure.description("Cannot login with an inactive user")
     def test_cannot_login_with_an_inactive_user(self, get_test_info):
-        username, password = TestData.data[get_test_info.get("company")]["users"]["inactive"]
+        username, password = SrTestData.data[get_test_info.get("company")]["users"]["inactive"]
         invalid_credentials = dict(password=password, username=username)
         login = Login(driver=self.driver)
         login.do_login(get_test_info, cred=invalid_credentials)
 
         error_msg = login.get_text(locator=login.login_error)
-        assert error_msg == TestData.login_validation.get("inactive_login_error", "")
+        assert error_msg == SrTestData.login_validation.get("inactive_login_error", "")
 
     @allure.description("Can open the forget password link")
     def test_can_open_forget_password_link(self, get_test_info):
@@ -67,7 +67,7 @@ class TestRecruitingAts:
     @allure.description("Can submit a valid username")
     @pytest.mark.dependency()
     def test_can_submit_a_valid_username(self, get_test_info):
-        user, *_ = TestData.data[get_test_info.get("company")]["users"]["for_password_change"]
+        user, *_ = SrTestData.data[get_test_info.get("company")]["users"]["for_password_change"]
         login = Login(driver=self.driver)
         ats_url = login.get_env_url(info=get_test_info, app="ats")
         login.open_url(url=ats_url)
@@ -123,9 +123,9 @@ class TestRecruitingAts:
         cp.open_url(url=reset_password_url)
         # TODO Must add a random name generator
         cp.do_change_password(new_password="Silkroad2022", confirm_password="silkroad2022")
-        assert cp.get_password_change_success_msg() == TestData.change_password_success_msg
+        assert cp.get_password_change_success_msg() == SrTestData.change_password_success_msg
         body, attachments = cp.read_mailbox(subject_search_text="SilkRoad Recruiting password changed successfully")
         assert body != ''
         assert "change_me" in body
-        assert TestData.changed_password_success_email_body_text.format(user="change_me") in body
+        assert SrTestData.changed_password_success_email_body_text.format(user="change_me") in body
         assert attachments == []

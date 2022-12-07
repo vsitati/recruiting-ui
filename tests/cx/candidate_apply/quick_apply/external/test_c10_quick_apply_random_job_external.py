@@ -6,7 +6,7 @@ from cx_pages.login import Login
 from config import Config
 from ats_pages.login.login import Login as AtsLogin
 from cx_pages.cx_quick_apply import QuickApply
-from test_data.test_data_details import TestData
+from test_data.test_data_details import SrTestData
 from ats_pages.left_menus import LeftMenus
 from ats_pages.candidates.advanced_search import CandidateAdvancedSearch
 from ats_pages.candidates.candidate_resume_profile import CandidateResumeProfile
@@ -52,11 +52,11 @@ class TestQuickApplyRandomJobExternal:
         assert job_title in js.get_title()
 
         qa = QuickApply(driver=self.driver)
-        td = TestData()
+        td = SrTestData()
         form_details = td.get_quick_apply_form_data(parent_folder=Config.env_config["path_to_resumes"])
         qa.click_cx_job_apply_btn()
         qa.fill_in_quick_apply_form(**form_details)
-
+# TODO add assert
         # Login to ATS
         ats_login = AtsLogin(driver=self.driver)
         ats_login.do_login(get_test_info)
