@@ -12,6 +12,7 @@ class Elements:
     apply_success_heading = (By.ID, "Apply_Success_PageHeading")
     apply_success_page_text = (By.ID, "Apply_Success_PageText")
     continue_btn = (By.ID, "Apply_Success_ExternalLink")
+    email_address_error = (By.ID, "Apply_ApplyToJob_Email-error")
 
 
 class QuickApply(Common, Elements):
@@ -28,3 +29,5 @@ class QuickApply(Common, Elements):
         self.driver.execute_script("arguments[0].scrollIntoView();", apply_elem)
         self.do_click(apply_elem)
 
+    def get_invalid_email_error_text(self):
+        return self.driver.find_element_by_locator(self.email_address_error).text
