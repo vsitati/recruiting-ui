@@ -3,18 +3,16 @@ import allure
 from cx_pages.career_sites import CareerSites
 from cx_pages.jobs_search import JobSearch
 from cx_pages.login import Login
-from config import Config
 from cx_pages.cx_quick_apply import QuickApply
-from test_data.test_data_details import TestData
 from cx_pages.career_site_settings.manage_general_settings import ManageGeneralSettings
 from cx_pages.career_site_settings.career_site_settings import CareerSiteSettings
 from cx_pages.career_site_settings.manage_languages import ManageLanguages
 
 
 @pytest.mark.usefixtures("setup")
-class TestQuickApplyRandomJobExternalIncorrectEmailAddress:
-    @allure.description("C12 - Random Job Quick Apply External Incorrect Email Address")
-    def test_random_job_quick_apply_external_incorrect_email_address(self, get_test_info):
+class TestQuickApplyRandomJobExternalFormNotCompleted:
+    @allure.description("C11 - Random Job Quick Apply External Form Not Completed")
+    def test_random_job_quick_apply_external_form_not_completed(self, get_test_info):
         language = "english"
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)
@@ -47,9 +45,12 @@ class TestQuickApplyRandomJobExternalIncorrectEmailAddress:
         assert job_title in js.get_title()
 
         qa = QuickApply(driver=self.driver)
-        td = TestData()
-        form_details = td.get_quick_apply_form_data(parent_folder=Config.env_config["path_to_resumes"])
-        form_details["email"] = "InvalidEmail"
         qa.click_cx_job_apply_btn()
-        qa.fill_in_quick_apply_form(**form_details)
-        assert qa.get_invalid_email_error_text() == "\"Email Address\" is invalid."
+        apply_elem = qa.driver.find_element_by_locator(qa.apply_btn)
+        qa.driver.execute_script("arguments[0].scrollIntoView();", apply_elem)
+        qa.do_click(apply_elem)
+
+        assert qa.get_invalid_firstname_error_text() == "\"First Name\" is required."
+        assert qa.get_invalid_lastname_error_text() == "\"Last Name\" is required."
+        assert qa.get_invalid_email_error_text() == "\"Email Address\" is required."
+        assert qa.get_invalid_resume_error_text() == "Please upload a Resume/CV file."
