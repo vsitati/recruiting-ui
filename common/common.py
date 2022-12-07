@@ -72,11 +72,16 @@ class Common(Elements):
         for i in range(int(total_time)):
             response = self.get_request(url=self.get_mailbox_url(), headers=self.headers)
 
-            if subject_search_text:
+            if subject_search_text and not sent_to:
                 emails = [x for x in response if
                           subject_search_text in x["headers"]["Subject"].strip().replace("\r", "").replace("\n", "")]
-            if sent_to:
+            if sent_to and not subject_search_text:
                 emails = [x for x in response if x["headers"]["To"] == sent_to]
+
+            if subject_search_text and sent_to:
+                emails = [x for x in response if
+                          subject_search_text in x["headers"]["Subject"].strip().replace("\r", "").replace("\n", "")
+                          and x["headers"]["To"] == sent_to]
 
             if emails:
                 view_link = emails[email_index].get("viewLink", "")
