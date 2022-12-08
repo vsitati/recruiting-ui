@@ -6,7 +6,7 @@ from cx_pages.jobs_search import JobSearch
 from cx_pages.login import Login
 from config import Config
 from cx_pages.cx_quick_apply import QuickApply
-from test_data.test_data_details import TestData
+from test_data.test_data_details import SrTestData
 from cx_pages.career_site_settings.manage_general_settings import ManageGeneralSettings
 from cx_pages.career_site_settings.career_site_settings import CareerSiteSettings
 from cx_pages.career_site_settings.manage_languages import ManageLanguages
@@ -48,7 +48,7 @@ class TestQuickApplyRandomJobExternalMaxFileSize:
         assert job_title in js.get_title()
 
         qa = QuickApply(driver=self.driver)
-        td = TestData()
+        td = SrTestData()
         form_details = td.get_quick_apply_form_data(parent_folder=Config.env_config["path_to_large_files"])
         qa.click_cx_job_apply_btn()
         qa.fill_in_quick_apply_form(**form_details)
