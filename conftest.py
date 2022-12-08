@@ -11,6 +11,8 @@ def pytest_addoption(parser):
     parser.addoption("--ats", action="store", default="ats_login", help="Choices for ATS: ['ats.ats_login', "
                                                                         "'ats.admin'(openadmin)]")
     parser.addoption("--cx", action="store", default="admin", help="cx.admin(admin page)")
+    parser.addoption("--browser_language", action="store", default="english", help="Choices for Browser Language: "
+                                                                                   "english, french, german, spanish")
 
 
 @pytest.fixture(scope='session')
@@ -19,14 +21,14 @@ def get_test_info(request):
         company=request.config.getoption("--company"),
         user_role=request.config.getoption("--user_role"),
         ats=request.config.getoption("--ats"),
-        cx=request.config.getoption("--cx")
+        cx=request.config.getoption("--cx"),
     )
 
 
 @pytest.fixture()
 def setup(request):
     config = Config.env_config
-    driver = Drivers.get_driver(config)
+    driver = Drivers.get_driver(config, request.config.getoption("--browser_language"))
     driver.implicitly_wait(config["timeout"])
     request.cls.driver = driver
     before_failed = request.session.testsfailed

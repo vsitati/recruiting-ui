@@ -5,10 +5,10 @@ from test_data.cx_candidate_apply.quick_apply.quick_apply_form_data import Quick
 from test_data.cx_candidate_apply.portal_langauge_text import PortalLanguageTextData
 
 
-class TestData(CompanyData, ValidationData,
-               QuickApplyForm, PortalLanguageTextData):
+class SrTestData(CompanyData, ValidationData,
+                  QuickApplyForm, PortalLanguageTextData):
     pass
 
 
-class TestDataJob(JobData):
+class SrTestDataJob(JobData):
     pass

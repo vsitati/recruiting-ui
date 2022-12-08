@@ -16,6 +16,7 @@ class Elements:
     lastname_error = (By.ID, "Apply_ApplyToJob_LastName-error")
     email_address_error = (By.ID, "Apply_ApplyToJob_Email-error")
     resume_error = (By.ID, "Apply_ApplyToJob_File-error")
+    file_upload_instuctions = (By.ID, "Apply_ApplyToJob_FileUploadInstructionsText")
 
 
 class QuickApply(Common, Elements):
@@ -43,3 +44,6 @@ class QuickApply(Common, Elements):
 
     def get_invalid_resume_error_text(self):
         return self.driver.find_element_by_locator(self.resume_error).text
+
+    def get_file_upload_instructions_text(self):
+        return self.driver.find_element_by_locator(self.file_upload_instuctions).text
