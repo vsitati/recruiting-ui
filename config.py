@@ -6,7 +6,7 @@ class Config:
         "poll_frequency": 0.5,
         "log_path": "./logs",
         "path_to_resumes": "test_data/resumes",
-        "path_to_large_files": "test_date/large_files",
+        "path_to_large_files": "test_data/large_files",
         "browser_language": "english",
         "env": {
             "ats": {

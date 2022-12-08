@@ -59,6 +59,7 @@ def get_resumes(parent_folder, specify_resume="", file_ext=""):
     """
     resume_folders = glob(os.path.abspath(f"{parent_folder}/[!_]*"))
     # [!_]: This is a regex to filter out any folder starting with an (_), for ex. __init__.py
+    # TODO update this so that files can be selected from the parent folder if a sub folder does not exist
     resume_files = list(chain.from_iterable([glob(f"{resume_folder}/[!_]*") for resume_folder in resume_folders]))
     # chain.from_iterable I am using to flatten a list of lists ex. list of list looks like [[1, 2, 3], [4, 5, 6]]
     # this will be flatten to look like: [1, 2, 3, 4, 5, 6]
