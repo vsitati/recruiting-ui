@@ -53,6 +53,7 @@ From the root of the repository, to run all tests:
     --user_role(default value: rm)               - Set the user role to execute the tests with
     --ats(default value: ats_login)              - Set the endpoint path to "/" by using the tag "ats_login" or "openadmin"
     --cx(default value: admin)                   - Set the endpoint path to "/admin" by using the tag "admin"
+    --browser_language(default value: english)   - Start the browser in a specific language by using the tags "english", "french", "german", or "spanish"
  
  _**NB:** All tests will run with the above default values_
 
@@ -70,6 +71,9 @@ _**NB:** The specified tests will run with the default values as seen above_
     pytest -k cx
 For a more detailed usage of the _-k_ argument, see _pytest --help_
 
+To run a test with a specific browser language:
+    
+    pytest -k <matching test name> --browser_language german
 ## Viewing Test Report:            
   To view the report, run:
   

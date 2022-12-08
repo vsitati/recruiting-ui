@@ -3,18 +3,18 @@ import allure
 from cx_pages.career_sites import CareerSites
 from cx_pages.jobs_search import JobSearch
 from cx_pages.login import Login
-from config import Config
 from cx_pages.cx_quick_apply import QuickApply
-from test_data.test_data_details import SrTestData
 from cx_pages.career_site_settings.manage_general_settings import ManageGeneralSettings
 from cx_pages.career_site_settings.career_site_settings import CareerSiteSettings
 from cx_pages.career_site_settings.manage_languages import ManageLanguages
+from utils.drivers import Drivers
+from config import Config
 
 
 @pytest.mark.usefixtures("setup")
-class TestQuickApplyRandomJobExternalIncorrectEmailAddress:
-    @allure.description("C12 - Random Job Quick Apply External Incorrect Email Address")
-    def test_random_job_quick_apply_external_incorrect_email_address(self, get_test_info):
+class TestQuickApplyRandomJobExternalDefaultPortalLanguage:
+    @allure.description("Random Job Quick Apply External Default Portal Language")
+    def test_random_job_quick_apply_external_default_portal_language(self, get_test_info):
         language = "english"
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)
@@ -38,6 +38,12 @@ class TestQuickApplyRandomJobExternalIncorrectEmailAddress:
         ml = ManageLanguages(driver=self.driver)
         ml.set_given_langauge_to_default_only(language=language, enable=True)
         ml.click_language_setting_save_btn()
+
+        # start a new driver, so we can confirm in different browser language
+        # todo find a better way of doing this than launching a new browser
+
+        config = Config.env_config
+        driver2 = Drivers.get_driver(config, "french")
         cs.open_url(portal_url)
         assert cs.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 
@@ -47,9 +53,8 @@ class TestQuickApplyRandomJobExternalIncorrectEmailAddress:
         assert job_title in js.get_title()
 
         qa = QuickApply(driver=self.driver)
-        td = SrTestData()
-        form_details = td.get_quick_apply_form_data(parent_folder=Config.env_config["path_to_resumes"])
-        form_details["email"] = "InvalidEmail"
         qa.click_cx_job_apply_btn()
-        qa.fill_in_quick_apply_form(**form_details)
-        assert qa.get_invalid_email_error_text() == "\"Email Address\" is invalid."
+        assert qa.get_file_upload_instructions_text() == "Upload a doc, docx, htm, html, odt, pdf, rtf, or txt " \
+                                                         "file. Attachment must be less than 10 MB."
+
+        driver2.quit()
