@@ -1,3 +1,4 @@
+
 import pytest
 import allure
 from cx_pages.career_sites import CareerSites
