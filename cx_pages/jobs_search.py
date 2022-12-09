@@ -34,11 +34,11 @@ class JobSearch(Elements, Common):
                 current_url = self.driver.current_url
                 self.open_url(f"{current_url}?page={random_page_number}")
                 title_elems = self.driver.find_elements_by_locator(self.job_titles)
-                title_elem = random.choice([title_elem for title_elem in title_elems])
+                title_elem = random.choice(title_elems)
                 return title_elem, title_elem.text
 
             title_elems = self.driver.find_elements_by_locator(self.job_titles)
-            return [title_elem for title_elem in title_elems if title_elem.text == _title]
+            return [(title_elem, title_elem.text) for title_elem in title_elems if title_elem.text == _title]
 
         if random_job:
             return get_title_elem(_random=True)
