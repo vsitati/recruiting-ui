@@ -38,7 +38,6 @@ class JobSearch(Elements, Common):
                 return title_elem, title_elem.text
 
             title_elems = self.driver.find_elements_by_locator(self.job_titles)
-            print(f"!!!!!!!!!!!!!!!!!!!TITLE_ELEMS: {title_elems}")
             return [(title_elem, title_elem.text) for title_elem in title_elems if title_elem.text == _title]
 
         if random_job:
