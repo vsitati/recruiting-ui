@@ -67,5 +67,5 @@ class TestQuickApplyRandomJobExternalAlreadyApplied:
         qa.click_cx_job_apply_btn()
         qa.fill_in_quick_apply_form(**form_details)
 
-        assert qa.already_applied_info() == "Already Applied "
+        assert qa.already_applied_info() == "Already Applied"
 
