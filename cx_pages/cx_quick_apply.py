@@ -18,6 +18,7 @@ class Elements:
     resume_error = (By.ID, "Apply_ApplyToJob_File-error")
     file_upload_instuctions = (By.ID, "Apply_ApplyToJob_FileUploadInstructionsText")
     large_file_error = (By.ID, "Apply_ApplyToJob_File_Validation")
+    already_applied = (By.ID, "Error_AlreadyApplied_Success_PageHeading")
 
 
 class QuickApply(Common, Elements):
@@ -51,3 +52,6 @@ class QuickApply(Common, Elements):
 
     def get_large_file_error(self):
         return self.driver.find_element_by_locator(self.large_file_error).text
+
+    def already_applied_info(self):
+        return self.driver.find_element_by_locator(self.already_applied).text

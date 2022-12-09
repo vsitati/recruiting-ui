@@ -24,6 +24,7 @@ class Elements:
     cx_apply_btn = (By.ID, "Base_BackToJobs_ApplyLink")
     all_hrefs = (By.XPATH, "//a[@href]")
     cx_settings_back_btn = (By.ID, "Admin_BackLink")
+    cx_view_other_job_openings = (By.ID, "Apply_Success_JobsLink")
 
 
 class Common(Elements):
@@ -284,3 +285,6 @@ class Common(Elements):
         elem = self.driver.find_element_by_locator(self.cx_settings_back_btn)
         self.driver.execute_script("arguments[0].scrollIntoView();", elem)
         return self.do_click(elem)
+
+    def click_view_other_job_openings(self):
+        return self.do_click(self.driver.find_element_by_locator(self.cx_view_other_job_openings))
