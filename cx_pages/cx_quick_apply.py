@@ -50,7 +50,7 @@ class QuickApply(Common, Elements):
     def get_file_upload_instructions_text(self):
         return self.driver.find_element_by_locator(self.file_upload_instuctions).text
 
-    def get_large_file_error(self):
+    def get_file_error(self):
         return self.driver.find_element_by_locator(self.large_file_error).text
 
     def already_applied_info(self):

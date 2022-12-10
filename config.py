@@ -7,6 +7,7 @@ class Config:
         "log_path": "./logs",
         "path_to_resumes": "test_data/resumes",
         "path_to_large_files": "test_data/large_files",
+        "path_to_invalid_files": "test_data/invalid_file",
         "browser_language": "english",
         "env": {
             "ats": {
