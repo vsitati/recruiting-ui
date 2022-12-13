@@ -5,9 +5,13 @@ from selenium.webdriver.common.by import By
 
 class Elements:
     firstname = (By.ID, 'Apply_ApplyToJob_FirstName')
+    firstname_label = (By.XPATH, "//label[@for='Apply_ApplyToJob_FirstName']")
     lastname = (By.ID, 'Apply_ApplyToJob_LastName')
+    lastname_label = (By.XPATH, "//label[@for='Apply_ApplyToJob_LastName']")
     email = (By.ID, 'Apply_ApplyToJob_Email')
+    email_label = (By.XPATH, "//label[@for='Apply_ApplyToJob_Email']")
     choose_file_btn = (By.ID, 'Apply_ApplyToJob_File')
+    choose_file_btn_label = (By.XPATH, "//label[@for='Apply_ApplyToJob_File']")
     apply_btn = (By.ID, 'Apply_ApplyToJob_SubmitButton')
     apply_success_heading = (By.ID, "Apply_Success_PageHeading")
     apply_success_page_text = (By.ID, "Apply_Success_PageText")
@@ -55,3 +59,15 @@ class QuickApply(Common, Elements):
 
     def already_applied_info(self):
         return self.driver.find_element_by_locator(self.already_applied).text
+
+    def get_firstname_label_text(self):
+        return self.driver.find_element_by_locator(self.firstname_label).text
+
+    def get_lastname_label_text(self):
+        return self.driver.find_element_by_locator(self.lastname_label).text
+
+    def get_email_label_text(self):
+        return self.driver.find_element_by_locator(self.email_label).text
+
+    def get_choose_file_btn_label_text(self):
+        return self.driver.find_element_by_locator(self.choose_file_btn_label).text
