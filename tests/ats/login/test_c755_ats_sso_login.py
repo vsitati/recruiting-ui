@@ -14,7 +14,7 @@ class TestAtsSsoLogin:
         login = Login(driver=self.driver)
         login.do_login(get_test_info, cred=sso_credentials, sso=True)
         sso_link, *_ = login.get_all_hrefs()
-        login.open_url(sso_link)
+        login.do_click(sso_link)
         login.switch_tab()
 
         assert login.is_element_visible(locator=login.quick_search) is True
