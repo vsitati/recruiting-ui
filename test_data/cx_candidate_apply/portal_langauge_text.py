@@ -12,7 +12,12 @@ class PortalLanguageTextData:
 
         "german": {
             "search_input_placeholder_text": "Stellensuche per Beschreibung",
-            "submit_resume_message": "Haben Sie keine passende Stelle gefunden? Reichen Sie Ihren Lebenslauf ein."
+            "submit_resume_message": "Haben Sie keine passende Stelle gefunden? Reichen Sie Ihren Lebenslauf ein.",
+            "firstname_label": "* Vorname",
+            "lastname_label": "* Nachname",
+            "email_label": "* E-Mail-Addresse",
+            "choose_file_btn_label": "* Lebenslauf",
+            "application_successful_message": "Vielen Dank für Ihre Bewerbung"
         },
 
         "spanish": {
