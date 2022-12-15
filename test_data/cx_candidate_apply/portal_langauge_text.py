@@ -22,6 +22,11 @@ class PortalLanguageTextData:
 
         "spanish": {
             "search_input_placeholder_text": "Buscar trabajos por palabras clave",
-            "submit_resume_message": "¿No encuentras la oportunidad perfecta? Enviar su CV/currículum."
+            "submit_resume_message": "¿No encuentras la oportunidad perfecta? Enviar su CV/currículum.",
+            "firstname_label": "* Nombre",
+            "lastname_label": "* Apellido",
+            "email_label": "* Dirección de correo electrónico",
+            "choose_file_btn_label": "* CV/currículum vitae",
+            "application_successful_message": "Gracias por solicitar"
         }
     }
