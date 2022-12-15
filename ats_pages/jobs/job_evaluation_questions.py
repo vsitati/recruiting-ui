@@ -9,7 +9,7 @@ class Elements:
     select_question_quickly_btn = (By.ID, "selectQuestionsQuicklyButton")
     update_question_settings_btn = (By.ID, "updateQuestionSettingsButton")
     return_to_job_lists_btn = ".lifesuite__button.lifesuite__float-right"
-    save_btn = (By.CSS_SELECTOR, "button.lifesuite__float-right:nth-child(1)")
+    save_btn = (By.XPATH, "//span[text()='Save']")
 
 
 class JobEvaluationQuestions(Common, Elements):

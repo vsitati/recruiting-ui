@@ -35,9 +35,12 @@ class JobData:
         "address_line_1": "123 Main St",
         "address_line_2": "address line 2",
         "city": "Atlanta",
+        "city_edit": "Miami",
         "state": "Georgia",
+        "state_edit": "Florida",
         "zip_postal_code": "22022",
         "additional_locations": "Chicago",
+        "additional_locations_edit": "Jacksonville",
 
         # Compliance
         "eeo1_job_category": "Professionals",
@@ -47,10 +50,12 @@ class JobData:
 
         # Position Requirements
         "travel": "Up to 25%",
+        "travel_edit": "No Travel Required",
         "per_diem_included": True,
         "minimum_salary": "55,555",
         "maximum_salary": "66,666",
         "salary_type": "Annually",
+        "salary_type_edit": "Bi-Weekly",
         "salary_currency": "USD (US Dollar)",
         "level_of_education": "Masters Degree",
         "years_of_experience": "5+ to 7 Years",
@@ -58,30 +63,38 @@ class JobData:
         # EmployeeReferrals.com
         "list_on_employeeReferralscom": True,
         "referral_bonus": "7,777",
+        "referral_bonus_edit": "8,888",
         "referral_points": 66,
         "keywords": "my keywords",
         "negative_keywords": "my negative keywords",
         "hot_job": True,
+        "hot_job_edit": False,
 
         # Description/Skills
         "job_description": "This is job description for testing.",
         "required_skills": "This is required skills for testing.",
+        "required_skills_edit": "Edit: This is required skills for testing.",
         "required_experience": "This is required experience for testing.",
+        "required_experience_edit": "Edit: This is required experience for testing.",
         "skills_candidate_should_possess": "This is Skills Candidate Should Possess for testing.",
         "notes_on_position": "This is Notes on Position for testing.",
 
         # Custom Fields
         "job_grade": "6",
+        "job_grade_edit": "8",
         "exemption_status": "exempt",
         # "newdate": "12/12/2022",
         "collect_eeo_for_this_job": "Yes",
+        "collect_eeo_for_this_job_edit": "No",
 
         # Department Information
         # "business_unit": "Lucee QA 01",
         "department": "Audit",
+        "department_edit": "Accounting",
         "hiring_manager": "Michael Baxter",
         "recruiting_team": "Monica Edwards",
         "industry": "Agriculture",
+        "industry_edit": "Education",
         "business_function": "Legal",
         "budgeted_salary": "99,999",
         "budgeted_currency": "USD (US Dollar)",
@@ -90,20 +103,26 @@ class JobData:
 
         # Fee Agency
         "select_fee_agency": ["Apple One", "Kelly Services", "Staffing Solutions"],
+        "select_fee_agency_edit": ["Apple One", "Remedy Staffing"],
 
         # Priority
-        "time_measurement": "Month(s)",
+        "time_measurement": "Week(s)",
+        "time_measurement_edit": "Month(s)",
         "no_more_than": "100",
         "no_less_than": "10",
 
         # Category
         "category_radio_list": "Call Center Representative",
+        "category_radio_list_edit": "Warehouse Clerk",
 
         # Attachments
         "upload_file": "\\\\srefs01.silkroad-eng.local\\Openhire_QA\\Documents\\Resume-Offer-Samples\\Resume_001.docx",
+        "upload_file_edit": "\\\\srefs01.silkroad-eng.local\\Openhire_QA\\Documents\\Resume-Offer-Samples\\Resume.txt",
+        "attachment_description": "my test description",
 
         # Evaluation Questions
         "cqe": "Interview - HR",
+        "cqe_edit": "Nursing",
 
         # Add Internal Notes
         "add_note": "This is a test internal note.",
