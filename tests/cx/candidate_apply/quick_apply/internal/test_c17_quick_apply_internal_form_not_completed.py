@@ -57,7 +57,6 @@ class TestQuickApplyRandomJobInternalFormNotCompleted:
         apply_elem = qa.driver.find_element_by_locator(qa.apply_btn)
         qa.driver.execute_script("arguments[0].scrollIntoView();", apply_elem)
         qa.do_click(apply_elem)
-        input("Enter...")
 
         assert qa.get_invalid_firstname_error_text() == "\"First Name\" is required."
         assert qa.get_invalid_lastname_error_text() == "\"Last Name\" is required."
