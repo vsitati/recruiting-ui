@@ -10,7 +10,11 @@ from test_data.test_data_details import SrTestData
 from cx_pages.career_site_settings.manage_general_settings import ManageGeneralSettings
 from cx_pages.career_site_settings.career_site_settings import CareerSiteSettings
 from cx_pages.career_site_settings.manage_languages import ManageLanguages
-
+from ats_pages.left_menus import LeftMenus
+from ats_pages.candidates.advanced_search import CandidateAdvancedSearch
+from ats_pages.candidates.candidate_resume_profile import CandidateResumeProfile
+from ats_pages.login.login import Login as AtsLogin
+from helpers.utils import get_basename_from_file_path
 
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyRandomJobInternalSupportedFiles:
@@ -54,3 +58,23 @@ class TestQuickApplyRandomJobInternalSupportedFiles:
         qa.click_cx_job_apply_btn()
         qa.fill_in_quick_apply_form(**form_details)
         assert qa.get_success_message() == "Thank You for Applying"
+
+# Login to ATS
+        ats_login = AtsLogin(driver=self.driver)
+        ats_login.do_login(get_test_info)
+
+        left_menu = LeftMenus(driver=self.driver)
+        left_menu.click_left_nav(left_menu.candidates)
+        left_menu.click_left_nav(left_menu.candidates_advanced_search)
+        cas = CandidateAdvancedSearch(driver=self.driver)
+        candidate_name = f"{form_details.get('firstname')} {form_details.get('lastname')}"
+        cas.open_candidate_profile(candidate_name=candidate_name)
+
+        crp = CandidateResumeProfile(driver=self.driver)
+        assert crp.verify_candidate_name() == candidate_name
+        assert crp.verify_candidate_email() == f"{form_details.get('email')}"
+
+        crp.open_attachment_tab()
+        crp.get_attachment_names()
+        attachments = crp.get_attachment_names()
+        assert get_basename_from_file_path(file_path=form_details.get("file_path")) in attachments
