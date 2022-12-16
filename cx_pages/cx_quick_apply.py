@@ -25,6 +25,7 @@ class Elements:
     already_applied = (By.ID, "Error_AlreadyApplied_Success_PageHeading")
 
 
+
 class QuickApply(Common, Elements):
     def __init__(self, driver):
         super().__init__(driver)
@@ -71,3 +72,6 @@ class QuickApply(Common, Elements):
 
     def get_choose_file_btn_label_text(self):
         return self.driver.find_element_by_locator(self.choose_file_btn_label).text
+
+    def get_success_message(self):
+        return self.driver.find_element_by_locator(self.apply_success_heading).text
