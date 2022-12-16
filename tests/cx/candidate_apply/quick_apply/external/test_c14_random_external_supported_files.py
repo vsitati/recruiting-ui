@@ -54,5 +54,3 @@ class TestQuickApplyRandomJobExternalSupportedFiles:
         qa.click_cx_job_apply_btn()
         qa.fill_in_quick_apply_form(**form_details)
         assert qa.get_success_message() == "Thank You for Applying"
-
-
