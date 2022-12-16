@@ -13,7 +13,11 @@ from cx_pages.career_site_settings.manage_languages import ManageLanguages
 
 
 @pytest.mark.usefixtures("setup")
+<<<<<<< HEAD
 class TestQuickApplyRandomJobExternalSupportedFiles:
+=======
+class TestQuickApplyRandomJobExternalInvalidFiles:
+>>>>>>> origin/Quick_apply_Internal_&_External_supported_files_c14._c20
     @allure.description("Random Job Quick Apply External Supported File Types")
     @pytest.mark.parametrize("file_type", ["pdf", "doc", "docx", "htm", "html", "odt", "rtf", "txt"])
     def test_random_job_quick_apply_external_supported_file_type(self, get_test_info, file_type):
