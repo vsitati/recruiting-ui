@@ -11,6 +11,7 @@ import base64
 from time import sleep
 from selenium.webdriver import Keys
 from helpers.webdriver_listener import WebDriverListener
+from selenium.webdriver.common.window import WindowTypes
 
 
 class Elements:
@@ -265,6 +266,12 @@ class Common(Elements):
 
     def switch_tab(self, index=1):
         self.driver.switch_to.window(self.driver.window_handles[index])
+
+    def new_tab(self):
+        self.driver.switch_to.new_window(WindowTypes.TAB)
+
+    def close_tab(self):
+        self.driver.close()
 
     def get_all_hrefs(self, specific_href=""):
         href_elms = self.driver.find_elements_by_locator(self.all_hrefs)

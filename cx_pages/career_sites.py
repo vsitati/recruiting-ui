@@ -1,4 +1,3 @@
-import allure
 from common.common import Common
 from selenium.webdriver.common.by import By
 
@@ -19,7 +18,7 @@ class CareerSites(Elements, Common):
         if site_section == "external":
             career_sites_parent, *_ = self.driver.find_elements_by_locator(self.board_lists)
         else:
-            # External
+            # Internal
             *_, career_sites_parent = self.driver.find_elements_by_locator(self.board_lists)
 
         # Career Site URL
@@ -41,7 +40,7 @@ class CareerSites(Elements, Common):
             return False
 
         if visible:
-            # ('UFT Auto - zNeksnGNrD', 'https://cx-qa.silkroad-eng.com/qaautomationonly/mXNZbGUopHElCSouHZXDQGPaSMZXCn',
+            # ('UFT Auto - zNeksnGNrD', 'https://cx-qa.silkroad-eng.com/qaautomationonly/mXNZbGUopHElCSouHZXDQGPaSMZXCn'
             # 'https://cx-qa.silkroad-eng.com/qaautomationonly/admin/JobBoards/Options?portalId=2404')
             result = [info for info in data if info[0] == site_name and info[1] is not None]
             return result[0]
@@ -50,4 +49,3 @@ class CareerSites(Elements, Common):
             # 'https://cx-qa.silkroad-eng.com/qaautomationonly/admin/JobBoards/Edit?portalId=0&portalCode=1605')
             return [info for info in data if info[1] is None]
             # TODO Need to add site name here, to publish a specific portal
-

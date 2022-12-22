@@ -202,7 +202,7 @@ class JobPositionDetails(Common, Elements):
         self.click_radio_yes_no(self.evergreen_job, JobData.job_data.get("evergreen_job_edit"))
         self.enter_text(self.internal_job_title, JobData.job_data.get("internal_job_title_edit"))
         self.enter_text(self.posted_job_title, JobData.job_data.get("posted_job_title_edit"))
-        self.select_from_dropdown(self.status, JobData.job_data.get("status_edit"))
+        # self.select_from_dropdown(self.status, JobData.job_data.get("status_edit"))
         self.select_from_dropdown(self.position_type, JobData.job_data.get("position_type_edit"))
         self.select_from_dropdown(self.job_duration, JobData.job_data.get("job_duration_edit"))
         self.pick_datepicker(self.expected_start_date, JobData.job_data.get("expected_start_date_edit"))

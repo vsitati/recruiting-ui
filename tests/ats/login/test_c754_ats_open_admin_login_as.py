@@ -15,8 +15,8 @@ class TestOpenAdminLoginAs:
 
         assert login.is_element_visible(locator=login.openadmin_banner) is True
 
-        loginAs = UserManagement(driver=self.driver)
-        loginAs.do_loginas(get_test_info)
+        user_management = UserManagement(driver=self.driver)
+        user_management.do_loginas(get_test_info)
 
-        loginAs.switch_tab(self)
-        assert login.is_element_visible(locator=loginAs.quick_search) is True
+        user_management.switch_tab()
+        assert login.is_element_visible(locator=user_management.quick_search) is True
