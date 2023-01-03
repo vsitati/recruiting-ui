@@ -20,7 +20,7 @@ class Elements:
     tracking_code = (By.ID, 'trackingcode')
     number_of_positions = (By.ID, "numofpositions")
     require_eForm_submission = [By.ID, "display_eform_"]
-    status = (By.ID, 'status')
+    posting_status = (By.ID, 'status')
     position_type = (By.ID, 'jobtype')
     job_level = (By.ID, "joblev")
     job_duration = (By.ID, 'duration')
@@ -85,6 +85,11 @@ class JobPositionDetails(Common, Elements):
     def __init__(self, driver):
         super().__init__(driver)
 
+    # class PostingStatus(enumerate):
+    #     Normal = "Normal - Int./Ext. Applicants"
+    #     External = "External"
+    #     Internal = "Internal"
+
     def fill_out_minimum_job_details_fields(self):
         # Job Administration
         self.select_from_dropdown(self.assigned_recruiter, JobData.job_data.get("assigned_recruiter"))
@@ -134,7 +139,7 @@ class JobPositionDetails(Common, Elements):
         self.enter_text(self.tracking_code, JobData.job_data.get("tracking_code"))
         self.enter_richtext_integer(self.number_of_positions, JobData.job_data.get("number_of_positions"))
         # self.click_radio_yes_no(self.require_eForm_submission, JobData.job_data.get("require_eForm_submission"))
-        self.select_from_dropdown(self.status, JobData.job_data.get("status"))
+        self.select_from_dropdown(self.posting_status, JobData.job_data.get("posting_status_normal"))
         self.select_from_dropdown(self.position_type, JobData.job_data.get("position_type"))
         self.select_from_dropdown(self.job_level, JobData.job_data.get("job_level"))
         self.select_from_dropdown(self.job_duration, JobData.job_data.get("job_duration"))
@@ -201,8 +206,7 @@ class JobPositionDetails(Common, Elements):
         self.pick_datepicker(self.closed_date, JobData.job_data.get("closed_date"))
         self.click_radio_yes_no(self.evergreen_job, JobData.job_data.get("evergreen_job_edit"))
         self.enter_text(self.internal_job_title, JobData.job_data.get("internal_job_title_edit"))
-        self.enter_text(self.posted_job_title, JobData.job_data.get("posted_job_title_edit"))
-        # self.select_from_dropdown(self.status, JobData.job_data.get("status_edit"))
+        # self.enter_text(self.posted_job_title, JobData.job_data.get("posted_job_title_edit"))
         self.select_from_dropdown(self.position_type, JobData.job_data.get("position_type_edit"))
         self.select_from_dropdown(self.job_duration, JobData.job_data.get("job_duration_edit"))
         self.pick_datepicker(self.expected_start_date, JobData.job_data.get("expected_start_date_edit"))
@@ -229,6 +233,19 @@ class JobPositionDetails(Common, Elements):
         self.enter_text(self.job_grade, JobData.job_data.get("job_grade_edit"))
         self.select_from_dropdown(self.collect_eeo_for_this_job, JobData.job_data.get("collect_eeo_for_this_job_edit"))
 
+        self.go_click(self.save_btn)
+
+        return
+
+    def edit_job_posting_status(self, posting_status):
+        self.select_from_dropdown(self.posting_status, posting_status)
+        self.go_click(self.save_btn)
+
+        return
+
+    def edit_job_title_clone(self):
+        self.enter_text(self.internal_job_title, JobData.job_data.get("internal_job_title_clone"))
+        self.enter_text(self.posted_job_title, JobData.job_data.get("posted_job_title_clone"))
         self.go_click(self.save_btn)
 
         return

@@ -181,15 +181,22 @@ class JobPositionDetailsView(Common, Elements):
 
         return
 
+    def verify_posting_status(self, job_status):
+        self.__comparing(self.driver.find_element_by_locator(self.status).text, job_status)
+
     def __comparing(self, source, target):
         if target is True:
             target = "Yes"
         target = str(target)
         if source == target:
             self.sr_logger.logger.info(f"-- {source} is correct")
+            assert source == target
         elif target in source:
             self.sr_logger.logger.info(f"-- {source} is correct")
+            assert target in source
         elif source in target:
             self.sr_logger.logger.info(f"-- {source} is correct")
+            assert source in target
         else:
             self.sr_logger.logger.error(f"@@ {source} is NOT correct")
+            # raise Exception(f"{source} is NOT correct")
