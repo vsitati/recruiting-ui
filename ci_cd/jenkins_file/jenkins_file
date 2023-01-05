@@ -1,0 +1,15 @@
+pipeline {
+   agent {
+        node {
+            label "RecruitingQA'
+        }
+    }
+
+   stages {
+      stage('Hello') {
+         steps {
+            echo 'Hello World'
+         }
+      }
+   }
+}
