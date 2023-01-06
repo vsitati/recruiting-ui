@@ -2,8 +2,12 @@ pipeline {
    agent {
         node {
             label 'RecruitingQA'
-            customWorkspace 'workspace\\recruiting'
+            customWorkspace 'workspace\\recruiting_qa'
         }
+    }
+    environment {
+    JenkinsNode = "RecruitingQA"
+    Workspace= "recruiting_qa_${env.BRANCH_NAME}"
     }
 
    stages {
