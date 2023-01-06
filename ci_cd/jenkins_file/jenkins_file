@@ -2,6 +2,7 @@ pipeline {
    agent {
         node {
             label 'RecruitingQA'
+            customWorkspace 'C:\jenkins'
         }
     }
 
