@@ -8,7 +8,11 @@ pipeline {
    stages {
       stage('Create Python Virtual Env and install libraries') {
          steps {
-          powershell script: "ci_cd\\setup\\install_libraries.ps1"
+          bat """
+              python -m venv .env
+              source ./.env/bin/activate
+              python -m pip install -r requirements.txt
+          """
          }
       }
    }
