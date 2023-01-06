@@ -6,9 +6,13 @@ pipeline {
     }
 
    stages {
-      stage('Hello') {
+      stage('Create Python Virtual Env and install libraries') {
          steps {
-            echo 'Hello World'
+          sh """
+              python -m venv .env
+              source ./.env/bin/activate
+              python -m pip install -r requirements.txt
+          """
          }
       }
    }
