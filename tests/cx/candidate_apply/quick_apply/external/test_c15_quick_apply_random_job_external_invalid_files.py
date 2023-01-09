@@ -52,6 +52,5 @@ class TestQuickApplyRandomJobExternalInvalidFiles:
         form_details = td.get_quick_apply_form_data(parent_folder=Config.env_config["path_to_invalid_files"])
         qa.click_cx_job_apply_btn()
         qa.fill_in_quick_apply_form(**form_details)
-        input("enter...")
         assert qa.get_file_error() == "The file type for Resume/CV is invalid. Upload a doc, docx, htm, html, odt, pdf, rtf, txt file."
 
