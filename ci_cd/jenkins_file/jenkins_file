@@ -9,9 +9,8 @@ pipeline {
       stage('Create Python Virtual Env and install libraries') {
          steps {
           bat """
-              C:\\python\\python.exe -m venv .env
-              source ./.env/bin/activate
-              python -m pip install -r requirements.txt
+              python -m venv .env
+              ./.env/Scripts/activate
           """
          }
       }
