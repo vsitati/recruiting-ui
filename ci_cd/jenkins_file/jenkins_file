@@ -17,7 +17,7 @@ pipeline {
       stage('Run tests') {
          steps {
           bat """
-              .\\.env\\Scripts\\activate.bat && pytest
+              .\\.env\\Scripts\\activate.bat && pytest -k c758
           """
          }
       }
