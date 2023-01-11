@@ -20,7 +20,7 @@ class TestAtsStdLoginResetPasswordTests:
         fp = ForgetPassword(driver=self.driver)
         fp.enter_text(locator=fp.username, text=user)
         fp.click_submit_btn()
-        assert fp.verify_account_verification_text() is True
+        assert SrTestData.account_verification_text == fp.verify_account_verification_text()
         body, attachments = fp.read_mailbox(subject_search_text="Reset Your Password", sent_to="changeme@test.com")
         assert body != ''
         assert "change_me" in body
