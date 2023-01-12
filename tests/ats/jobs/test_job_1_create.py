@@ -11,10 +11,12 @@ from ats_pages.jobs.job_evaluation_questions import JobEvaluationQuestions
 
 
 @pytest.mark.usefixtures("setup")
-class TestATSCreateJob:
-    @allure.title("ATS Create Job Tests")
-    @allure.description("Create a Standard Job")
-    def test_create_standard_job(self, get_test_info):
+class TestJobCreate:
+    # @pytest.mark.skip()
+    @pytest.mark.dependency()
+    @allure.title("ATS Create a Job")
+    @allure.description("Create a Standard Job - JIRA: RND-7268")
+    def test_job_create(self, get_test_info):
         login = Login(driver=self.driver)
         login.do_login(get_test_info)
 
@@ -23,27 +25,22 @@ class TestATSCreateJob:
         left_menu.click_left_nav_sub(left_menu.create_job_postings)
 
         job_position_details = JobPositionDetails(self.driver)
-        job_position_details.fill_out_all()
-        # job_position_details.fill_out_minimum()
+        job_position_details.fill_out_all_job_details_fields()
+        # job_position_details.fill_out_minimum_job_details_fields()
 
         job_department_budget = JobDepartmentBudget(self.driver)
-        job_department_budget.fill_out_all()
+        job_department_budget.fill_out_all_job_departments_fields()
 
         job_priority = JobPriority(self.driver)
         job_priority.setup_priority()
 
         job_category = JobCategory(self.driver)
-        job_category.select_a_category()
+        job_category.select_category()
 
         job_attachments = JobAttachments(self.driver)
-        job_attachments.upload_a_file()
+        job_attachments.upload_file()
 
         job_evaluation_questions = JobEvaluationQuestions(self.driver)
-        job_evaluation_questions.select_a_cqe()
+        job_evaluation_questions.select_cqe()
 
         return
-
-    @pytest.mark.skip
-    @allure.description("Verify the Job in ATS")
-    def test_verify_job_in_ats(self, get_test_info):
-        pass
