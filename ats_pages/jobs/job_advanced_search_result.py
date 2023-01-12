@@ -30,7 +30,7 @@ class JobAdvancedSearchResult(Common, Elements):
 
     def open_job(self, internal_job_title):
         def _find_job_name(_job_name):
-            all_hrefs = elm_result_sheet.find_elements(By.XPATH, "//a[@href]")
+            all_hrefs = self.get_all_hrefs()
             for elm in all_hrefs:
                 if elm.get_attribute("text") == internal_job_title:
                     self.do_click(elm)
