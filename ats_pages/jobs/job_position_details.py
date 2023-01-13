@@ -33,7 +33,7 @@ class Elements:
     address_line_2 = (By.ID, "addressLine2")
     city = (By.ID, "city")
     state = (By.ID, "state")
-    zip_postal_code = (By.ID, "postal_code")
+    zip_postal_code = (By.NAME, "zip")
     additional_locations = (By.ID, "additionalLocations_input")
 
     # Compliance
@@ -89,40 +89,6 @@ class JobPositionDetails(Common, Elements):
     #     Normal = "Normal - Int./Ext. Applicants"
     #     External = "External"
     #     Internal = "Internal"
-
-    def fill_out_minimum_job_details_fields(self):
-        # Job Administration
-        self.select_from_dropdown(self.assigned_recruiter, JobData.job_data.get("assigned_recruiter"))
-
-        # Job Information
-        self.enter_text(self.internal_job_title, JobData.job_data.get("internal_job_title"))
-        self.enter_text(self.posted_job_title, JobData.job_data.get("posted_job_title"))
-        self.enter_text(self.tracking_code, JobData.job_data.get("tracking_code"))
-
-        # Location Details
-        self.select_from_dropdown(self.country, JobData.job_data.get("country"))
-        self.enter_text(self.address_line_1, JobData.job_data.get("address_line_1"))
-        self.enter_text(self.address_line_2, JobData.job_data.get("address_line_2"))
-        self.enter_text(self.city, JobData.job_data.get("city"))
-        self.select_from_dropdown(self.state, JobData.job_data.get("state"))
-        self.enter_text(self.zip_postal_code, JobData.job_data.get("zip_postal_code"))
-
-        # Compliance
-        # Position Requirements
-
-        # EmployeeReferrals.com
-        self.enter_richtext_integer(self.referral_bonus, JobData.job_data.get("referral_bonus"))
-        self.enter_richtext_integer(self.referral_points, JobData.job_data.get("referral_points"))
-
-        # Description/Skills
-        self.enter_richtext(self.job_description, JobData.job_data.get("job_description"))
-
-        # Custom Fields
-        self.select_from_dropdown(self.exemption_status, JobData.job_data.get("exemption_status"))
-        self.select_from_dropdown(self.collect_eeo_for_this_job, JobData.job_data.get("collect_eeo_for_this_job"))
-
-        # Buttons
-        self.go_click(self.continue_btn)
 
     def fill_out_all_job_details_fields(self):
         # Job Administration
@@ -198,6 +164,33 @@ class JobPositionDetails(Common, Elements):
         sleep(self.sleep_time)
         self.go_click(self.continue_btn)
 
+    def fill_out_required_job_details_fields(self):
+        # Job Administration
+        self.select_from_dropdown(self.assigned_recruiter, JobData.job_data.get("assigned_recruiter"))
+
+        # Job Information
+        self.enter_text(self.internal_job_title, JobData.job_data.get("internal_job_title"))
+        self.enter_text(self.posted_job_title, JobData.job_data.get("posted_job_title"))
+
+        # Location Details
+        self.select_from_dropdown(self.country, JobData.job_data.get("country"))
+        self.enter_text(self.city, JobData.job_data.get("city"))
+        self.select_from_dropdown(self.state, JobData.job_data.get("state"))
+        self.enter_text(self.zip_postal_code, JobData.job_data.get("zip_postal_code"))
+
+        # Compliance
+        # Position Requirements
+        # EmployeeReferrals.com
+        self.enter_richtext_integer(self.referral_bonus, JobData.job_data.get("referral_bonus"))
+
+        # Description/Skills
+        self.enter_richtext(self.job_description, JobData.job_data.get("job_description"))
+
+        # Custom Fields
+        self.select_from_dropdown(self.exemption_status, JobData.job_data.get("exemption_status"))
+        self.select_from_dropdown(self.collect_eeo_for_this_job, JobData.job_data.get("collect_eeo_for_this_job"))
+        return
+
     def edit_job_details_fields(self):
         # Job Administration
         self.select_from_dropdown(self.replies_emailed_to, JobData.job_data.get("replies_emailed_to_edit"))
@@ -234,18 +227,91 @@ class JobPositionDetails(Common, Elements):
         self.select_from_dropdown(self.collect_eeo_for_this_job, JobData.job_data.get("collect_eeo_for_this_job_edit"))
 
         self.go_click(self.save_btn)
-
         return
 
     def edit_job_posting_status(self, posting_status):
         self.select_from_dropdown(self.posting_status, posting_status)
         self.go_click(self.save_btn)
-
         return
 
     def edit_job_title_clone(self):
         self.enter_text(self.internal_job_title, JobData.job_data.get("internal_job_title_clone"))
         self.enter_text(self.posted_job_title, JobData.job_data.get("posted_job_title_clone"))
         self.go_click(self.save_btn)
+        return
 
+    def edit_job_template(self):
+        self.select_auto_complete(self.job_template, JobData.job_data.get("job_template"))
+        sleep(self.sleep_time)
+        self.go_click(self.save_btn)
+        return
+
+    def select_job_temp_remote_country(self):
+        self.select_auto_complete(self.job_template, JobData.job_data.get("job_template_remote_country"))
+        sleep(self.sleep_time)
+        assert self.is_element_displayed(self.country)
+        assert self.verify_dropdown_selection(self.country, "Remote (Worldwide)")
+        self.__verify_hide_by_remote('country')
+        return
+
+    def select_job_temp_remote_state(self):
+        self.select_auto_complete(self.job_template, JobData.job_data.get("job_template_remote_state"))
+        sleep(self.sleep_time)
+        assert self.is_element_displayed(self.country)
+        assert self.verify_dropdown_selection(self.country, JobData.job_data.get("country"))
+        assert self.is_element_displayed(self.state)
+        assert self.verify_dropdown_selection(self.state, "REMOTE")
+        self.__verify_hide_by_remote()
+        return
+
+    def select_remote_country(self):
+        self.select_from_dropdown(self.country, "Remote (Worldwide)")
+        sleep(self.sleep_time)
+        self.__verify_hide_by_remote('country')
+        return
+
+    def select_remote_state(self):
+        self.select_from_dropdown(self.country, JobData.job_data.get("country"))
+        sleep(self.sleep_time)
+        self.select_from_dropdown(self.state, "REMOTE")
+        sleep(self.sleep_time)
+        self.__verify_hide_by_remote()
+        return
+
+    def select_job_location_remote_country(self):
+        self.select_auto_complete(self.job_location_code, JobData.job_data.get("job_location_code_remote_worldwide"))
+        sleep(self.sleep_time)
+        assert self.is_element_displayed(self.country)
+        assert self.verify_dropdown_selection(self.country, "Remote (Worldwide)")
+
+        self.__verify_hide_by_remote('country')
+        return
+
+    def select_job_location_remote_state(self):
+        self.select_auto_complete(self.job_location_code, JobData.job_data.get("job_location_code_remote_US_wide"))
+        sleep(self.sleep_time)
+        assert self.is_element_displayed(self.country)
+        assert self.verify_dropdown_selection(self.country, JobData.job_data.get("country"))
+        assert self.is_element_displayed(self.state)
+        assert self.verify_dropdown_selection(self.state, "REMOTE")
+
+        self.__verify_hide_by_remote()
+        return
+
+    def __verify_hide_by_remote(self, type='state'):
+        assert self.is_element_displayed(self.address_line_1) is False
+        assert self.is_element_displayed(self.address_line_2) is False
+        assert self.is_element_displayed(self.city) is False
+        assert self.is_element_displayed(self.zip_postal_code) is False
+        if type == 'country':
+            assert self.is_element_displayed(self.state) is False
+
+    def click_continue(self):
+        # Buttons
+        self.go_click(self.continue_btn)
+        return
+
+    def click_save(self):
+        # Buttons
+        self.go_click(self.save_btn)
         return

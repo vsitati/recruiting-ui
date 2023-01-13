@@ -54,6 +54,11 @@ class JobDepartmentBudget(Common, Elements):
         sleep(self.sleep_time)
         self.go_click(self.continue_btn)
 
+    def fill_out_required_job_departments_fields(self):
+        self.select_auto_complete(self.department, JobData.job_data.get("department"))
+        self.select_auto_complete(self.hiring_manager, JobData.job_data.get("hiring_manager"))
+        self.go_click(self.continue_btn)
+
     def edit_job_departments(self):
         # Department Information
         self.select_auto_complete(self.department, JobData.job_data.get("department_edit"))

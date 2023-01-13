@@ -26,7 +26,6 @@ class TestJobCreate:
 
         job_position_details = JobPositionDetails(self.driver)
         job_position_details.fill_out_all_job_details_fields()
-        # job_position_details.fill_out_minimum_job_details_fields()
 
         job_department_budget = JobDepartmentBudget(self.driver)
         job_department_budget.fill_out_all_job_departments_fields()
@@ -36,6 +35,7 @@ class TestJobCreate:
 
         job_category = JobCategory(self.driver)
         job_category.select_category()
+        # upon this step, the job is created
 
         job_attachments = JobAttachments(self.driver)
         job_attachments.upload_file()
