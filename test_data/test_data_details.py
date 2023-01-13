@@ -9,7 +9,3 @@ from test_data.cx_candidate_apply.portal_langauge_text import PortalLanguageText
 class SrTestData(CompanyData, ValidationData,
                  QuickApplyForm, PortalLanguageTextData):
     pass
-
-
-# class SrTestDataJob(JobData):
-#     pass
