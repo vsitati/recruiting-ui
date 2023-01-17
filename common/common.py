@@ -133,6 +133,13 @@ class Common(Elements):
         select = Select(self.driver.find_element_by_locator(locator))
         select.select_by_visible_text(text)
 
+    def verify_dropdown_selection(self, locator, text):
+        select = Select(self.driver.find_element_by_locator(locator))
+        if select.first_selected_option.text == text:
+            return True
+        else:
+            return False
+
     def select_multiselect_list(self, locator, text):
         elm = self.driver.find_element_by_locator(locator)
         my_select = Select(elm)
@@ -173,11 +180,17 @@ class Common(Elements):
         else:
             return f"{protocol}://{company}{domain}{path}"
 
+    # By Jason: NOT always correct, please use is_element_displayed
     def is_element_visible(self, locator):
         try:
             return self.driver.find_element_by_locator(locator) and True
         except Exception as e:  # TODO Need to add proper exception
             return False
+
+    def is_element_displayed(self, locator):
+        is_display = self.driver.find_element_by_locator(locator).is_displayed()
+        if is_display: return True
+        else: return False
 
     def get_text(self, locator):
         try:

@@ -32,6 +32,9 @@ class JobAttachments(Common, Elements):
 
         self.go_click(self.continue_btn)
 
+    def upload_required_file(self):
+        self.go_click(self.continue_btn)
+
     def update_file(self):
         self.go_click(self.upload_files_btn)
         elm = self.driver.find_element_by_locator(Elements.file)

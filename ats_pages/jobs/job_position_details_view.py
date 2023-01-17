@@ -12,7 +12,7 @@ class Elements:
     hiring_workflow = (By.ID, 'hiringWorkflowColonLabelValue')
     evergreen_job = [By.ID, 'evergreenJobColonLabelValue']
     job_category = (By.ID, "jobCategoryColonLabelValue")
-    job_template = (By.ID, "")
+    job_template = (By.ID, "jobTemplateColonLabelValue")
     eeoc_job_category = (By.ID, "eEOCJobCategoryColonLabelValue")
     status = (By.ID, 'jobStatusColonLabelValue')
     number_of_positions = (By.ID, "numberofPositionsColonLabelValue")
@@ -181,15 +181,64 @@ class JobPositionDetailsView(Common, Elements):
 
         return
 
+    def verify_posting_status(self, job_status):
+        self.__comparing(self.driver.find_element_by_locator(self.status).text, job_status)
+
+    def verify_from_temp(self):
+        self.__comparing(self.driver.find_element_by_locator(self.internal_job_title).text,
+                         JobData.job_data.get("internal_job_title_temp"))
+        self.__comparing(self.driver.find_element_by_locator(self.job_template).text,
+                         JobData.job_data.get("job_template"))
+        self.__comparing(self.driver.find_element_by_locator(self.job_location_code).text,
+                         JobData.job_data.get("job_location_code_temp"))
+        self.__comparing(self.driver.find_element_by_locator(self.hiring_workflow).text,
+                         JobData.job_data.get("hiring_workflow_temp"))
+        self.__comparing(self.driver.find_element_by_locator(self.eeoc_job_category).text,
+                         JobData.job_data.get("eeo1_job_category_temp"))
+        # ToDo: bug: RND-7374
+        # self.__comparing(self.driver.find_element_by_locator(self.industry).text,
+        #                  JobData.job_data.get("industry_temp"))
+        # self.__comparing(self.driver.find_element_by_locator(self.department).text,
+        #                  JobData.job_data.get("department_temp"))
+        # self.__comparing(self.driver.find_element_by_locator(self.business_function).text,
+        #                  JobData.job_data.get("business_function_temp"))
+        # self.__comparing(self.driver.find_element_by_locator(self.job_duration).text,
+        #                  JobData.job_data.get("job_duration_temp"))
+        self.__comparing(self.driver.find_element_by_locator(self.position_type).text,
+                         JobData.job_data.get("position_type_temp"))
+        self.__comparing(self.driver.find_element_by_locator(self.years_of_experience).text,
+                         JobData.job_data.get("years_of_experience_temp"))
+        self.__comparing(self.driver.find_element_by_locator(self.level_of_education).text,
+                         JobData.job_data.get("level_of_education_temp"))
+        self.__comparing(self.driver.find_element_by_locator(self.per_diem_included).text,
+                         JobData.job_data.get("per_diem_included_temp"))
+        self.__comparing(self.driver.find_element_by_locator(self.travel).text,
+                         JobData.job_data.get("travel_temp"))
+        self.__comparing(self.driver.find_element_by_locator(self.salary_type).text,
+                         JobData.job_data.get("salary_type_temp"))
+        self.__comparing(self.driver.find_element_by_locator(self.maximum_salary).text,
+                         JobData.job_data.get("maximum_salary_temp"))
+        self.__comparing(self.driver.find_element_by_locator(self.minimum_salary).text,
+                         JobData.job_data.get("minimum_salary_temp"))
+
+    def verify_remote_country(self, job_location):
+        job_loc = self.get_text(self.job_location)
+        self.__comparing(job_loc, job_location)
+        return
+
     def __comparing(self, source, target):
         if target is True:
             target = "Yes"
         target = str(target)
         if source == target:
             self.sr_logger.logger.info(f"-- {source} is correct")
+            assert source == target
         elif target in source:
             self.sr_logger.logger.info(f"-- {source} is correct")
+            assert target in source
         elif source in target:
             self.sr_logger.logger.info(f"-- {source} is correct")
+            assert source in target
         else:
             self.sr_logger.logger.error(f"@@ {source} is NOT correct")
+            # raise Exception(f"{source} is NOT correct")

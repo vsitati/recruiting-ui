@@ -28,7 +28,7 @@ class CandidateAdvancedSearch(Common, Elements):
         if not result:
             pagination_parent_elem = self.driver.find_element_by_locator(self.pagination_parent)
             pagination_parent_elems = pagination_parent_elem.find_elements(*self.pagination_tags)
-            total_pages = len(pagination_parent_elems[1:-1]) + 1
+            total_pages = len(pagination_parent_elems[1:-1])
             for i in range(total_pages):
                 next_page_elem = self.driver.find_element_by_locator(self.next_page)
                 self.driver.execute_script("arguments[0].scrollIntoView();", next_page_elem)

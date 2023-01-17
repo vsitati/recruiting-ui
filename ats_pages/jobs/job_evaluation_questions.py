@@ -48,3 +48,6 @@ class JobEvaluationQuestions(Common, Elements):
         elm_btn = self.driver.find_element_by_locator(self.update_question_settings_btn)
         elm = self.driver.find_element(locate_with(By.CSS_SELECTOR, self.return_to_job_lists_btn).to_left_of(elm_btn))
         self.do_click(elm)
+
+    def click_return_to_job_lists_btn(self):
+        self.go_click(self.return_to_job_lists_btn)

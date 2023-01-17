@@ -5,10 +5,10 @@ from common.common import Common
 class Elements:
     edit_search = (By.XPATH, "//span[contains(@data-expandlabel, 'Edit Search')]")
     filter_status = (By.ID, "isActive")
-    apply_filter_btn = (By.ID, "applyFiltersLabel")
+    apply_filter_btn = (By.ID, "applyFilters")
 
 
-class JobAdvancedSearch(Common, Elements):
+class JobAdvancedSearchEdit(Common, Elements):
     def __init__(self, driver):
         super().__init__(driver)
 
