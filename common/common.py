@@ -295,3 +295,4 @@ class Common(Elements):
 
     def click_view_other_job_openings(self):
         return self.do_click(self.driver.find_element_by_locator(self.cx_view_other_job_openings))
+
