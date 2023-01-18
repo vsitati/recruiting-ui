@@ -29,7 +29,7 @@ class TestJobEditFromTemp:
         job_position_details_view = JobPositionDetailsView(self.driver)
         job_position_details_view.verify_header()
 
-        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditThisJob)
+        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditThisJob, page_header.OnPage.Job_Details)
 
         job_position_details = JobPositionDetails(self.driver)
         job_position_details.edit_job_template()
