@@ -5,13 +5,8 @@ from cx_pages.career_sites import CareerSites
 from cx_pages.jobs_search import JobSearch
 from cx_pages.login import Login
 from config import Config
-from ats_pages.login.login import Login as AtsLogin
 from cx_pages.cx_quick_apply import QuickApply
 from test_data.test_data_details import SrTestData
-from ats_pages.left_menus import LeftMenus
-from ats_pages.candidates.advanced_search import CandidateAdvancedSearch
-from ats_pages.candidates.candidate_resume_profile import CandidateResumeProfile
-from helpers.utils import get_basename_from_file_path
 from cx_pages.career_site_settings.manage_general_settings import ManageGeneralSettings
 from cx_pages.career_site_settings.career_site_settings import CareerSiteSettings
 from cx_pages.career_site_settings.manage_languages import ManageLanguages
