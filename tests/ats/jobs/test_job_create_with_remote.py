@@ -71,7 +71,7 @@ class TestJobCreateWithRemote:
         job_position_details_view.verify_remote_country(job_title)
 
         # Edit the remote job
-        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditThisJob)
+        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditThisJob, page_header.OnPage.Job_Details)
 
         job_position_details.select_job_temp_remote_state()
         job_position_details.click_save()

@@ -1,6 +1,8 @@
 from common.common import Common
 from selenium.webdriver.common.by import By
 from test_data.test_data_details import JobData
+from config import Config
+from helpers.utils import get_resumes
 
 
 class Elements:
@@ -23,8 +25,9 @@ class JobAttachments(Common, Elements):
 
     def upload_file(self):
         self.go_click(self.upload_files_btn)
-        elm = self.driver.find_element_by_locator(Elements.file)
-        upload_file = JobData.job_data.get("upload_file")
+        elm = self.driver.find_element_by_locator(self.file)
+        # upload_file = JobData.job_data.get("upload_file")
+        upload_file = get_resumes(Config.env_config["path_to_resumes"], specify_resume="Resume_001.docx")
         elm.send_keys(upload_file)
 
         self.enter_text(self.description, JobData.job_data.get("attachment_description"))
@@ -37,8 +40,9 @@ class JobAttachments(Common, Elements):
 
     def update_file(self):
         self.go_click(self.upload_files_btn)
-        elm = self.driver.find_element_by_locator(Elements.file)
-        upload_file = JobData.job_data.get("upload_file_edit")
+        elm = self.driver.find_element_by_locator(self.file)
+        # upload_file = JobData.job_data.get("upload_file_edit")
+        upload_file = get_resumes(Config.env_config["path_to_resumes"], specify_resume="resume_text.txt")
         elm.send_keys(upload_file)
 
         self.enter_text(self.description, JobData.job_data.get("attachment_description"))

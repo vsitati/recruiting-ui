@@ -37,38 +37,43 @@ class TestJobEdit:
         job_position_details_view = JobPositionDetailsView(self.driver)
         job_position_details_view.verify_header()
 
-        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditThisJob)
+        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditThisJob, page_header.OnPage.Job_Details)
 
         job_position_details = JobPositionDetails(self.driver)
         job_position_details.edit_job_details_fields()
         job_position_details_view.verify_header()
 
-        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditThisJob)
-        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditJobPostingDepartmentBudgetDetails, "job_edit")
+        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditThisJob, page_header.OnPage.Job_Details)
+        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditJobPostingDepartmentBudgetDetails,
+                                         page_header.OnPage.Job_Edit)
 
         job_department_budget = JobDepartmentBudget(self.driver)
         job_department_budget.edit_job_departments()
         job_position_details_view.verify_header()
 
-        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditThisJob)
-        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditJobPostingPositionPriority, "job_edit")
+        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditThisJob, page_header.OnPage.Job_Details)
+        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditJobPostingPositionPriority,
+                                         page_header.OnPage.Job_Edit)
 
         job_priority = JobPriority(self.driver)
         job_priority.update_priority()
 
-        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditJobPostingPositionCategory, "job_edit")
+        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditJobPostingPositionCategory,
+                                         page_header.OnPage.Job_Edit)
 
         job_category = JobCategory(self.driver)
         job_category.update_category()
 
-        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditThisJob)
-        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditJobPostingPositionAttachments, "job_edit")
+        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditThisJob, page_header.OnPage.Job_Details)
+        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditJobPostingPositionAttachments,
+                                         page_header.OnPage.Job_Edit)
 
         job_attachments = JobAttachments(self.driver)
         job_attachments.update_file()
 
-        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditThisJob)
-        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditJobPostingPositionEvaluationQuestions, "job_edit")
+        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditThisJob, page_header.OnPage.Job_Details)
+        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditJobPostingPositionEvaluationQuestions,
+                                         page_header.OnPage.Job_Edit)
 
         job_evaluation_questions = JobEvaluationQuestions(self.driver)
         job_evaluation_questions.update_cqe()
