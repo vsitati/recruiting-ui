@@ -6,7 +6,7 @@ pipeline {
     }
 
    stages {
-      stage('Create Python Virtual Env and install libraries') {
+      stage('Setup Virtual Environment') {
          steps {
           bat """
               python -m venv .env
@@ -14,7 +14,19 @@ pipeline {
           """
          }
       }
-      stage('Run tests') {
+      stage('Create Customer') {
+         steps {
+          echo "Create Customer(WIP)"
+         }
+      }
+      stage('Smoke Tests') {
+         steps {
+          bat """
+              .\\.env\\Scripts\\activate.bat && pytest -k c758
+          """
+         }
+      }
+      stage('Full Regression Tests') {
          steps {
           bat """
               .\\.env\\Scripts\\activate.bat && pytest -k c758
