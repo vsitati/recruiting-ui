@@ -22,7 +22,7 @@ pipeline {
       stage('Smoke Tests') {
          steps {
           bat """
-              .\\.env\\Scripts\\activate.bat && pytest -k c758
+              .\\.env\\Scripts\\activate.bat && pytest -m smoke
           """
          }
       }
