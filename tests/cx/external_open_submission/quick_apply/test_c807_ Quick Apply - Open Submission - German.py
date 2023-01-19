@@ -20,9 +20,9 @@ from utils.drivers import Drivers
 
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyOpenSubmission:
-    @allure.description("Quick Apply Open Submission Spanish")
-    def test_random_job_quick_apply_open_submission_spanish(self, get_test_info):
-        language = "spanish"
+    @allure.description("Quick Apply Open Submission German")
+    def test_random_job_quick_apply_open_submission_german(self, get_test_info):
+        language = "german"
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)
 
@@ -49,13 +49,13 @@ class TestQuickApplyOpenSubmission:
         assert cs.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 
         config = Config.env_config
-        driver2 = Drivers.get_driver(config, "spanish")
+        driver2 = Drivers.get_driver(config, "german")
         cs2 = CareerSites(driver=driver2)
         cs2.open_url(portal_url)
         assert cs2.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 
         js = JobSearch(driver=self.driver)
-        assert js.get_submit_resume_message() == "¿No encuentras la oportunidad perfecta? Enviar su CV/currículum."
+        assert js.get_submit_resume_message() == "Haben Sie keine passende Stelle gefunden? Reichen Sie Ihren Lebenslauf ein."
         os_link = js.get_all_hrefs(specific_href="QuickApply")
         js.open_url(os_link)
 
@@ -63,7 +63,7 @@ class TestQuickApplyOpenSubmission:
         td = SrTestData()
         form_details = td.get_quick_apply_form_data(parent_folder=Config.env_config["path_to_resumes"])
         qa.fill_in_quick_apply_form(**form_details)
-        assert qa.get_success_message() == "Gracias por enviar su CV/currículum vitae"
+        assert qa.get_success_message() == "Danke das Sie Ihren Lebenslauf eingereicht haben"
 
         # Login to ATS
         ats_login = AtsLogin(driver=self.driver)
