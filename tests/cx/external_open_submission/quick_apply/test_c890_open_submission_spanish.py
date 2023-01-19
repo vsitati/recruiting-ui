@@ -20,8 +20,8 @@ from utils.drivers import Drivers
 
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyOpenSubmission:
-    @allure.description("Quick Apply Open Submission French")
-    def test_random_job_quick_apply_open_submission_french(self, get_test_info):
+    @allure.description("Quick Apply Open Submission Spanish")
+    def test_random_job_quick_apply_open_submission_spanish(self, get_test_info):
         language = "spanish"
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)
