@@ -18,10 +18,25 @@ from utils.drivers import Drivers
 
 
 @pytest.mark.usefixtures("setup")
-class TestQuickApplyOpenSubmissionFrench:
-    @allure.description("Quick Apply Open Submission French")
-    def test_random_job_quick_apply_open_submission_french(self, get_test_info):
-        language = "french"
+class TestQuickApplyOpenSubmissionLangs:
+
+    @pytest.mark.parametrize("lang", ["French", "Spanish", "German"])
+    @allure.description("Quick Apply Open Submission foreign languages")
+    def test_random_job_quick_apply_open_submission_langs(self, get_test_info, lang):
+        if lang == "French":
+            submit_resume_message = \
+                "Vous ne trouvez pas l'offre que vous recherchez ?Soumettre votre curriculum vitae / CV."
+            success_message = "Merci d’avoir soumis votre curriculum vitae"
+        elif lang == "Spanish":
+            submit_resume_message = "¿No encuentras la oportunidad perfecta? Enviar su CV/currículum."
+            success_message = "Gracias por enviar su CV/currículum vitae"
+        elif lang == "German":
+            submit_resume_message = "Haben Sie keine passende Stelle gefunden? Reichen Sie Ihren Lebenslauf ein."
+            success_message = "Danke das Sie Ihren Lebenslauf eingereicht haben"
+        else:
+            raise Exception("Please use French, Spanish or German")
+
+        language = lang
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)
 
@@ -48,13 +63,13 @@ class TestQuickApplyOpenSubmissionFrench:
         assert cs.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 
         config = Config.env_config
-        driver2 = Drivers.get_driver(config, "french")
+        driver2 = Drivers.get_driver(config, language)
         cs2 = CareerSites(driver=driver2)
         cs2.open_url(portal_url)
         assert cs2.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 
         js = JobSearch(driver=self.driver)
-        assert js.get_submit_resume_message() == "Vous ne trouvez pas l'offre que vous recherchez ?Soumettre votre curriculum vitae / CV."
+        assert js.get_submit_resume_message() == submit_resume_message
         os_link = js.get_all_hrefs(specific_href="QuickApply")
         js.open_url(os_link)
 
@@ -62,7 +77,7 @@ class TestQuickApplyOpenSubmissionFrench:
         td = SrTestData()
         form_details = td.get_quick_apply_form_data(parent_folder=Config.env_config["path_to_resumes"])
         qa.fill_in_quick_apply_form(**form_details)
-        assert qa.get_success_message() == "Merci d’avoir soumis votre curriculum vitae"
+        assert qa.get_success_message() == success_message
 
         # Login to ATS
         ats_login = AtsLogin(driver=self.driver)
