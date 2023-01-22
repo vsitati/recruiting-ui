@@ -55,3 +55,7 @@ class ManageGeneralSettings(Elements, Common):
         savebtnopensubmission = self.driver.find_element_by_locator(self.open_submission_savebtn)
         self.driver.execute_script("arguments[0].scrollIntoView();", savebtnopensubmission)
         return self.do_click(savebtnopensubmission)
+
+    def open_submission_click(self):
+        checkbox = self.driver.find_element_by_locator(self.open_submission_switch)
+        checkbox.click()
