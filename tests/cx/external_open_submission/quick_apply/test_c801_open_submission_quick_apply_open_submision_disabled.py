@@ -9,9 +9,9 @@ from cx_pages.career_site_settings.manage_languages import ManageLanguages
 
 
 @pytest.mark.usefixtures("setup")
-class TestQuickApplyOpenSubmission:
-    @allure.description("Quick Apply Open Submission")
-    def test_random_job_quick_apply_open_submission(self, get_test_info, assertion=None):
+class TestQuickApplyOpenSubmissionDisabled:
+    @allure.description("Quick Apply Open Submission Disabled")
+    def test_random_job_quick_apply_open_submission_disabled(self, get_test_info, assertion=None):
         language = "english"
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)
