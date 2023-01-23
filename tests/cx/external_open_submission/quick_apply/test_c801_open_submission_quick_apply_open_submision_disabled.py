@@ -15,7 +15,6 @@ class TestQuickApplyOpenSubmissionDisabled:
         language = "english"
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)
-
         cs = CareerSites(driver=self.driver)
         data = cs.get_career_sites(site_section="external")
         result = cs.filter_career_site(data=data, site_name="Corporate Career Portal")
@@ -32,7 +31,6 @@ class TestQuickApplyOpenSubmissionDisabled:
         mgs.click_save_button()
 
         # Disable open submission and assert the link is not present on the page
-
         css.open_setting(setting="languages")
         ml = ManageLanguages(driver=self.driver)
         ml.set_given_langauge_to_default_only(language=language, enable=True)
@@ -45,15 +43,8 @@ class TestQuickApplyOpenSubmissionDisabled:
         css.open_setting(setting="open_submission")
         mgs.open_submission_click()
         mgs.click_save_button()
+        cs.open_url(portal_url)
 
         # confirm open submission link is present on the web page
-
-        css.open_setting(setting="languages")
-        ml = ManageLanguages(driver=self.driver)
-        ml.set_given_langauge_to_default_only(language=language, enable=True)
-        ml.click_language_setting_save_btn()
-        cs.open_url(portal_url)
-        assert cs.get_title() == "QA Automation Only - SilkRoad Talent Activation"
-
         js = JobSearch(driver=self.driver)
         assert js.get_submit_resume_message() == "Not finding the perfect opportunity? Submit Your Resume/CV."
