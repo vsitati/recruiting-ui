@@ -21,7 +21,7 @@ from utils.drivers import Drivers
 class TestQuickApplyOpenSubmissionLangs:
 
     @pytest.mark.parametrize("lang", ["French", "Spanish", "German"])
-    @allure.description("Quick Apply Open Submission foreign languages")
+    @allure.description("Quick Apply Open Submission foreign languages, TestRail c805, c807, c890, ")
     def test_random_job_quick_apply_open_submission_langs(self, get_test_info, lang):
         if lang == "French":
             submit_resume_message = \
