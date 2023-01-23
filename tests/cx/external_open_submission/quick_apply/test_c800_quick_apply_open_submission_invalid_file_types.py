@@ -13,9 +13,9 @@ from cx_pages.career_site_settings.manage_languages import ManageLanguages
 
 
 @pytest.mark.usefixtures("setup")
-class TestQuickApplyRandomJobExternalAlreadyApplied:
-    @allure.description("Random Job Quick Apply External Already Applied")
-    def test_random_job_quick_apply_external_already_applied(self, get_test_info):
+class TestQuickApplyOpenSubmissionInvalidFileTypes:
+    @allure.description("Quick Apply Open Submission Invalid File Types")
+    def test_random_job_quick_apply_open_submission_invalid_file_types(self, get_test_info):
         language = "english"
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)
@@ -43,24 +43,14 @@ class TestQuickApplyRandomJobExternalAlreadyApplied:
         assert cs.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 
         js = JobSearch(driver=self.driver)
-        job_elem, job_title = js.find_job(random_job=True)
-        js.open_job(job_elem=job_elem)
-        assert job_title in js.get_title()
+        assert js.get_submit_resume_message() == "Not finding the perfect opportunity? Submit Your Resume/CV."
+        os_link = js.get_all_hrefs(specific_href="QuickApply")
+        js.open_url(os_link)
 
         qa = QuickApply(driver=self.driver)
         td = SrTestData()
-        form_details = td.get_quick_apply_form_data(parent_folder=Config.env_config["path_to_resumes"])
-        qa.click_cx_job_apply_btn()
+        form_details = td.get_quick_apply_form_data(parent_folder=Config.env_config["path_to_invalid_files"])
         qa.fill_in_quick_apply_form(**form_details)
-        qa.click_view_other_job_openings()
-
-        # applying for second job
-        second_job_elem, second_job_title = js.find_job(title=job_title)
-        js.open_job(job_elem=second_job_elem)
-        assert second_job_title in js.get_title()
-
-        qa.click_cx_job_apply_btn()
-        qa.fill_in_quick_apply_form(**form_details)
-
-        assert qa.already_applied_info() == "Already Applied"
+        assert qa.get_file_error() == "The file type for Resume/CV is invalid. Upload a doc, docx, htm, html, odt, " \
+                                      "pdf, rtf, txt file."
 

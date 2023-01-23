@@ -1,31 +1,30 @@
 
-import pytest
 import allure
-from cx_pages.career_sites import CareerSites
-from cx_pages.jobs_search import JobSearch
-from cx_pages.login import Login
+import pytest
+
 from config import Config
-from cx_pages.cx_quick_apply import QuickApply
-from test_data.test_data_details import SrTestData
-from cx_pages.career_site_settings.manage_general_settings import ManageGeneralSettings
 from cx_pages.career_site_settings.career_site_settings import CareerSiteSettings
+from cx_pages.jobs_search import JobSearch
+from cx_pages.career_site_settings.manage_general_settings import ManageGeneralSettings
 from cx_pages.career_site_settings.manage_languages import ManageLanguages
+from cx_pages.career_sites import CareerSites
+from cx_pages.cx_quick_apply import QuickApply
+from cx_pages.login import Login
+from test_data.test_data_details import SrTestData
 
 
 @pytest.mark.usefixtures("setup")
-class TestQuickApplyRandomJobExternalAlreadyApplied:
-    @allure.description("Random Job Quick Apply External Already Applied")
-    def test_random_job_quick_apply_external_already_applied(self, get_test_info):
+class TestQuickApplyOpenSubmissionAlreadySubmitted:
+    @allure.description("Quick Apply - Open Submission - Already Submitted")
+    def test_quick_apply_open_submission_already_submitted(self, get_test_info):
         language = "english"
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)
-
         cs = CareerSites(driver=self.driver)
         data = cs.get_career_sites(site_section="external")
         result = cs.filter_career_site(data=data, site_name="Corporate Career Portal")
         name, portal_url, settings_url = result
         cs.open_url(settings_url)
-
         # Career Site Settings
         css = CareerSiteSettings(driver=self.driver)
         css.open_setting(setting="general")
@@ -43,24 +42,24 @@ class TestQuickApplyRandomJobExternalAlreadyApplied:
         assert cs.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 
         js = JobSearch(driver=self.driver)
-        job_elem, job_title = js.find_job(random_job=True)
-        js.open_job(job_elem=job_elem)
-        assert job_title in js.get_title()
+        assert js.get_submit_resume_message() == "Not finding the perfect opportunity? Submit Your Resume/CV."
+        os_link = js.get_all_hrefs(specific_href="QuickApply")
+        js.open_url(os_link)
 
         qa = QuickApply(driver=self.driver)
         td = SrTestData()
         form_details = td.get_quick_apply_form_data(parent_folder=Config.env_config["path_to_resumes"])
-        qa.click_cx_job_apply_btn()
         qa.fill_in_quick_apply_form(**form_details)
-        qa.click_view_other_job_openings()
+        assert qa.get_success_message() == "Thank You for Submitting Your Resume/CV"
+        os2_link = js.get_all_hrefs(specific_href="SaveSearch")
+        js.open_url(os2_link)
 
         # applying for second job
-        second_job_elem, second_job_title = js.find_job(title=job_title)
-        js.open_job(job_elem=second_job_elem)
-        assert second_job_title in js.get_title()
+        js = JobSearch(driver=self.driver)
+        os_link = js.get_all_hrefs(specific_href="QuickApply")
+        js.open_url(os_link)
 
-        qa.click_cx_job_apply_btn()
-        qa.fill_in_quick_apply_form(**form_details)
+        qa2 = QuickApply(driver=self.driver)
+        qa2.fill_in_quick_apply_form(**form_details)
 
-        assert qa.already_applied_info() == "Already Applied"
-
+        assert qa.already_applied_info() == "Already Submitted"

@@ -23,7 +23,8 @@ class Elements:
     file_upload_instuctions = (By.ID, "Apply_ApplyToJob_FileUploadInstructionsText")
     large_file_error = (By.ID, "Apply_ApplyToJob_File_Validation")
     already_applied = (By.ID, "Error_AlreadyApplied_Success_PageHeading")
-
+    apply_success = (By.ID, "Apply_Success_JobsLink")
+    apply_job_file_error = (By.ID, "Apply_ApplyToJob_File-error")
 
 
 class QuickApply(Common, Elements):
@@ -75,3 +76,9 @@ class QuickApply(Common, Elements):
 
     def get_success_message(self):
         return self.driver.find_element_by_locator(self.apply_success_heading).text
+
+    def get_already_applied_link(self):
+        return self.driver.find_element_by_locator(self.apply_success).click()
+
+    def get_job_application_error(self):
+        return self.driver.find_element_by_locator(self.apply_job_file_error).text

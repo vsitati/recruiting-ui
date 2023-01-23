@@ -17,10 +17,10 @@ from cx_pages.career_site_settings.manage_languages import ManageLanguages
 
 
 @pytest.mark.usefixtures("setup")
-class TestQuickApplyRandomJobExternalGerman:
-    @allure.description("Random Job Quick Apply External - German")
-    def test_random_job_quick_apply_external_german(self, get_test_info):
-        language = "german"
+class TestQuickApplyOpenSubmissionDefaultPortalLanguage:
+    @allure.description("Quick Apply Open Submission Default Portal Language")
+    def test_random_job_quick_apply_open_submission_default_portal_language(self, get_test_info):
+        language = "english"
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)
 
@@ -44,28 +44,18 @@ class TestQuickApplyRandomJobExternalGerman:
         ml.set_given_langauge_to_default_only(language=language, enable=True)
         ml.click_language_setting_save_btn()
         cs.open_url(portal_url)
+        assert cs.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 
         js = JobSearch(driver=self.driver)
-        text_data = SrTestData.cx_portal_language_text.get(language, "")
-        assert text_data.get("search_input_placeholder_text") == js.get_job_search_input_placeholder_text()
-        assert text_data.get("submit_resume_message") == js.get_submit_resume_message()
-
-        job_elem, job_title = js.find_job(random_job=True)
-        js.open_job(job_elem=job_elem)
-        assert job_title in js.get_title()
+        assert js.get_submit_resume_message() == "Not finding the perfect opportunity? Submit Your Resume/CV."
+        os_link = js.get_all_hrefs(specific_href="QuickApply")
+        js.open_url(os_link)
 
         qa = QuickApply(driver=self.driver)
         td = SrTestData()
         form_details = td.get_quick_apply_form_data(parent_folder=Config.env_config["path_to_resumes"])
-        qa.click_cx_job_apply_btn()
-
-        assert qa.get_firstname_label_text() == text_data.get("firstname_label")
-        assert qa.get_lastname_label_text() == text_data.get("lastname_label")
-        assert qa.get_email_label_text() == text_data.get("email_label")
-        assert qa.get_choose_file_btn_label_text() == text_data.get("choose_file_btn_label")
-
         qa.fill_in_quick_apply_form(**form_details)
-        assert qa.get_h2_tag_name() == text_data.get("application_successful_message")
+        assert qa.get_success_message() == "Thank You for Submitting Your Resume/CV"
 
         # Login to ATS
         ats_login = AtsLogin(driver=self.driver)
@@ -87,3 +77,40 @@ class TestQuickApplyRandomJobExternalGerman:
         attachments = crp.get_attachment_names()
         assert get_basename_from_file_path(file_path=form_details.get("file_path")) in attachments
 
+        # 2nd scenario
+        language = "french"
+        login = Login(driver=self.driver)
+        login.do_login(env_info=get_test_info)
+
+        cs = CareerSites(driver=self.driver)
+        data = cs.get_career_sites(site_section="external")
+        result = cs.filter_career_site(data=data, site_name="Corporate Career Portal")
+        name, portal_url, settings_url = result
+        cs.open_url(settings_url)
+
+        # Career Site Settings
+        css = CareerSiteSettings(driver=self.driver)
+        css.open_setting(setting="general")
+
+        # Manage Settings
+        mgs = ManageGeneralSettings(driver=self.driver)
+        mgs.change_portal_default_language(language=language)
+        mgs.click_cx_settings_save_btn()
+
+        css.open_setting(setting="languages")
+        ml = ManageLanguages(driver=self.driver)
+        ml.set_given_langauge_to_default_only(language=language, enable=True)
+        ml.click_language_setting_save_btn()
+        cs.open_url(portal_url)
+        assert cs.get_title() == "QA Automation Only - SilkRoad Talent Activation"
+
+        js = JobSearch(driver=self.driver)
+        assert js.get_submit_resume_message() == "Vous ne trouvez pas l'offre que vous recherchez ?Soumettre votre curriculum vitae / CV."
+        os_link = js.get_all_hrefs(specific_href="QuickApply")
+        js.open_url(os_link)
+
+        qa = QuickApply(driver=self.driver)
+        td = SrTestData()
+        form_details = td.get_quick_apply_form_data(parent_folder=Config.env_config["path_to_invalid_files"])
+        qa.fill_in_quick_apply_form(**form_details)
+        assert qa.get_job_application_error() == "Le type de fichier pour Curriculum vitae n'est pas valide. Téléchargez un fichier doc, docx, htm, html, odt, pdf, rtf, txt."

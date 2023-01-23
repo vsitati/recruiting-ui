@@ -54,3 +54,4 @@ class TestQuickApplyRandomJobExternalInvalidFiles:
         qa.fill_in_quick_apply_form(**form_details)
         assert qa.get_file_error() == "The file type for Resume/CV is invalid. Upload a doc, docx, htm, html, odt, pdf, rtf, txt file."
 
+

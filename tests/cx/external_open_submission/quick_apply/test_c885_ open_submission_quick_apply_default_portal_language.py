@@ -5,17 +5,22 @@ from cx_pages.career_sites import CareerSites
 from cx_pages.jobs_search import JobSearch
 from cx_pages.login import Login
 from config import Config
+from ats_pages.login.login import Login as AtsLogin
 from cx_pages.cx_quick_apply import QuickApply
 from test_data.test_data_details import SrTestData
+from ats_pages.left_menus import LeftMenus
+from ats_pages.candidates.advanced_search import CandidateAdvancedSearch
+from ats_pages.candidates.candidate_resume_profile import CandidateResumeProfile
+from helpers.utils import get_basename_from_file_path
 from cx_pages.career_site_settings.manage_general_settings import ManageGeneralSettings
 from cx_pages.career_site_settings.career_site_settings import CareerSiteSettings
 from cx_pages.career_site_settings.manage_languages import ManageLanguages
 
 
 @pytest.mark.usefixtures("setup")
-class TestQuickApplyRandomJobExternalAlreadyApplied:
-    @allure.description("Random Job Quick Apply External Already Applied")
-    def test_random_job_quick_apply_external_already_applied(self, get_test_info):
+class TestQuickApplyOpenSubmissionDefaultPortalLanguage:
+    @allure.description("Quick Apply Open Submission Default Portal Language")
+    def test_random_job_quick_apply_open_submission_default_portal_language(self, get_test_info):
         language = "english"
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)
@@ -43,24 +48,32 @@ class TestQuickApplyRandomJobExternalAlreadyApplied:
         assert cs.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 
         js = JobSearch(driver=self.driver)
-        job_elem, job_title = js.find_job(random_job=True)
-        js.open_job(job_elem=job_elem)
-        assert job_title in js.get_title()
+        assert js.get_submit_resume_message() == "Not finding the perfect opportunity? Submit Your Resume/CV."
+        os_link = js.get_all_hrefs(specific_href="QuickApply")
+        js.open_url(os_link)
 
         qa = QuickApply(driver=self.driver)
         td = SrTestData()
         form_details = td.get_quick_apply_form_data(parent_folder=Config.env_config["path_to_resumes"])
-        qa.click_cx_job_apply_btn()
         qa.fill_in_quick_apply_form(**form_details)
-        qa.click_view_other_job_openings()
+        assert qa.get_success_message() == "Thank You for Submitting Your Resume/CV"
 
-        # applying for second job
-        second_job_elem, second_job_title = js.find_job(title=job_title)
-        js.open_job(job_elem=second_job_elem)
-        assert second_job_title in js.get_title()
+        # Login to ATS
+        ats_login = AtsLogin(driver=self.driver)
+        ats_login.do_login(get_test_info)
 
-        qa.click_cx_job_apply_btn()
-        qa.fill_in_quick_apply_form(**form_details)
+        left_menu = LeftMenus(driver=self.driver)
+        left_menu.click_left_nav(left_menu.candidates)
+        left_menu.click_left_nav(left_menu.candidates_advanced_search)
+        cas = CandidateAdvancedSearch(driver=self.driver)
+        candidate_name = f"{form_details.get('firstname')} {form_details.get('lastname')}"
+        cas.open_candidate_profile(candidate_name=candidate_name)
 
-        assert qa.already_applied_info() == "Already Applied"
+        crp = CandidateResumeProfile(driver=self.driver)
+        assert crp.verify_candidate_name() == candidate_name
+        assert crp.verify_candidate_email() == f"{form_details.get('email')}"
 
+        crp.open_attachment_tab()
+        crp.get_attachment_names()
+        attachments = crp.get_attachment_names()
+        assert get_basename_from_file_path(file_path=form_details.get("file_path")) in attachments

@@ -139,8 +139,6 @@ class JobData:
         "category_radio_list_edit": "Warehouse Clerk",
 
         # Attachments
-        "upload_file": "\\\\srefs01.silkroad-eng.local\\Openhire_QA\\Documents\\Resume-Offer-Samples\\Resume_001.docx",
-        "upload_file_edit": "\\\\srefs01.silkroad-eng.local\\Openhire_QA\\Documents\\Resume-Offer-Samples\\Resume.txt",
         "attachment_description": "my test description",
 
         # Evaluation Questions

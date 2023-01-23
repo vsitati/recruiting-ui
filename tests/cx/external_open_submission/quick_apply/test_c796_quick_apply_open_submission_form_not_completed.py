@@ -4,18 +4,16 @@ import allure
 from cx_pages.career_sites import CareerSites
 from cx_pages.jobs_search import JobSearch
 from cx_pages.login import Login
-from config import Config
 from cx_pages.cx_quick_apply import QuickApply
-from test_data.test_data_details import SrTestData
 from cx_pages.career_site_settings.manage_general_settings import ManageGeneralSettings
 from cx_pages.career_site_settings.career_site_settings import CareerSiteSettings
 from cx_pages.career_site_settings.manage_languages import ManageLanguages
 
 
 @pytest.mark.usefixtures("setup")
-class TestQuickApplyRandomJobExternalAlreadyApplied:
-    @allure.description("Random Job Quick Apply External Already Applied")
-    def test_random_job_quick_apply_external_already_applied(self, get_test_info):
+class TestQuickApplyOpenSubmissionFormNotCompleted:
+    @allure.description("Quick Apply Open Submission Form Not Completed")
+    def test_random_job_quick_apply_open_submission_form_not_completed(self, get_test_info):
         language = "english"
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)
@@ -43,24 +41,18 @@ class TestQuickApplyRandomJobExternalAlreadyApplied:
         assert cs.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 
         js = JobSearch(driver=self.driver)
-        job_elem, job_title = js.find_job(random_job=True)
-        js.open_job(job_elem=job_elem)
-        assert job_title in js.get_title()
+        assert js.get_submit_resume_message() == "Not finding the perfect opportunity? Submit Your Resume/CV."
+        os_link = js.get_all_hrefs(specific_href="QuickApply")
+        js.open_url(os_link)
 
         qa = QuickApply(driver=self.driver)
-        td = SrTestData()
-        form_details = td.get_quick_apply_form_data(parent_folder=Config.env_config["path_to_resumes"])
-        qa.click_cx_job_apply_btn()
-        qa.fill_in_quick_apply_form(**form_details)
-        qa.click_view_other_job_openings()
+        apply_elem = qa.driver.find_element_by_locator(qa.apply_btn)
+        qa.driver.execute_script("arguments[0].scrollIntoView();", apply_elem)
+        qa.do_click(apply_elem)
 
-        # applying for second job
-        second_job_elem, second_job_title = js.find_job(title=job_title)
-        js.open_job(job_elem=second_job_elem)
-        assert second_job_title in js.get_title()
+        assert qa.get_invalid_firstname_error_text() == "\"First Name\" is required."
+        assert qa.get_invalid_lastname_error_text() == "\"Last Name\" is required."
+        assert qa.get_invalid_email_error_text() == "\"Email Address\" is required."
+        assert qa.get_invalid_resume_error_text() == "Please upload a Resume/CV file."
 
-        qa.click_cx_job_apply_btn()
-        qa.fill_in_quick_apply_form(**form_details)
-
-        assert qa.already_applied_info() == "Already Applied"
 

@@ -14,6 +14,8 @@ class Elements:
     enable_captcha_cbox = (By.ID, "Admin_JobBoardsEdit__EnableRecaptcha")
     default_portal_language = (By.ID, "Admin_JobBoardsEdit__DefaultLocale")
     save_btn = (By.ID, "Admin_JobBoardsEdit__SaveButton")
+    open_submission_switch = (By.ID, "Admin_OpenSubmissionForms__OpenSubmissionEnabled")
+    open_submission_savebtn = (By.ID, "Admin_OpenSubmissionForms__SaveButton")
 
 
 class ManageGeneralSettings(Elements, Common):
@@ -41,3 +43,19 @@ class ManageGeneralSettings(Elements, Common):
         elem = self.driver.find_element_by_locator(self.save_btn)
         self.driver.execute_script("arguments[0].scrollIntoView();", elem)
         return self.do_click(elem)
+
+    def open_submission_choice(self):
+        checkbox = self.driver.find_element_by_locator(self.open_submission_switch)
+        if checkbox.is_selected():
+            checkbox.click()
+        else:
+            return self.driver.find_element_by_locator(self.open_submission_switch)
+
+    def click_save_button(self,):
+        savebtnopensubmission = self.driver.find_element_by_locator(self.open_submission_savebtn)
+        self.driver.execute_script("arguments[0].scrollIntoView();", savebtnopensubmission)
+        return self.do_click(savebtnopensubmission)
+
+    def open_submission_click(self):
+        checkbox = self.driver.find_element_by_locator(self.open_submission_switch)
+        checkbox.click()
