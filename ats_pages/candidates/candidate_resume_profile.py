@@ -12,6 +12,7 @@ class Elements:
     attachment_tab = (By.ID, "attachmentsTab")
     history_tab = (By.ID, "attachmentsTab")
     attachments_parent = (By.CSS_SELECTOR, ".lifesuite__table-container")
+    source = (By.ID, "sourceValue")
 
 
 class CandidateResumeProfile(Common, Elements):
@@ -44,3 +45,6 @@ class CandidateResumeProfile(Common, Elements):
                 if attachment_text.split(".")[-1]
                 in supported_file_types
                 ]
+
+    def verify_source(self):
+        return self.driver.find_element_by_locator(self.source).text
