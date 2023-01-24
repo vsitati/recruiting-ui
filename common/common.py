@@ -286,11 +286,16 @@ class Common(Elements):
     def close_tab(self):
         self.driver.close()
 
-    def get_all_hrefs(self, specific_href=""):
+    def get_all_hrefs(self, specific_href="", link_text=""):
         href_elms = self.driver.find_elements_by_locator(self.all_hrefs)
         if specific_href:
             for href_elm in href_elms:
                 if specific_href in href_elm.get_attribute("href"):
+                    return href_elm.get_attribute("href")
+            return ""
+        if link_text:
+            for href_elm in href_elms:
+                if href_elm.text == link_text:
                     return href_elm.get_attribute("href")
             return ""
         return href_elms
