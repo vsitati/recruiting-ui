@@ -4,8 +4,23 @@ pipeline {
             label 'RecruitingQA'
         }
     }
+    options {
+        skipDefaultCheckout(true)
+    }
 
    stages {
+      stage('Teardown Environment') {
+         steps {
+          echo "Teardown Environment(WIP)"
+         }
+      }
+      stage('Clean workspace and clone repository') {
+         steps {
+            // Clean before running the test
+            cleanWs()
+            checkout scm
+         }
+      }
       stage('Setup Virtual Environment') {
          steps {
           bat """
