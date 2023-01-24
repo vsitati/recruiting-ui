@@ -16,13 +16,14 @@ pipeline {
       }
       stage('Clean workspace and clone repository') {
          steps {
-            // Clean before running the test
+            echo "Clean up WS before running the test"
             cleanWs()
             checkout scm
          }
       }
       stage('Setup Virtual Environment') {
          steps {
+          echo "Setting up virtual environment and install required libraries"
           bat """
               python -m venv .env
               .\\.env\\Scripts\\activate.bat && python -m pip install -r requirements.txt
@@ -36,6 +37,7 @@ pipeline {
       }
       stage('Smoke Tests') {
          steps {
+          echo "Running smoke tests"
           bat """
               .\\.env\\Scripts\\activate.bat && pytest -m smoke
           """
@@ -43,6 +45,7 @@ pipeline {
       }
       stage('Full Regression Tests') {
          steps {
+          echo "Running full regression suite"
           bat """
               .\\.env\\Scripts\\activate.bat && pytest -k c758
           """
