@@ -47,7 +47,7 @@ pipeline {
          steps {
           echo "Running full regression suite"
           bat """
-              .\\.env\\Scripts\\activate.bat && pytest -k test_c753
+              .\\.env\\Scripts\\activate.bat && pytest
           """
          }
       }
