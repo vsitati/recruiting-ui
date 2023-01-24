@@ -25,6 +25,7 @@ class TestAtsStandardLogin:
         error_msg = login.get_text(locator=login.login_error)
         assert error_msg == SrTestData.login_validation.get("inactive_login_error", "")
 
+    @pytest.mark.smoke
     @allure.description("Scenario Login with an Active User with an invalid username")
     def test_cannot_login_with_an_invalid_username(self, get_test_info):
         username, password = SrTestData.data[get_test_info.get("company")]["users"]["invalid_username"]
@@ -33,7 +34,7 @@ class TestAtsStandardLogin:
         login.do_login(get_test_info, cred=invalid_credentials)
 
         error_msg = login.get_text(locator=login.login_error)
-        assert error_msg == SrTestData.login_validation.get("invalid_username_password_error", "")
+        assert error_msg == SrTestData.login_validation.get("invalid_username_password_errorS", "")
 
     @allure.description("Scenario Login with an Active User with an invalid password")
     def test_cannot_login_with_an_invalid_password(self, get_test_info):
