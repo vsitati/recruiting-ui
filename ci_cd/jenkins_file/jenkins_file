@@ -14,7 +14,7 @@ pipeline {
           echo "Teardown Environment(WIP)"
          }
       }
-      stage('Clean workspace and clone repository') {
+      stage('Clean WS & clone repository') {
          steps {
             echo "Clean up WS before running the test"
             cleanWs()
