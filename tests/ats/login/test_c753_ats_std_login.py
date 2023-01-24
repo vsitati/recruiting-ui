@@ -34,7 +34,7 @@ class TestAtsStandardLogin:
         login.do_login(get_test_info, cred=invalid_credentials)
 
         error_msg = login.get_text(locator=login.login_error)
-        assert error_msg == SrTestData.login_validation.get("invalid_username_password_errorS", "")
+        assert error_msg == SrTestData.login_validation.get("invalid_username_password_error", "")
 
     @allure.description("Scenario Login with an Active User with an invalid password")
     def test_cannot_login_with_an_invalid_password(self, get_test_info):
