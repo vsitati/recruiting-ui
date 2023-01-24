@@ -25,6 +25,18 @@ def get_test_info(request):
     )
 
 
+def pytest_collection_modifyitems(config, items):
+    keyword_expr = config.option.keyword
+    mark_expr = config.option.markexpr
+    if keyword_expr or mark_expr:
+        return
+
+    skip_marker = pytest.mark.skip(reason='smoke not selected')
+    for item in items:
+        if 'smoke' in item.keywords:
+            item.add_marker(skip_marker)
+
+
 @pytest.fixture()
 def setup(request):
     config = Config.env_config

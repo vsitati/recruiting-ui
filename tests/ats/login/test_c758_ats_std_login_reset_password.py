@@ -20,7 +20,7 @@ class TestAtsStdLoginResetPasswordTests:
         fp = ForgetPassword(driver=self.driver)
         fp.enter_text(locator=fp.username, text=user)
         fp.click_submit_btn()
-        assert fp.verify_account_verification_text() is True
+        assert SrTestData.account_verification_text == fp.verify_account_verification_text()
         body, attachments = fp.read_mailbox(subject_search_text="Reset Your Password", sent_to="changeme@test.com")
         assert body != ''
         assert "change_me" in body
@@ -28,6 +28,7 @@ class TestAtsStdLoginResetPasswordTests:
         assert "IP Address" in body
         assert attachments == []
 
+    @pytest.mark.skip(reason="Unable to locate tooltip element, we need to find another way to verify this.")
     @allure.description("Cannot submit with an empty new password field")
     def test_cannot_submit_empty_new_password_fields(self):
         cp = ChangePassword(driver=self.driver)
@@ -48,6 +49,7 @@ class TestAtsStdLoginResetPasswordTests:
         cp.do_change_password(new_password="silkroad2022", confirm_password="silkroad2")
         assert cp.get_mismatched_text() == "Your passwords do not match."
 
+    @pytest.mark.skip(reason="Needs to be re-written as we need to setup the rules first in Open Admin")
     @allure.description("Cannot submit where the password characters length are less than 8")
     def test_cannot_submit_passwords_with_length_less_than_eight_characters(self):
         cp = ChangePassword(driver=self.driver)

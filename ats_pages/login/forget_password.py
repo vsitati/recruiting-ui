@@ -30,7 +30,4 @@ class ForgetPassword(Common, Elements):
         return self.driver.find_element_by_locator(self.acc_verification_heading).text
 
     def verify_account_verification_text(self):
-        account_verification_text = self.driver.find_element_by_locator(self.account_verification_text).text
-        test_data_text = SrTestData.account_verification_text
-        return account_verification_text == test_data_text
-
+        return self.driver.find_element_by_locator(self.account_verification_text).text

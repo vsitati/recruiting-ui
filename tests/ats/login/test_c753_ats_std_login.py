@@ -14,6 +14,7 @@ class TestAtsStandardLogin:
 
         assert login.is_element_visible(locator=login.quick_search) is True
 
+    @pytest.mark.smoke
     @allure.description("Scenario Login with an Inactive User with valid credentials")
     def test_cannot_login_with_an_inactive_user(self, get_test_info):
         username, password = SrTestData.data[get_test_info.get("company")]["users"]["inactive"]
@@ -24,6 +25,7 @@ class TestAtsStandardLogin:
         error_msg = login.get_text(locator=login.login_error)
         assert error_msg == SrTestData.login_validation.get("inactive_login_error", "")
 
+    @pytest.mark.smoke
     @allure.description("Scenario Login with an Active User with an invalid username")
     def test_cannot_login_with_an_invalid_username(self, get_test_info):
         username, password = SrTestData.data[get_test_info.get("company")]["users"]["invalid_username"]

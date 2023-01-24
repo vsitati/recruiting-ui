@@ -19,6 +19,7 @@ from cx_pages.career_site_settings.manage_languages import ManageLanguages
 
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyRandomJobExternal:
+    @pytest.mark.smoke
     @allure.description("Random Job Quick Apply External")
     def test_random_job_quick_apply_external(self, get_test_info):
         language = "english"
