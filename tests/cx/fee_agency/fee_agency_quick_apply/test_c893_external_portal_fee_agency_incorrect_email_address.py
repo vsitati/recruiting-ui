@@ -7,9 +7,9 @@ from ats_pages.left_menus import LeftMenus
 
 
 @pytest.mark.usefixtures("setup")
-class TestFeeAgencyQuickApplyInvalidEmailAddress:
-    @allure.description("Fee Agency Quick Apply Invalid Email Address")
-    def test_fee_agency_quick_apply_invalid_email_address(self, get_test_info):
+class TestFeeAgencyQuickApplyIncorrectEmailAddress:
+    @allure.description("Fee Agency Quick Apply Incorrect Email Address")
+    def test_fee_agency_quick_apply_incorrect_email_address(self, get_test_info):
         # Login to ATS as RM
         login = AtsLogin(driver=self.driver)
         login.do_login(get_test_info)
@@ -24,11 +24,10 @@ class TestFeeAgencyQuickApplyInvalidEmailAddress:
         # Open Fee Agency Profile
         fee_agency = FeeAgencies(self.driver)
         fee_agency.open_fee_agency_profile(fee_agency_name="Apple One")
-        fee_agency_email = fee_agency.get_fee_agency_incorrect_email()
+        fee_agency_email = fee_agency.get_fee_agency_invalid_email()
 
         # Login To Cx
         cx_link = fee_agency.get_cx_link(site_name="CorporateCareerPortal")
         fee_agency.open_url(cx_link)
         fee_agency.login_to_fee_agency(fee_agency_email)
-        input("")
-        assert r"""Email Address" is invalid.""" in fee_agency.get_page_source()
+        assert "Authentication Failed" in fee_agency.get_page_source()
