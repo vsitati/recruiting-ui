@@ -41,8 +41,8 @@ class JobData:
         # Location Details
         "job_location_code": "Boston",
         "job_location_code_temp": "Jacksonville",
-        "job_location_code_remote_worldwide": "Remote (Worldwide) (REMOTE-WW)",
-        "job_location_code_remote_US_wide": "Remote (US Wide) (REMOTE-USW)",
+        "job_location_code_remote_worldwide": "Remote_WorldWide (REMOTE-WW)",
+        "job_location_code_remote_US_wide": "Remote_USWide (REMOTE-USW)",
         "country": "United States",
         "address_line_1": "123 Main St",
         "address_line_2": "address line 2",

@@ -13,6 +13,7 @@ class Elements:
     pagination_tags = (By.TAG_NAME, "li")
     next_page = (By.ID, "bulkActionItemsPagerButton_next")
     next_page_tip = (By.CSS_SELECTOR, "[title='Next Page']")
+    record_count = (By.ID, "bulkActionItemsRecordCount")
 
 
 class JobAdvancedSearchResult(Common, Elements):
@@ -27,6 +28,9 @@ class JobAdvancedSearchResult(Common, Elements):
         self.__comparing(elm.text, JobData.job_data.get("filter_label"))
 
         return
+
+    def verify_record_count(self):
+        return self.get_text(self.record_count)
 
     def open_job(self, internal_job_title):
         def _find_job_name(_job_name):
