@@ -13,8 +13,6 @@ class Elements:
     pagination_parent = (By.ID, "bulkActionItemPager")
     pagination_tags = (By.TAG_NAME, "li")
     result_sheet = (By.ID, 'bulkActionItemResultsTable')
-    # result_sheet_header = (By.XPATH, "//thead//th")
-    # result_sheet_column = (By.XPATH, "//tbody//td")
     result_sheet_header = (By.XPATH, "//table[@id='bulkActionItemResultsTable']//th")
     result_sheet_column = (By.XPATH, "//table[@id='bulkActionItemResultsTable']//td")
     saved_candidate_search_name = (By.XPATH, "//div[@id='pageHeader']//h1")
