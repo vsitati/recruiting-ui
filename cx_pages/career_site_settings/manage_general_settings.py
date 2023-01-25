@@ -27,6 +27,7 @@ class ManageGeneralSettings(Elements, Common):
         return select.select_by_visible_text(language)
 
     def change_portal_default_language(self, language):
+        language = language.lower()
         languages = dict(
             german=partial(self.select_portal_language, "Deutsch (German) [de]"),
             english=partial(self.select_portal_language, "English (English) [en]"),
