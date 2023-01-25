@@ -2,6 +2,9 @@ import pytest
 import allure
 
 from ats_pages.administration.fee_agencies import FeeAgencies
+from cx_pages.career_site_settings.career_site_settings import CareerSiteSettings
+from cx_pages.career_site_settings.manage_general_settings import ManageGeneralSettings
+from cx_pages.career_site_settings.manage_languages import ManageLanguages
 from cx_pages.career_sites import CareerSites
 from cx_pages.jobs_search import JobSearch
 from cx_pages.login import Login
@@ -19,6 +22,30 @@ from helpers.utils import get_basename_from_file_path
 class TestFeeAgencyQuickApplyHappyPath:
     @allure.description("Fee Agency Quick Apply Happy Path")
     def test_fee_agency_quick_apply_happy_path(self, get_test_info):
+        language = "english"
+        login = Login(driver=self.driver)
+        login.do_login(env_info=get_test_info)
+
+        cs = CareerSites(driver=self.driver)
+        data = cs.get_career_sites(site_section="external")
+        result = cs.filter_career_site(data=data, site_name="Corporate Career Portal")
+        name, portal_url, settings_url = result
+        cs.open_url(settings_url)
+
+        # Career Site Settings
+        css = CareerSiteSettings(driver=self.driver)
+        css.open_setting(setting="general")
+
+        # Manage Settings
+        mgs = ManageGeneralSettings(driver=self.driver)
+        mgs.change_portal_default_language(language=language)
+        mgs.click_cx_settings_save_btn()
+
+        css.open_setting(setting="languages")
+        ml = ManageLanguages(driver=self.driver)
+        ml.set_given_langauge_to_default_only(language=language, enable=True)
+        ml.click_language_setting_save_btn()
+
         # Login to ATS as RM
         login = AtsLogin(driver=self.driver)
         login.do_login(get_test_info)
@@ -53,7 +80,7 @@ class TestFeeAgencyQuickApplyHappyPath:
         form_details = td.get_quick_apply_form_data(parent_folder=Config.env_config["path_to_resumes"])
         qa.click_cx_job_apply_btn()
         qa.fill_in_quick_apply_form(**form_details)
-        assert qa.get_h2_tag_name() == "Thank You for the Submittal"
+        assert qa.get_success_message() == "Thank You for the Submittal"
 
         # Login to ATS
         ats_login = AtsLogin(driver=self.driver)
