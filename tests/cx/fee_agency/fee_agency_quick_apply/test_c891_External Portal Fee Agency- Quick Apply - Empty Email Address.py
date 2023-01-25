@@ -7,9 +7,9 @@ from ats_pages.left_menus import LeftMenus
 
 
 @pytest.mark.usefixtures("setup")
-class TestFeeAgencyQuickApplyInvalidEmailAddress:
-    @allure.description("Fee Agency Quick Apply Invalid Email Address")
-    def test_fee_agency_quick_apply_invalid_email_address(self, get_test_info):
+class TestFeeAgencyQuickApplyEmptyEmailAddress:
+    @allure.description("Fee Agency Quick Apply Empty Email Address")
+    def test_fee_agency_quick_apply_empty_email_address(self, get_test_info):
         # Login to ATS as RM
         login = AtsLogin(driver=self.driver)
         login.do_login(get_test_info)
