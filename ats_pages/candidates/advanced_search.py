@@ -13,6 +13,10 @@ class Elements:
     pagination_parent = (By.ID, "bulkActionItemPager")
     pagination_tags = (By.TAG_NAME, "li")
     result_sheet = (By.ID, 'bulkActionItemResultsTable')
+    # result_sheet_header = (By.XPATH, "//thead//th")
+    # result_sheet_column = (By.XPATH, "//tbody//td")
+    result_sheet_header = (By.XPATH, "//table[@id='bulkActionItemResultsTable']//th")
+    result_sheet_column = (By.XPATH, "//table[@id='bulkActionItemResultsTable']//td")
     saved_candidate_search_name = (By.XPATH, "//div[@id='pageHeader']//h1")
     filter_label = (By.XPATH, "//div[@id='appliedFilters']//h3")
     record_count = (By.ID, "bulkActionItemsRecordCount")
@@ -86,7 +90,8 @@ class CandidateAdvancedSearch(Common, Elements):
             return 0
 
         # get the column position in the header
-        elms = elm_result_sheet.find_elements(By.XPATH, "//thead//th")
+        # elms = elm_result_sheet.find_elements(By.XPATH, self.result_sheet_header)
+        elms = self.driver.find_elements(*self.result_sheet_header)
         count = len(elms)
         pos = 0
         for elm in elms:
@@ -95,7 +100,8 @@ class CandidateAdvancedSearch(Common, Elements):
             pos += 1
 
         # get column values list
-        elms = elm_result_sheet.find_elements(By.XPATH, "//tbody//td")
+        # elms = elm_result_sheet.find_elements(By.XPATH, self.result_sheet_column)
+        elms = self.driver.find_elements(*self.result_sheet_column)
         col_list = []
         for i in range(len(elms)//count):
             loc = pos + i * count
@@ -105,8 +111,8 @@ class CandidateAdvancedSearch(Common, Elements):
         return col_list
 
     def sort_candidate_column_header(self, column, ordering, date=""):
-        elm_result_sheet = self.driver.find_element_by_locator(self.result_sheet)
-        elms = elm_result_sheet.find_elements(By.XPATH, "//thead//th")
+        # elm_result_sheet = self.driver.find_element_by_locator(self.result_sheet)
+        elms = self.driver.find_elements(*self.result_sheet_header)
         for elm in elms:
             if column in elm.text:
                 self.do_click(elm)
