@@ -11,6 +11,8 @@ class Elements:
     fee_agency_signin_email = (By.ID, "FeeAgency_SignIn__EmailAddress")
     fee_agency_signin_button = (By.ID, "FeeAgency_SignIn_Submit")
     invalid_email = "invalid_email@email.com" # find a better way to do this
+    incorrect_email = "incorrect@"
+
 
 class FeeAgencies(Common, Elements):
     def __init__(self, driver):
@@ -47,3 +49,6 @@ class FeeAgencies(Common, Elements):
 
     def get_fee_agency_invalid_email(self):
         return self.invalid_email
+
+    def get_fee_agency_incorrect_email(self):
+        return self.incorrect_email
