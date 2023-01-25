@@ -13,8 +13,8 @@ class Elements:
     pagination_parent = (By.ID, "bulkActionItemPager")
     pagination_tags = (By.TAG_NAME, "li")
     result_sheet = (By.ID, 'bulkActionItemResultsTable')
-    saved_candidate_search_name = (By.CSS_SELECTOR, "[id='pageHeader']>div>div>h1")
-    filter_label = (By.CSS_SELECTOR, "[id='appliedFilters']>div>h3")
+    saved_candidate_search_name = (By.XPATH, "//div[@id='pageHeader']//h1")
+    filter_label = (By.XPATH, "//div[@id='appliedFilters']//h3")
     record_count = (By.ID, "bulkActionItemsRecordCount")
 
 
@@ -86,7 +86,7 @@ class CandidateAdvancedSearch(Common, Elements):
             return 0
 
         # get the column position in the header
-        elms = elm_result_sheet.find_elements(By.CSS_SELECTOR, "thead>tr>th")
+        elms = elm_result_sheet.find_elements(By.XPATH, "//thead//th")
         count = len(elms)
         pos = 0
         for elm in elms:
@@ -95,7 +95,7 @@ class CandidateAdvancedSearch(Common, Elements):
             pos += 1
 
         # get column values list
-        elms = elm_result_sheet.find_elements(By.CSS_SELECTOR, "tbody>tr>td")
+        elms = elm_result_sheet.find_elements(By.XPATH, "//tbody//td")
         col_list = []
         for i in range(len(elms)//count):
             loc = pos + i * count
@@ -106,7 +106,7 @@ class CandidateAdvancedSearch(Common, Elements):
 
     def sort_candidate_column_header(self, column, ordering, date=""):
         elm_result_sheet = self.driver.find_element_by_locator(self.result_sheet)
-        elms = elm_result_sheet.find_elements(By.CSS_SELECTOR, "thead>tr>th")
+        elms = elm_result_sheet.find_elements(By.XPATH, "//thead//th")
         for elm in elms:
             if column in elm.text:
                 self.do_click(elm)
@@ -123,10 +123,11 @@ class CandidateAdvancedSearch(Common, Elements):
     def verify_ordering(self, alist, direction, date=""):
         if len(alist) == 0:
             return self.sr_logger.logger.error("There is 0 record.")
+        date_format = "%m/%d/%y"
         for i in range(len(alist)-1):
             if date == "date":
-                date1 = datetime.datetime.strptime(alist[i], "%m/%d/%y").date()
-                date2 = datetime.datetime.strptime(alist[i + 1], "%m/%d/%y").date()
+                date1 = datetime.datetime.strptime(alist[i], date_format).date()
+                date2 = datetime.datetime.strptime(alist[i + 1], date_format).date()
             if direction == "asc":
                 if date == "date":
                     if date1 > date2:
@@ -158,9 +159,10 @@ class CandidateAdvancedSearch(Common, Elements):
         if len(dates) == 0:
             self.sr_logger.logger.error("There is 0 record.")
             return
+        date_format = "%m/%d/%y"
         for i in range(len(dates)):
             base_date = datetime.date.today() - datetime.timedelta(days_diff)
-            the_date = datetime.datetime.strptime(dates[i], "%m/%d/%y").date()
+            the_date = datetime.datetime.strptime(dates[i], date_format).date()
             if direction == "older":
                 assert the_date > base_date, "date NOT older than."
             elif direction == "newer":
