@@ -14,14 +14,15 @@ from helpers.utils import get_basename_from_file_path
 from cx_pages.career_site_settings.manage_general_settings import ManageGeneralSettings
 from cx_pages.career_site_settings.career_site_settings import CareerSiteSettings
 from cx_pages.career_site_settings.manage_languages import ManageLanguages
+from ats_pages.administration.fee_agencies import FeeAgencies
 
 
 @pytest.mark.usefixtures("setup")
-class TestQuickApplyRandomJobExternalLangs:
+class TestFeeAgencyQuickApplyLangs:
 
-    @pytest.mark.parametrize("lang", ["French", "Spanish", "German"])
-    @allure.description("Random Job Quick Apply External - foreign languages: TestRail: c839, c840, c841")
-    def test_random_job_quick_apply_external_langs(self, get_test_info, lang):
+    @pytest.mark.parametrize("lang", ["french", "spanish", "german"])
+    @allure.description("Fee Agency Quick Apply - foreign languages: TestRail: c888, c889, c890")
+    def test_fee_agency_quick_apply_langs(self, get_test_info, lang):
         language = lang
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)
@@ -45,12 +46,26 @@ class TestQuickApplyRandomJobExternalLangs:
         ml = ManageLanguages(driver=self.driver)
         ml.set_given_langauge_to_default_only(language=language, enable=True)
         ml.click_language_setting_save_btn()
-        cs.open_url(portal_url)
+
+        # ATS->Fee Agency
+        login = AtsLogin(driver=self.driver)
+        login.do_login(get_test_info)
+        left_menu = LeftMenus(self.driver)
+        left_menu.click_left_nav(left_menu.administration)
+        left_menu.click_left_nav_sub(left_menu.fee_agencies)
+        fee_agency = FeeAgencies(self.driver)
+        fee_agency.open_fee_agency_profile(fee_agency_name="Apple One")
+        fee_agency_email = fee_agency.get_fee_agency_email()
+
+        # Login To Cx
+        cx_link = fee_agency.get_cx_link(site_name="CorporateCareerPortal")
+        fee_agency.open_url(cx_link)
+        fee_agency.login_to_fee_agency(fee_agency_email)
+        assert fee_agency.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 
         js = JobSearch(driver=self.driver)
         text_data = SrTestData.cx_portal_language_text.get(language, "")
         assert text_data.get("search_input_placeholder_text") == js.get_job_search_input_placeholder_text()
-        assert text_data.get("submit_resume_message") == js.get_submit_resume_message()
 
         job_elem, job_title = js.find_job(random_job=True)
         js.open_job(job_elem=job_elem)
@@ -67,7 +82,7 @@ class TestQuickApplyRandomJobExternalLangs:
         assert qa.get_choose_file_btn_label_text() == text_data.get("choose_file_btn_label")
 
         qa.fill_in_quick_apply_form(**form_details)
-        assert qa.get_success_message() == text_data.get("application_successful_message")
+        assert qa.get_success_message() == text_data.get("fee_agency_application_successful_message")
 
         # Login to ATS
         ats_login = AtsLogin(driver=self.driver)
@@ -83,6 +98,7 @@ class TestQuickApplyRandomJobExternalLangs:
         crp = CandidateResumeProfile(driver=self.driver)
         assert crp.verify_candidate_name() == candidate_name
         assert crp.verify_candidate_email() == f"{form_details.get('email')}"
+        assert crp.verify_source() == "Apple One"
 
         crp.open_attachment_tab()
         crp.get_attachment_names()
