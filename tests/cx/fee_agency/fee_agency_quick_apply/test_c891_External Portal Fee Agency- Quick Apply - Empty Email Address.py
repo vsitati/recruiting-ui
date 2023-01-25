@@ -24,10 +24,10 @@ class TestFeeAgencyQuickApplyInvalidEmailAddress:
         # Open Fee Agency Profile
         fee_agency = FeeAgencies(self.driver)
         fee_agency.open_fee_agency_profile(fee_agency_name="Apple One")
-        fee_agency_email = fee_agency.get_fee_agency_incorrect_email()
+        fee_agency_email = fee_agency.get_fee_agency_empty_email()
 
         # Login To Cx
         cx_link = fee_agency.get_cx_link(site_name="CorporateCareerPortal")
         fee_agency.open_url(cx_link)
         fee_agency.login_to_fee_agency(fee_agency_email)
-        assert r"""Email Address" is invalid.""" in fee_agency.get_page_source()
+        assert r"""Email Address" is required.""" in fee_agency.get_page_source()
