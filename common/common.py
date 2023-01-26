@@ -26,6 +26,9 @@ class Elements:
     all_hrefs = (By.XPATH, "//a[@href]")
     cx_settings_back_btn = (By.ID, "Admin_BackLink")
     cx_view_other_job_openings = (By.ID, "Apply_Success_JobsLink")
+    duplicate_candidate_submission = (By.ID, "duplicateCandidateSubmissionOption")
+    save_changes_btn_duplicate = (By.ID, "saveChangesBtn")
+    candidate_already_exists_error = (By.ID, "Error_AlreadyApplied_Success_PageHeading")
 
 
 class Common(Elements):
@@ -37,7 +40,7 @@ class Common(Elements):
         self.regex = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
 
     sr_logger = WebDriverListener()
-    sleep_time = 1
+    sleep_time = 2
 
     @staticmethod
     def parse_email_body(body):
@@ -189,8 +192,10 @@ class Common(Elements):
 
     def is_element_displayed(self, locator):
         is_display = self.driver.find_element_by_locator(locator).is_displayed()
-        if is_display: return True
-        else: return False
+        if is_display:
+            return True
+        else:
+            return False
 
     def get_text(self, locator):
         try:
@@ -316,3 +321,15 @@ class Common(Elements):
 
     def get_page_source(self):
         return self.driver.page_source
+
+    def get_duplicate_option(self):
+        select = Select(self.driver.find_element_by_locator(self.duplicate_candidate_submission))
+        select.select_by_visible_text('Do not allow this fee agency to submit candidates who are already linked to the same job')
+
+    def save_button_duplicate(self):
+        elem = self.driver.find_element_by_locator(self.save_changes_btn_duplicate)
+        self.driver.execute_script("arguments[0].scrollIntoView();", elem)
+        return self.do_click(elem)
+
+    def candidate_already_exists(self):
+        return self.driver.find_element_by_locator(self.candidate_already_exists_error).text
