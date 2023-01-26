@@ -12,6 +12,7 @@ class Elements:
     fee_agency_signin_button = (By.ID, "FeeAgency_SignIn_Submit")
     invalid_email = "invalid_email@email.com" # find a better way to do this
     incorrect_email = "incorrect@"
+    empty_email = ""
 
 
 class FeeAgencies(Common, Elements):
@@ -52,3 +53,6 @@ class FeeAgencies(Common, Elements):
 
     def get_fee_agency_incorrect_email(self):
         return self.incorrect_email
+
+    def get_fee_agency_empty_email(self):
+        return self.empty_email
