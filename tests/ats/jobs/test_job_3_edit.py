@@ -57,7 +57,7 @@ class TestJobEdit:
 
         job_priority = JobPriority(self.driver)
         job_priority.update_priority()
-
+        job_priority.wait_for_priority_modal()
         page_header.select_ellipses_menu(page_header.EllipsesMenu.EditJobPostingPositionCategory,
                                          page_header.OnPage.Job_Edit)
 

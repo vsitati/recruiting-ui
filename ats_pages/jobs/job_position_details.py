@@ -14,12 +14,14 @@ class Elements:
     job_template = (By.ID, "job_template_id_label")
     closed_date = (By.ID, 'closeddate')
     hiring_workflow = (By.ID, 'workflowId')
-    evergreen_job = [By.ID, 'isEvergreen_']
+    evergreen_job_yes_radio_btn = (By.XPATH, "//input[@name='isEvergreen'][@value='1'][@type='radio']")
+    evergreen_job_no_radio_btn = (By.XPATH, "//input[@name='isEvergreen'][@value='0'][@type='radio']")
     internal_job_title = (By.ID, 'job_title')
     posted_job_title = (By.ID, 'ext_job_title')
     tracking_code = (By.ID, 'trackingcode')
     number_of_positions = (By.ID, "numofpositions")
-    require_eForm_submission = [By.ID, "display_eform_"]
+    require_eForm_submission_yes_radio_btn = (By.XPATH, "//input[@name='display_eform'][@value='1'][@type='radio']")
+    require_eForm_submission_no_radio_btn = (By.XPATH, "//input[@name='display_eform'][@value='0'][@type='radio']")
     posting_status = (By.ID, 'status')
     position_type = (By.ID, 'jobtype')
     job_level = (By.ID, "joblev")
@@ -44,7 +46,9 @@ class Elements:
 
     # Position Requirements
     travel = (By.ID, "travel")
-    per_diem_included = [By.ID, "perdiem_"]
+    # per_diem_included = [By.ID, "perdiem_"]
+    per_diem_included_yes_radio_btn = (By.XPATH, "//input[@name='perdiem'][@value='1'][@type='radio']")
+    per_diem_included_no_radio_btn = (By.XPATH, "//input[@name='perdiem'][@value='0'][@type='radio']")
     minimum_salary = (By.ID, "salmin")
     maximum_salary = (By.ID, "salmax")
     salary_type = (By.ID, "saltype")
@@ -53,12 +57,18 @@ class Elements:
     years_of_experience = (By.ID, "experyrs")
 
     # EmployeeReferrals.com
-    list_on_employeeReferralscom = [By.ID, "hasEmployeeReferral_"]
+    # list_on_employeeReferralscom = [By.ID, "hasEmployeeReferral_"]
+    list_on_employeeReferralscom_yes_radio_btn = (
+    By.XPATH, "//input[@name='hasEmployeeReferral'][@value='1'][@type='radio']")
+    list_on_employeeReferralscom_no_radio_btn = (
+    By.XPATH, "//input[@name='hasEmployeeReferral'][@value='0'][@type='radio']")
     referral_bonus = (By.ID, 'erReferralBonus')
     referral_points = (By.ID, 'erReferralPoints')
     keywords = (By.ID, 'erKeywords')
     negative_keywords = (By.ID, 'erNegativeKeywords')
-    hot_job = [By.ID, 'erIsHotJob_']
+    # hot_job = [By.ID, 'erIsHotJob_']
+    hot_job_yes_radio_btn = (By.XPATH, "//input[@name='erIsHotJob'][@value='1'][@type='radio']")
+    hot_job_no_radio_btn = (By.XPATH, "//input[@name='erIsHotJob'][@value='0'][@type='radio']")
 
     # Description/Skills
     job_description = (By.ID, "jobdescription_ifr")
@@ -85,10 +95,6 @@ class JobPositionDetails(Common, Elements):
     def __init__(self, driver):
         super().__init__(driver)
 
-    # class PostingStatus(enumerate):
-    #     Normal = "Normal - Int./Ext. Applicants"
-    #     External = "External"
-    #     Internal = "Internal"
 
     def fill_out_all_job_details_fields(self):
         # Job Administration
@@ -99,7 +105,9 @@ class JobPositionDetails(Common, Elements):
         # Job Information
         # self.select_auto_complete(self.job_template, JobData.job_data.get("job_template"))
         self.select_from_dropdown(self.hiring_workflow, JobData.job_data.get("hiring_workflow"))
-        self.click_radio_yes_no(self.evergreen_job, JobData.job_data.get("evergreen_job"))
+        self.click_radio_yes_no(yes_btn_elem=self.evergreen_job_yes_radio_btn,
+                                no_btn_elem=self.evergreen_job_no_radio_btn,
+                                yes=JobData.job_data.get("evergreen_job_edit"))
         self.enter_text(self.internal_job_title, JobData.job_data.get("internal_job_title"))
         self.enter_text(self.posted_job_title, JobData.job_data.get("posted_job_title"))
         self.enter_text(self.tracking_code, JobData.job_data.get("tracking_code"))
@@ -130,7 +138,9 @@ class JobPositionDetails(Common, Elements):
 
         # Position Requirements
         self.select_from_dropdown(self.travel, JobData.job_data.get("travel"))
-        self.click_radio_yes_no(self.per_diem_included, JobData.job_data.get("per_diem_included"))
+        self.click_radio_yes_no(yes_btn_elem=self.per_diem_included_yes_radio_btn,
+                                no_btn_elem=self.per_diem_included_no_radio_btn,
+                                yes=JobData.job_data.get("per_diem_included"))
         self.enter_text(self.minimum_salary, JobData.job_data.get("minimum_salary"))
         self.enter_text(self.maximum_salary, JobData.job_data.get("maximum_salary"))
         self.select_from_dropdown(self.salary_type, JobData.job_data.get("salary_type"))
@@ -139,13 +149,16 @@ class JobPositionDetails(Common, Elements):
         self.select_from_dropdown(self.years_of_experience, JobData.job_data.get("years_of_experience"))
 
         # EmployeeReferrals.com
-        self.click_radio_yes_no(self.list_on_employeeReferralscom, JobData.job_data.get("list_on_employeeReferralscom"))
+        self.click_radio_yes_no(yes_btn_elem=self.list_on_employeeReferralscom_yes_radio_btn,
+                                no_btn_elem=self.per_diem_included_no_radio_btn,
+                                yes=JobData.job_data.get("list_on_employeeReferralscom"))
         self.enter_richtext_integer(self.referral_bonus, JobData.job_data.get("referral_bonus"))
         self.enter_richtext_integer(self.referral_points, JobData.job_data.get("referral_points"))
         self.enter_text(self.keywords, JobData.job_data.get("keywords"))
         self.enter_text(self.negative_keywords, JobData.job_data.get("negative_keywords"))
-        self.click_radio_yes_no(self.hot_job, JobData.job_data.get("hot_job"))
-
+        self.click_radio_yes_no(yes_btn_elem=self.hot_job_yes_radio_btn,
+                                no_btn_elem=self.hot_job_no_radio_btn,
+                                yes=JobData.job_data.get("hot_job"))
         # Description/Skills
         self.enter_richtext(self.job_description, JobData.job_data.get("job_description"))
         self.enter_richtext(self.required_skills, JobData.job_data.get("required_skills"))
@@ -197,7 +210,9 @@ class JobPositionDetails(Common, Elements):
 
         # Job Information
         self.pick_datepicker(self.closed_date, JobData.job_data.get("closed_date"))
-        self.click_radio_yes_no(self.evergreen_job, JobData.job_data.get("evergreen_job_edit"))
+        self.click_radio_yes_no(yes_btn_elem=self.evergreen_job_yes_radio_btn,
+                                no_btn_elem=self.evergreen_job_no_radio_btn,
+                                yes=JobData.job_data.get("evergreen_job_edit"))
         self.enter_text(self.internal_job_title, JobData.job_data.get("internal_job_title_edit"))
         # self.enter_text(self.posted_job_title, JobData.job_data.get("posted_job_title_edit"))
         self.select_from_dropdown(self.position_type, JobData.job_data.get("position_type_edit"))
@@ -216,7 +231,9 @@ class JobPositionDetails(Common, Elements):
 
         # EmployeeReferrals.com
         self.enter_richtext_integer(self.referral_bonus, JobData.job_data.get("referral_bonus_edit"))
-        self.click_radio_yes_no(self.hot_job, JobData.job_data.get("hot_job_edit"))
+        self.click_radio_yes_no(yes_btn_elem=self.hot_job_yes_radio_btn,
+                                no_btn_elem=self.hot_job_no_radio_btn,
+                                yes=JobData.job_data.get("hot_job_edit"))
 
         # Description/Skills
         self.enter_richtext(self.required_skills, JobData.job_data.get("required_skills_edit"))

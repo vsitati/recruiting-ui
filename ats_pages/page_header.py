@@ -13,9 +13,7 @@ class Elements:
     ellipses_menu_btn_on_job_edit = (By.CSS_SELECTOR,
                                         "[class='oh__icon-button lifesuite__float-right richTextValidatorIgnore']"
                                         ">[class='richTextValidatorIgnore']")
-    ellipses_menu_btn_on_candidate_search = (By.CSS_SELECTOR,
-                                        "[class='richTextValidatorIgnore']"
-                                        ">[class='fas fa-ellipsis-v fa-2x richTextValidatorIgnore']")
+    ellipses_menu_btn_on_candidate_search = (By.CSS_SELECTOR, ".fas.fa-ellipsis-v.fa-2x.richTextValidatorIgnore")
 
 
 class PageHeader(Common, Elements):
