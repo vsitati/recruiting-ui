@@ -5,8 +5,8 @@ from enum import auto
 
 
 class Elements:
-    search_btn = (By.ID, 'quick_search_button')
-    search_text = (By.ID, 'quick_search_input')
+    quick_search_btn = (By.ID, 'quick_search_button')
+    quick_search_text = (By.ID, 'quick_search_input')
     ellipses_menu_btn_on_job_details = (By.CSS_SELECTOR,
                                         "[class='oh__menu-icon lifesuite__button--dropdown oh__menu-button']"
                                         ">[class='oh__icon-button lifesuite__float-right']")
@@ -49,11 +49,11 @@ class PageHeader(Common, Elements):
         Candidate_Search = auto()
 
     def quick_search(self, search_object, search_input=""):
-        elm = self.driver.find_element_by_locator(self.search_btn)
+        elm = self.driver.find_element_by_locator(self.quick_search_btn)
         if elm.text.lower() != search_object.lower():
             self.do_click(elm)
 
-        elm = self.driver.find_element_by_locator(self.search_text)
+        elm = self.driver.find_element_by_locator(self.quick_search_text)
         elm.send_keys(search_input)
         elm.send_keys(Keys.ENTER)
 

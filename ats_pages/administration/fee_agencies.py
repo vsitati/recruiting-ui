@@ -10,6 +10,9 @@ class Elements:
     fee_agency_email = (By.ID, "email")
     fee_agency_signin_email = (By.ID, "FeeAgency_SignIn__EmailAddress")
     fee_agency_signin_button = (By.ID, "FeeAgency_SignIn_Submit")
+    invalid_email = "invalid_email@email.com" # find a better way to do this
+    incorrect_email = "incorrect@"
+    empty_email = ""
 
 
 class FeeAgencies(Common, Elements):
@@ -44,3 +47,12 @@ class FeeAgencies(Common, Elements):
     def login_to_fee_agency(self, email_address):
         self.driver.find_element_by_locator(self.fee_agency_signin_email).send_keys(email_address)
         return self.do_click(self.driver.find_element_by_locator(self.fee_agency_signin_button))
+
+    def get_fee_agency_invalid_email(self):
+        return self.invalid_email
+
+    def get_fee_agency_incorrect_email(self):
+        return self.incorrect_email
+
+    def get_fee_agency_empty_email(self):
+        return self.empty_email

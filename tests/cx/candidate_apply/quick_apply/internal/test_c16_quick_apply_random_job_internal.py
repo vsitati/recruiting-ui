@@ -57,7 +57,7 @@ class TestQuickApplyRandomJobInternal:
         form_details = td.get_quick_apply_form_data(parent_folder=Config.env_config["path_to_resumes"])
         qa.click_cx_job_apply_btn()
         qa.fill_in_quick_apply_form(**form_details)
-        assert qa.get_h2_tag_name() == "Thank You for Applying"
+        assert qa.get_success_message() == "Thank You for Applying"
 
         # Login to ATS
         ats_login = AtsLogin(driver=self.driver)

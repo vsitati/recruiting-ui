@@ -73,13 +73,13 @@ class JobPositionDetailsView(Common, Elements):
         elms = elm.find_elements(By.CLASS_NAME, "jobPostingDetailsTD")
         for elm in elms:
             if elm.text == JobData.job_data.get("assigned_recruiter"):
-                self.sr_logger.logger.info("Verified assigned recruiter.")
+                self.sr_logger.logger.info("-- Verified assigned recruiter.")
                 continue
             elif elm.text == JobData.job_data.get("hiring_manager"):
-                self.sr_logger.logger.info("Verified hiring manager.")
+                self.sr_logger.logger.info("-- Verified hiring manager.")
                 continue
             elif elm.text == JobData.job_data.get("status"):
-                self.sr_logger.logger.info("Verified posting status.")
+                self.sr_logger.logger.info("-- Verified posting status.")
                 continue
         return
 

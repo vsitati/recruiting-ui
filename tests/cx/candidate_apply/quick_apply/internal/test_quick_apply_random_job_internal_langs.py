@@ -73,7 +73,7 @@ class TestQuickApplyRandomJobInternalLangs:
         assert qa.get_choose_file_btn_label_text() == text_data.get("choose_file_btn_label")
 
         qa.fill_in_quick_apply_form(**form_details)
-        assert qa.get_h2_tag_name() == text_data.get("application_successful_message")
+        assert qa.get_success_message() == text_data.get("application_successful_message")
 
         driver2.quit()
 

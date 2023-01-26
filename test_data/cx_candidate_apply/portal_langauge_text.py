@@ -7,7 +7,8 @@ class PortalLanguageTextData:
             "lastname_label": "* Nom de famille",
             "email_label": "* Adresse e-mail",
             "choose_file_btn_label": "* Curriculum vitae",
-            "application_successful_message": "Merci pour votre candidature"
+            "application_successful_message": "Merci pour votre candidature",
+            "fee_agency_application_successful_message": "Merci d'avoir soumis votre candidature"
         },
 
         "german": {
@@ -17,7 +18,9 @@ class PortalLanguageTextData:
             "lastname_label": "* Nachname",
             "email_label": "* E-Mail-Addresse",
             "choose_file_btn_label": "* Lebenslauf",
-            "application_successful_message": "Vielen Dank für Ihre Bewerbung"
+            "application_successful_message": "Vielen Dank für Ihre Bewerbung",
+            "fee_agency_application_successful_message": "Vielen Dank für die Einreichung"
+
         },
 
         "spanish": {
@@ -27,6 +30,7 @@ class PortalLanguageTextData:
             "lastname_label": "* Apellido",
             "email_label": "* Dirección de correo electrónico",
             "choose_file_btn_label": "* CV/currículum vitae",
-            "application_successful_message": "Gracias por solicitar"
+            "application_successful_message": "Gracias por solicitar",
+            "fee_agency_application_successful_message": "Gracias por el Submittal"
         }
     }
