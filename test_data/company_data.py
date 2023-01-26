@@ -15,6 +15,7 @@ class CompanyData:
                 "open_admin": ["ohqaadmin", "xW8hW8rZ"],
                 "sso": ["susan", "blank"],
                 "sso_invalid_username": ["invalid_username", "Silkroad@1"],
+                "sso_inactive_username": ["inactive_sso", "Silkroad@1"],
                 "sso_disabled_active_username": ["monica", "Silkroad@1"],
                 "sso_disabled_inactive_username": ["jbond0107", "Silkroad@1"]
             }
