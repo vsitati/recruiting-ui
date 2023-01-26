@@ -10,6 +10,7 @@ class TestOpenAdminLoginAs:
     @allure.title("C754 - ATS Open Admin Login as")
     @allure.description("Scenario Login As a user from Open Admin")
     def test_can_login_as(self, get_test_info):
+        get_test_info["ats"] = "openadmin"
         login = Login(driver=self.driver)
         login.do_login(get_test_info)
 
