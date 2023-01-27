@@ -16,9 +16,9 @@ from helpers.utils import get_basename_from_file_path
 
 
 @pytest.mark.usefixtures("setup")
-class TestFeeAgencyQuickApplyDoNotAllowSameJobDuplicates:
-    @allure.description("Fee Agency Quick Apply Do not allow same job duplicates")
-    def test_fee_agency_quick_apply_do_not_allow_same_job_duplicates(self, get_test_info):
+class TestFeeAgencyQuickApplyAllowSameDuplicates:
+    @allure.description("Fee Agency Quick Apply allow job duplicates")
+    def test_fee_agency_quick_apply_allow_job_duplicates(self, get_test_info):
         # Login to ATS as RM
         login = AtsLogin(driver=self.driver)
         login.do_login(get_test_info)
