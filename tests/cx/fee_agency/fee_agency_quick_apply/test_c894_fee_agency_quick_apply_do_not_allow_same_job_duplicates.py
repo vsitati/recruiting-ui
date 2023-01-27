@@ -63,9 +63,8 @@ class TestFeeAgencyQuickApplyDoNotAllowSameJobDuplicates:
         ats_login.do_login(get_test_info)
 
         left_menu = LeftMenus(driver=self.driver)
-        left_menu.click_left_nav_switch(left_menu.candidates)
-        time.sleep(3) # Will look for a better way of doing this # Victor
-        left_menu.click_left_nav_switch(left_menu.candidates_advanced_search)
+        left_menu.click_left_nav(left_menu.candidates)
+        left_menu.click_left_nav(left_menu.candidates_advanced_search)
 
         cas = CandidateAdvancedSearch(driver=self.driver)
         candidate_name = f"{form_details.get('firstname')} {form_details.get('lastname')}"
@@ -83,8 +82,8 @@ class TestFeeAgencyQuickApplyDoNotAllowSameJobDuplicates:
 
         # Navigate to Administration->Fee Agency
         left_menu = LeftMenus(self.driver)
-        left_menu.click_left_nav_switch(left_menu.administration)
-        left_menu.click_left_nav_switch(left_menu.fee_agencies)
+        left_menu.click_left_nav(left_menu.administration)
+        left_menu.click_left_nav(left_menu.fee_agencies)
         # Open Fee Agency Profile
         fee_agency = FeeAgencies(self.driver)
         fee_agency.open_fee_agency_profile(fee_agency_name="Apple One")
