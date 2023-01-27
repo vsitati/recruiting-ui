@@ -65,7 +65,7 @@ class LeftMenus(Common, Elements):
 
     def click_left_nav(self, element):
         self.open_menu()
-        time.sleep(self.sleep_time)   # TODO: find a better way to wait
+        time.sleep(self.sleep_time)  # TODO: find a better way to wait
         return self.do_click(self.driver.find_element_by_locator(element))
         # return False
 
@@ -76,3 +76,13 @@ class LeftMenus(Common, Elements):
         if not self.driver.find_element_by_locator(self.menu_text).is_displayed():
             return self.do_click(self.driver.find_element_by_locator(self.menu_icon))
         return True
+
+    def click_left_nav_switch(self, element):
+        self.open_menu()
+        menu_item = ''
+        while not menu_item:
+            try:
+                menu_item = self.driver.find_element_by_locator(element)
+                return self.do_click(menu_item)
+            finally:
+                continue
