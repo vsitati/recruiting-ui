@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
 
 from common.common import Common
 from helpers.utils import BaseError
@@ -63,6 +64,14 @@ class FeeAgencies(Common, Elements):
     def get_duplicate_option(self):
         select = Select(self.driver.find_element_by_locator(self.duplicate_candidate_submission))
         select.select_by_visible_text('Do not allow this fee agency to submit candidates who are already linked to the same job')
+
+    def get_duplicate_option_1(self):
+        select = Select(self.driver.find_element_by_locator(self.duplicate_candidate_submission))
+        select.select_by_visible_text('Allow this fee agency to submit any candidate')
+
+    def get_duplicate_option_2(self):
+        select = Select(self.driver.find_element_by_locator(self.duplicate_candidate_submission))
+        select.select_by_visible_text('Do not allow this fee agency to submit candidates who already exists in the system')
 
     def save_button_duplicate(self):
         elem = self.driver.find_element_by_locator(self.save_changes_btn_duplicate)
