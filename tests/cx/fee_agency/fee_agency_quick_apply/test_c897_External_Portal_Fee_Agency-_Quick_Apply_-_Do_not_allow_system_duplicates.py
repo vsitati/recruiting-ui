@@ -16,9 +16,9 @@ from helpers.utils import get_basename_from_file_path
 
 
 @pytest.mark.usefixtures("setup")
-class TestFeeAgencyQuickApplyAllowSameDuplicates:
-    @allure.description("Fee Agency Quick Apply allow job duplicates")
-    def test_fee_agency_quick_apply_allow_job_duplicates(self, get_test_info):
+class TestFeeAgencyQuickApplyDoNotAllowSystemDuplicates:
+    @allure.description("Fee Agency Quick Apply Do not allow system duplicates")
+    def test_fee_agency_quick_apply_do_not_allow_system_duplicates(self, get_test_info):
         # Login to ATS as RM
         login = AtsLogin(driver=self.driver)
         login.do_login(get_test_info)
@@ -34,7 +34,7 @@ class TestFeeAgencyQuickApplyAllowSameDuplicates:
         fee_agency = FeeAgencies(self.driver)
         fee_agency.open_fee_agency_profile(fee_agency_name="Apple One")
         fee_agency_email = fee_agency.get_fee_agency_email()
-        fee_agency.get_duplicate_option_1()
+        fee_agency.get_duplicate_option_2()
         fee_agency.save_button_duplicate()
         fee_agency.open_fee_agency_profile(fee_agency_name="Apple One")
 
@@ -103,5 +103,19 @@ class TestFeeAgencyQuickApplyAllowSameDuplicates:
 
         qa.click_cx_job_apply_btn()
         qa.fill_in_quick_apply_form(**form_details)
+        assert fee_agency.candidate_already_exists() == "Candidate Already Exists"
+        # qa.click_view_other_job_openings()
+        link = js.get_all_hrefs(specific_href="useSavedSearch")
+        js.open_url(link)
 
+        js = JobSearch(driver=self.driver)
+        job_elem, job_title = js.find_job(random_job=True)
+        js.open_job(job_elem=job_elem)
+        assert job_title in js.get_title()
+
+        qa = QuickApply(driver=self.driver)
+        td = SrTestData()
+        form_details = td.get_quick_apply_form_data(parent_folder=Config.env_config["path_to_resumes"])
+        qa.click_cx_job_apply_btn()
+        qa.fill_in_quick_apply_form(**form_details)
         assert qa.get_success_message() == "Thank You for the Submittal"
