@@ -190,8 +190,10 @@ class Common(Elements):
 
     def is_element_displayed(self, locator):
         is_display = self.driver.find_element_by_locator(locator).is_displayed()
-        if is_display: return True
-        else: return False
+        if is_display:
+            return True
+        else:
+            return False
 
     def get_text(self, locator):
         try:

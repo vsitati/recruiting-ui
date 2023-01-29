@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
 
 from common.common import Common
 from helpers.utils import BaseError
@@ -13,6 +14,9 @@ class Elements:
     invalid_email = "invalid_email@email.com" # find a better way to do this
     incorrect_email = "incorrect@"
     empty_email = ""
+    duplicate_candidate_submission = (By.ID, "duplicateCandidateSubmissionOption")
+    save_changes_btn_duplicate = (By.ID, "saveChangesBtn")
+    candidate_already_exists_error = (By.ID, "Error_AlreadyApplied_Success_PageHeading")
 
 
 class FeeAgencies(Common, Elements):
@@ -56,3 +60,23 @@ class FeeAgencies(Common, Elements):
 
     def get_fee_agency_empty_email(self):
         return self.empty_email
+
+    def get_duplicate_option(self):
+        select = Select(self.driver.find_element_by_locator(self.duplicate_candidate_submission))
+        select.select_by_visible_text('Do not allow this fee agency to submit candidates who are already linked to the same job')
+
+    def get_duplicate_option_1(self):
+        select = Select(self.driver.find_element_by_locator(self.duplicate_candidate_submission))
+        select.select_by_visible_text('Allow this fee agency to submit any candidate')
+
+    def get_duplicate_option_2(self):
+        select = Select(self.driver.find_element_by_locator(self.duplicate_candidate_submission))
+        select.select_by_visible_text('Do not allow this fee agency to submit candidates who already exists in the system')
+
+    def save_button_duplicate(self):
+        elem = self.driver.find_element_by_locator(self.save_changes_btn_duplicate)
+        self.driver.execute_script("arguments[0].scrollIntoView();", elem)
+        return self.do_click(elem)
+
+    def candidate_already_exists(self):
+        return self.driver.find_element_by_locator(self.candidate_already_exists_error).text
