@@ -2,6 +2,7 @@ from common.common import Common
 from selenium.webdriver.common.by import By
 from selenium.webdriver import Keys
 from enum import auto
+from time import sleep
 
 
 class Elements:
@@ -16,6 +17,9 @@ class Elements:
     ellipses_menu_btn_on_candidate_search = (By.CSS_SELECTOR,
                                         "[class='richTextValidatorIgnore']"
                                         ">[class='fas fa-ellipsis-v fa-2x richTextValidatorIgnore']")
+    ellipses_menu_btn_on_job_search = (By.CSS_SELECTOR,
+                                        "[class='oh__menu-icon lifesuite__button--dropdown oh__menu-button']"
+                                        ">[class='oh__icon-button lifesuite__float-right']")
 
 
 class PageHeader(Common, Elements):
@@ -42,13 +46,14 @@ class PageHeader(Common, Elements):
         EditJobPostingPositionAttachments = "Edit Job Posting - Attachments"
         EditJobPostingPositionEvaluationQuestions = "Edit Job Posting - Evaluation Questions"
         RequisitionApprovalDetails = "Requisition Approval Details"
-        # Candidate Search page
+        # Candidate/Job Search page
         Columns = "Columns"
 
     class OnPage(enumerate):
         Job_Details = auto()
         Job_Edit = auto()
         Candidate_Search = auto()
+        Job_Search = auto()
 
     def quick_search(self, search_object, search_input=""):
         elm = self.driver.find_element_by_locator(self.quick_search_btn)
@@ -66,8 +71,10 @@ class PageHeader(Common, Elements):
             self.go_click(self.ellipses_menu_btn_on_job_edit)
         elif on_page == self.OnPage.Candidate_Search:
             self.go_click(self.ellipses_menu_btn_on_candidate_search)
+        elif on_page == self.OnPage.Job_Search:
+            self.go_click(self.ellipses_menu_btn_on_job_search)
 
         elm_link = self.driver.find_element_by_locator((By.LINK_TEXT, ellipses_menu))
         self.do_click(elm_link)
-
+        sleep(self.sleep_time)
         return

@@ -1,5 +1,6 @@
 from common.common import Common
 from selenium.webdriver.common.by import By
+from time import sleep
 
 
 class Elements:
@@ -15,6 +16,8 @@ class Elements:
     recruiting_manager = (By.ID, "recruitingManagerId_input")
     sort_by = (By.ID, "sortBy")
     sort_by_order = (By.ID, "sortByDirection")
+    enter_date_start = (By.ID, "createdDateStart")
+    enter_date_end = (By.ID, "createdDateEnd")
 
 
 class CandidateAdvancedSearchEdit(Common, Elements):
@@ -23,7 +26,7 @@ class CandidateAdvancedSearchEdit(Common, Elements):
 
     def click_apply_filter_btn(self):
         self.go_click(self.apply_filter_btn)
-        return
+        sleep(self.sleep_time)
 
     def click_clear_filter_btn(self):
         return self.go_click(self.clear_filter_btn)
@@ -55,3 +58,7 @@ class CandidateAdvancedSearchEdit(Common, Elements):
 
     def select_sort_by_order(self, sort_by_order):
         return self.select_from_dropdown(self.sort_by_order, sort_by_order)
+
+    def pick_enter_date(self, date_start, date_end):
+        self.pick_datepicker(self.enter_date_start, date_start)
+        self.pick_datepicker(self.enter_date_end, date_end)
