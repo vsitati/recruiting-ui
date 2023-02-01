@@ -19,5 +19,6 @@ class ValidationData:
                                                " Thank you."
     sso_validation = {
         "sso_invalid_username_error": "You were not authenticated locally so SSO will not be attempted.",
-        "sso_inactive_user_error": "Session Unknown"
+        "sso_inactive_user_error": "Session Unknown",
+        "sso_inactive_and_disabled_error": "ApplicationKey failure"
     }

@@ -57,4 +57,4 @@ class TestAtsSsoLogin:
         login.do_login(get_test_info, cred=invalid_credentials, sso=True)
 
         error_msg = login.get_text(locator=login.sso_login_error)
-        assert error_msg == SrTestData.sso_validation.get("sso_inactive_user_error", "")
+        assert error_msg == SrTestData.sso_validation.get("sso_inactive_and_disabled_error", "")
