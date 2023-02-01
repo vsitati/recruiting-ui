@@ -38,20 +38,30 @@ class TestCandidateAdvancedSearch:
         candidate_advanced_search.sort_candidate_column_header("Enter Date", "desc", "date")
         return
 
+    @allure.title("Candidate Search: ")
+    @allure.description("JIRA: RND-7433; TestRail: c5503")
+    def test_candidate_search_enter_date(self, get_test_info):
+        self.__preset(get_test_info)
+
+        candidate_advanced_search_edit = CandidateAdvancedSearchEdit(self.driver)
+        enter_date_start = "7/1/2022"
+        enter_date_end = "1/31/2023"
+        candidate_advanced_search_edit.pick_enter_date(enter_date_start, enter_date_end)
+
+        candidate_advanced_search_edit.click_apply_filter_btn()
+
+        candidate_advanced_search = CandidateAdvancedSearch(self.driver)
+        col_list = candidate_advanced_search.get_candidate_column_values("Enter Date")
+        candidate_advanced_search.compare_date_range(col_list, enter_date_start, enter_date_end)
+
+        return
+
     @allure.title("Candidate Search: candidate name")
     @allure.description("JIRA: RND-7432; TestRail: C265")
     def test_candidate_search_candidate_name(self, get_test_info):
-        login = Login(driver=self.driver)
-        login.do_login(get_test_info)
-
-        left_menu = LeftMenus(self.driver)
-        left_menu.click_left_nav(left_menu.candidates)
-        left_menu.click_left_nav_sub(left_menu.candidates_advanced_search)
+        self.__preset(get_test_info)
 
         candidate_advanced_search_edit = CandidateAdvancedSearchEdit(self.driver)
-        candidate_advanced_search_edit.click_edit_search()
-        candidate_advanced_search_edit.click_clear_filter_btn()
-
         candidate_name = "Aaron"
         candidate_advanced_search_edit.enter_candidate_name(candidate_name)
 
@@ -64,20 +74,11 @@ class TestCandidateAdvancedSearch:
         return
 
     @allure.title("Candidate Search: enter date")
-    @allure.description("JIRA: RND-7433; TestRail: c266")
-    def test_candidate_search_enter_date(self, get_test_info):
-        login = Login(driver=self.driver)
-        login.do_login(get_test_info)
-
-        left_menu = LeftMenus(self.driver)
-        left_menu.click_left_nav(left_menu.candidates)
-        left_menu.click_left_nav_sub(left_menu.candidates_advanced_search)
-        sleep(left_menu.sleep_time)
+    @allure.description("JIRA: RND-7539; TestRail: c266")
+    def test_candidate_search_enter_in_the_last(self, get_test_info):
+        self.__preset(get_test_info)
 
         candidate_advanced_search_edit = CandidateAdvancedSearchEdit(self.driver)
-        candidate_advanced_search_edit.click_edit_search()
-        candidate_advanced_search_edit.click_clear_filter_btn()
-
         entered_in_the_last = 10
         candidate_advanced_search_edit.enter_entered_in_the_last(entered_in_the_last)
 
@@ -85,24 +86,16 @@ class TestCandidateAdvancedSearch:
 
         candidate_advanced_search = CandidateAdvancedSearch(self.driver)
         col_list = candidate_advanced_search.get_candidate_column_values("Enter Date")
-        candidate_advanced_search.compare_date_range(entered_in_the_last, col_list, "older")
+        candidate_advanced_search.compare_in_last_days_range(entered_in_the_last, col_list, "older")
 
         return
 
     @allure.title("Candidate Search: Current Stage")
     @allure.description("JIRA: RND-7435; TestRail: c267")
     def test_candidate_search_current_stage(self, get_test_info):
-        login = Login(driver=self.driver)
-        login.do_login(get_test_info)
-
-        left_menu = LeftMenus(self.driver)
-        left_menu.click_left_nav(left_menu.candidates)
-        left_menu.click_left_nav_sub(left_menu.candidates_advanced_search)
+        self.__preset(get_test_info)
 
         candidate_advanced_search_edit = CandidateAdvancedSearchEdit(self.driver)
-        candidate_advanced_search_edit.click_edit_search()
-        candidate_advanced_search_edit.click_clear_filter_btn()
-
         current_stage = CandidateData.candidate_current_stage.get("offer_approval")
         candidate_advanced_search_edit.select_current_stage(current_stage)
 
@@ -117,21 +110,12 @@ class TestCandidateAdvancedSearch:
     @allure.title("Candidate Search: Country")
     @allure.description("JIRA: RND-7436; TestRail: c268")
     def test_candidate_search_country(self, get_test_info):
-        login = Login(driver=self.driver)
-        login.do_login(get_test_info)
-
-        left_menu = LeftMenus(self.driver)
-        left_menu.click_left_nav(left_menu.candidates)
-        left_menu.click_left_nav_sub(left_menu.candidates_advanced_search)
-        sleep(left_menu.sleep_time)
+        self.__preset(get_test_info)
 
         candidate_advanced_search_edit = CandidateAdvancedSearchEdit(self.driver)
-        candidate_advanced_search_edit.click_edit_search()
-        candidate_advanced_search_edit.click_clear_filter_btn()
-
         country = "Canada"
         candidate_advanced_search_edit.select_country(country)
-        sleep(left_menu.sleep_time)
+        sleep(candidate_advanced_search_edit.sleep_time)
 
         candidate_advanced_search_edit.click_apply_filter_btn()
 
@@ -141,7 +125,6 @@ class TestCandidateAdvancedSearch:
         ellipses_columns = EllipsesColumns(self.driver)
         ellipses_columns.select_column(ellipses_columns.Columns.Country)
         ellipses_columns.click_apply()
-        sleep(left_menu.sleep_time)
 
         candidate_advanced_search = CandidateAdvancedSearch(self.driver)
         col_list = candidate_advanced_search.get_candidate_column_values("Country")
@@ -152,25 +135,16 @@ class TestCandidateAdvancedSearch:
     @allure.title("Candidate Search: Country and State")
     @allure.description("JIRA: RND-7437; TestRail: c269")
     def test_candidate_search_country_state(self, get_test_info):
-        login = Login(driver=self.driver)
-        login.do_login(get_test_info)
-
-        left_menu = LeftMenus(self.driver)
-        left_menu.click_left_nav(left_menu.candidates)
-        left_menu.click_left_nav_sub(left_menu.candidates_advanced_search)
-        sleep(left_menu.sleep_time)
+        self.__preset(get_test_info)
 
         candidate_advanced_search_edit = CandidateAdvancedSearchEdit(self.driver)
-        candidate_advanced_search_edit.click_edit_search()
-        candidate_advanced_search_edit.click_clear_filter_btn()
-
         country = "United States"
         candidate_advanced_search_edit.select_country(country)
-        sleep(left_menu.sleep_time)
+        sleep(candidate_advanced_search_edit.sleep_time)
 
         state = "New Hampshire"
         candidate_advanced_search_edit.select_state(state)
-        sleep(left_menu.sleep_time)
+        sleep(candidate_advanced_search_edit.sleep_time)
 
         candidate_advanced_search_edit.click_apply_filter_btn()
 
@@ -181,7 +155,6 @@ class TestCandidateAdvancedSearch:
         ellipses_columns.select_column(ellipses_columns.Columns.Country)
         ellipses_columns.select_column(ellipses_columns.Columns.State)
         ellipses_columns.click_apply()
-        sleep(left_menu.sleep_time)
 
         candidate_advanced_search = CandidateAdvancedSearch(self.driver)
         col_list = candidate_advanced_search.get_candidate_column_values("Country")
@@ -194,21 +167,11 @@ class TestCandidateAdvancedSearch:
     @allure.title("Candidate Search: recruiting manager")
     @allure.description("JIRA: RND-7438; TestRail: c264")
     def test_candidate_search_recruiting_manager(self, get_test_info):
-        login = Login(driver=self.driver)
-        login.do_login(get_test_info)
-
-        left_menu = LeftMenus(self.driver)
-        left_menu.click_left_nav(left_menu.candidates)
-        left_menu.click_left_nav_sub(left_menu.candidates_advanced_search)
-        sleep(left_menu.sleep_time)
+        self.__preset(get_test_info)
 
         candidate_advanced_search_edit = CandidateAdvancedSearchEdit(self.driver)
-        candidate_advanced_search_edit.click_edit_search()
-        candidate_advanced_search_edit.click_clear_filter_btn()
-
         recruiting_manager = "auto_rm_01 Silkroad"
         candidate_advanced_search_edit.select_recruiting_manager(recruiting_manager)
-        sleep(left_menu.sleep_time)
 
         candidate_advanced_search_edit.click_apply_filter_btn()
 
@@ -218,7 +181,6 @@ class TestCandidateAdvancedSearch:
         ellipses_columns = EllipsesColumns(self.driver)
         ellipses_columns.select_column(ellipses_columns.Columns.RecruitingManager)
         ellipses_columns.click_apply()
-        sleep(left_menu.sleep_time)
 
         candidate_advanced_search = CandidateAdvancedSearch(self.driver)
         col_list = candidate_advanced_search.get_candidate_column_values("Recruiting Manager")
@@ -229,18 +191,9 @@ class TestCandidateAdvancedSearch:
     @allure.title("Candidate Search: sort by")
     @allure.description("JIRA: RND-7439; TestRail: c5469")
     def test_candidate_search_sort_by(self, get_test_info):
-        login = Login(driver=self.driver)
-        login.do_login(get_test_info)
-
-        left_menu = LeftMenus(self.driver)
-        left_menu.click_left_nav(left_menu.candidates)
-        left_menu.click_left_nav_sub(left_menu.candidates_advanced_search)
-        sleep(left_menu.sleep_time)
+        self.__preset(get_test_info)
 
         candidate_advanced_search_edit = CandidateAdvancedSearchEdit(self.driver)
-        candidate_advanced_search_edit.click_edit_search()
-        candidate_advanced_search_edit.click_clear_filter_btn()
-
         sort_by = "Tracking Code"
         candidate_advanced_search_edit.select_sort_by(sort_by)
         candidate_advanced_search_edit.select_sort_by_order("Descending")
@@ -253,10 +206,22 @@ class TestCandidateAdvancedSearch:
         ellipses_columns = EllipsesColumns(self.driver)
         ellipses_columns.select_column(ellipses_columns.Columns.TrackingCode)
         ellipses_columns.click_apply()
-        sleep(left_menu.sleep_time)
 
         candidate_advanced_search = CandidateAdvancedSearch(self.driver)
         col_list = candidate_advanced_search.get_candidate_column_values(sort_by)
         candidate_advanced_search.verify_ordering(col_list, "desc")
 
         return
+
+    def __preset(self, get_test_info):
+        login = Login(driver=self.driver)
+        login.do_login(get_test_info)
+
+        left_menu = LeftMenus(self.driver)
+        left_menu.click_left_nav(left_menu.candidates)
+        left_menu.click_left_nav_sub(left_menu.candidates_advanced_search)
+        sleep(left_menu.sleep_time)
+
+        candidate_advanced_search_edit = CandidateAdvancedSearchEdit(self.driver)
+        candidate_advanced_search_edit.click_edit_search()
+        candidate_advanced_search_edit.click_clear_filter_btn()

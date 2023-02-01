@@ -1,6 +1,7 @@
 from common.common import Common
 from selenium.webdriver.common.by import By
 import time
+from selenium.common import ElementNotInteractableException, ElementClickInterceptedException
 
 
 class Elements:
@@ -67,7 +68,6 @@ class LeftMenus(Common, Elements):
         self.open_menu()
         time.sleep(self.sleep_time)  # TODO: find a better way to wait
         return self.do_click(self.driver.find_element_by_locator(element))
-        # return False
 
     def click_left_nav_sub(self, element):
         return self.do_click(self.driver.find_element_by_locator(element))
@@ -79,10 +79,12 @@ class LeftMenus(Common, Elements):
 
     def click_left_nav_switch(self, element):
         self.open_menu()
-        menu_item = ''
-        while not menu_item:
+        menu_text = ''
+        while not menu_text:
             try:
+                menu_text = self.get_text(element)
                 menu_item = self.driver.find_element_by_locator(element)
                 return self.do_click(menu_item)
-            finally:
+            except (ElementNotInteractableException, ElementClickInterceptedException):
+                self.sr_logger.logger.info("The above is a correct exception catch.")
                 continue
