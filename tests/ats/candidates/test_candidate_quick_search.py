@@ -24,10 +24,8 @@ class TestCandidateQuickSearch:
         candidate_advanced_search = CandidateAdvancedSearch(self.driver)
         candidate_advanced_search.verify_is_candidate_search_result_page()
         record_count = candidate_advanced_search.get_advanced_search_count()
-        if int(record_count) == 0:
-            raise BaseError(f"Search result should return some records, but only {record_count}.")
-        else:
-            Common.sr_logger.logger.info(f"-- Candidate Search returns {record_count} records.")
+        assert record_count != 0, f"-- Candidate Search returns {record_count} records."
+        Common.sr_logger.logger.info(f"-- Candidate Search returns {record_count} records.")
 
     @allure.title("Candidate Quick Search for Some")
     @allure.description("JIRA: RND-7464; TestRail: C298")
@@ -59,7 +57,5 @@ class TestCandidateQuickSearch:
         candidate_advanced_search = CandidateAdvancedSearch(self.driver)
         candidate_advanced_search.verify_is_candidate_search_result_page()
         record_count = candidate_advanced_search.get_advanced_search_count()
-        if int(record_count) == 0:
-            Common.sr_logger.logger.info("-- Candidate Search returns 0 record correctly.")
-        else:
-            raise BaseError(f"Search result should be 0, but returns {record_count}.")
+        assert record_count == 0, f"Search result should be 0, but returns {record_count}."
+        Common.sr_logger.logger.info("-- Candidate Search returns 0 record correctly.")

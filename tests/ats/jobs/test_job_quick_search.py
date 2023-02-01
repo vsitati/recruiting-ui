@@ -26,7 +26,7 @@ class TestJobQuickSearch:
         job_advanced_search_result.verify_is_job_search_result_page()
         candidate_advanced_search = CandidateAdvancedSearch(self.driver)
         record_count = candidate_advanced_search.get_advanced_search_count()
-        assert int(record_count) != 0, f"Search result should return some records, but only {record_count}."
+        assert record_count != 0, f"Search result should return some records, but only {record_count}."
         Common.sr_logger.logger.info(f"-- Job Search returns {record_count} records.")
 
     @allure.title("Job Quick Search for Some")
@@ -62,5 +62,5 @@ class TestJobQuickSearch:
         job_advanced_search_result.verify_is_job_search_result_page()
         candidate_advanced_search = CandidateAdvancedSearch(self.driver)
         record_count = candidate_advanced_search.get_advanced_search_count()
-        assert int(record_count) == 0, f"Search result should be 0, but returns {record_count}."
+        assert record_count == 0, f"Search result should be 0, but returns {record_count}."
         Common.sr_logger.logger.info("-- Job Search returns 0 record correctly.")
