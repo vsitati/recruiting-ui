@@ -226,7 +226,7 @@ class TestCandidateAdvancedSearch:
 
         candidate_advanced_search = CandidateAdvancedSearch(self.driver)
         candidate_advanced_search.verify_is_candidate_search_result_page()
-        record_count = candidate_advanced_search.verify_record_count()
+        record_count = candidate_advanced_search.get_advanced_search_count()
         assert int(record_count) == 0, "Not the expected 0 records."
         return
 
