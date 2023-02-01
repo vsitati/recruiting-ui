@@ -25,6 +25,7 @@ class TestJobQuickSearch:
         job_advanced_search_result = JobAdvancedSearchResult(self.driver)
         job_advanced_search_result.verify_is_job_search_result_page()
         record_count = job_advanced_search_result.verify_record_count()
+        Common.sr_logger.logger.info(f"-- DEBUG: RECORD VALUE - {record_count}")
         if int(record_count) == 0:
             raise BaseError(f"Search result should return some records, but only {record_count}.")
         else:
