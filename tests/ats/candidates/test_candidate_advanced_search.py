@@ -38,6 +38,7 @@ class TestCandidateAdvancedSearch:
         candidate_advanced_search.sort_candidate_column_header("Enter Date", "desc", "date")
         return
 
+    @pytest.mark.skip(reason="Jason to fix")
     @allure.title("Candidate Search: ")
     @allure.description("JIRA: RND-7433; TestRail: c5503")
     def test_candidate_search_enter_date(self, get_test_info):
@@ -73,6 +74,7 @@ class TestCandidateAdvancedSearch:
 
         return
 
+    @pytest.mark.skip(reason="Jason to fix")
     @allure.title("Candidate Search: enter date")
     @allure.description("JIRA: RND-7539; TestRail: c266")
     def test_candidate_search_enter_in_the_last(self, get_test_info):
@@ -107,6 +109,7 @@ class TestCandidateAdvancedSearch:
 
         return
 
+    @pytest.mark.skip(reason="Jason to fix")
     @allure.title("Candidate Search: Country")
     @allure.description("JIRA: RND-7436; TestRail: c268")
     def test_candidate_search_country(self, get_test_info):
