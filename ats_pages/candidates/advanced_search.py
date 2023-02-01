@@ -33,7 +33,7 @@ class CandidateAdvancedSearch(Common, Elements):
 
         return
 
-    def verify_record_count(self):
+    def get_advanced_search_count(self):
         time.sleep(self.sleep_time)
         return self.get_text(self.record_count)
 

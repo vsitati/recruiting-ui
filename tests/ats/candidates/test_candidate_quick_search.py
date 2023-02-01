@@ -23,7 +23,7 @@ class TestCandidateQuickSearch:
 
         candidate_advanced_search = CandidateAdvancedSearch(self.driver)
         candidate_advanced_search.verify_is_candidate_search_result_page()
-        record_count = candidate_advanced_search.verify_record_count()
+        record_count = candidate_advanced_search.get_advanced_search_count()
         if int(record_count) == 0:
             raise BaseError(f"Search result should return some records, but only {record_count}.")
         else:
@@ -58,7 +58,7 @@ class TestCandidateQuickSearch:
 
         candidate_advanced_search = CandidateAdvancedSearch(self.driver)
         candidate_advanced_search.verify_is_candidate_search_result_page()
-        record_count = candidate_advanced_search.verify_record_count()
+        record_count = candidate_advanced_search.get_advanced_search_count()
         if int(record_count) == 0:
             Common.sr_logger.logger.info("-- Candidate Search returns 0 record correctly.")
         else:

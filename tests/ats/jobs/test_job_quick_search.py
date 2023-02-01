@@ -24,11 +24,10 @@ class TestJobQuickSearch:
 
         job_advanced_search_result = JobAdvancedSearchResult(self.driver)
         job_advanced_search_result.verify_is_job_search_result_page()
-        record_count = job_advanced_search_result.verify_record_count()
-        if int(record_count) == 0:
-            raise BaseError(f"Search result should return some records, but only {record_count}.")
-        else:
-            Common.sr_logger.logger.info(f"-- Job Search returns {record_count} records.")
+        candidate_advanced_search = CandidateAdvancedSearch(self.driver)
+        record_count = candidate_advanced_search.get_advanced_search_count()
+        assert int(record_count) != 0, f"Search result should return some records, but only {record_count}."
+        Common.sr_logger.logger.info(f"-- Job Search returns {record_count} records.")
 
     @allure.title("Job Quick Search for Some")
     @allure.description("JIRA: RND-7459; TestRail: c238")
@@ -61,8 +60,7 @@ class TestJobQuickSearch:
 
         job_advanced_search_result = JobAdvancedSearchResult(self.driver)
         job_advanced_search_result.verify_is_job_search_result_page()
-        record_count = job_advanced_search_result.verify_record_count()
-        if int(record_count) == 0:
-            Common.sr_logger.logger.info("-- Job Search returns 0 record correctly.")
-        else:
-            raise BaseError(f"Search result should be 0, but returns {record_count}.")
+        candidate_advanced_search = CandidateAdvancedSearch(self.driver)
+        record_count = candidate_advanced_search.get_advanced_search_count()
+        assert int(record_count) == 0, f"Search result should be 0, but returns {record_count}."
+        Common.sr_logger.logger.info("-- Job Search returns 0 record correctly.")
