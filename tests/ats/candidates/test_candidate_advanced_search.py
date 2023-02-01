@@ -20,8 +20,8 @@ class TestCandidateAdvancedSearch:
         login.do_login(get_test_info)
 
         left_menu = LeftMenus(self.driver)
-        left_menu.click_left_nav(left_menu.candidates)
-        left_menu.click_left_nav_sub(left_menu.candidates_advanced_search)
+        left_menu.click_left_nav_switch(left_menu.candidates)
+        left_menu.click_left_nav_switch(left_menu.candidates_advanced_search)
         sleep(left_menu.sleep_time)
 
         candidate_advanced_search = CandidateAdvancedSearch(self.driver)
@@ -36,24 +36,6 @@ class TestCandidateAdvancedSearch:
 
         candidate_advanced_search.sort_candidate_column_header("Enter Date", "asc", "date")
         candidate_advanced_search.sort_candidate_column_header("Enter Date", "desc", "date")
-        return
-
-    @allure.title("Candidate Search: ")
-    @allure.description("JIRA: RND-7433; TestRail: c5503")
-    def test_candidate_search_enter_date(self, get_test_info):
-        self.__preset(get_test_info)
-
-        candidate_advanced_search_edit = CandidateAdvancedSearchEdit(self.driver)
-        enter_date_start = "7/1/2022"
-        enter_date_end = "1/31/2023"
-        candidate_advanced_search_edit.pick_enter_date(enter_date_start, enter_date_end)
-
-        candidate_advanced_search_edit.click_apply_filter_btn()
-
-        candidate_advanced_search = CandidateAdvancedSearch(self.driver)
-        col_list = candidate_advanced_search.get_candidate_column_values("Enter Date")
-        candidate_advanced_search.compare_date_range(col_list, enter_date_start, enter_date_end)
-
         return
 
     @allure.title("Candidate Search: candidate name")
@@ -164,6 +146,24 @@ class TestCandidateAdvancedSearch:
 
         return
 
+    @allure.title("Candidate Search: ")
+    @allure.description("JIRA: RND-7433; TestRail: c5503")
+    def test_candidate_search_enter_date(self, get_test_info):
+        self.__preset(get_test_info)
+
+        candidate_advanced_search_edit = CandidateAdvancedSearchEdit(self.driver)
+        enter_date_start = "7/1/2022"
+        enter_date_end = "1/31/2023"
+        candidate_advanced_search_edit.pick_enter_date(enter_date_start, enter_date_end)
+
+        candidate_advanced_search_edit.click_apply_filter_btn()
+
+        candidate_advanced_search = CandidateAdvancedSearch(self.driver)
+        col_list = candidate_advanced_search.get_candidate_column_values("Enter Date")
+        candidate_advanced_search.compare_date_range(col_list, enter_date_start, enter_date_end)
+
+        return
+
     @allure.title("Candidate Search: recruiting manager")
     @allure.description("JIRA: RND-7438; TestRail: c264")
     def test_candidate_search_recruiting_manager(self, get_test_info):
@@ -213,13 +213,30 @@ class TestCandidateAdvancedSearch:
 
         return
 
+    @allure.title("Candidate Advanced Search: no result")
+    @allure.description("JIRA: RND-7629; TestRail: c5515")
+    def test_candidate_search_none(self, get_test_info):
+        self.__preset(get_test_info)
+
+        candidate_advanced_search_edit = CandidateAdvancedSearchEdit(self.driver)
+        candidate_name = "xyz"
+        candidate_advanced_search_edit.enter_candidate_name(candidate_name)
+
+        candidate_advanced_search_edit.click_apply_filter_btn()
+
+        candidate_advanced_search = CandidateAdvancedSearch(self.driver)
+        candidate_advanced_search.verify_is_candidate_search_result_page()
+        record_count = candidate_advanced_search.verify_record_count()
+        assert int(record_count) == 0, "Not the expected 0 records."
+        return
+
     def __preset(self, get_test_info):
         login = Login(driver=self.driver)
         login.do_login(get_test_info)
 
         left_menu = LeftMenus(self.driver)
-        left_menu.click_left_nav(left_menu.candidates)
-        left_menu.click_left_nav_sub(left_menu.candidates_advanced_search)
+        left_menu.click_left_nav_switch(left_menu.candidates)
+        left_menu.click_left_nav_switch(left_menu.candidates_advanced_search)
         sleep(left_menu.sleep_time)
 
         candidate_advanced_search_edit = CandidateAdvancedSearchEdit(self.driver)
