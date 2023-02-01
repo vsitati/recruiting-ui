@@ -11,7 +11,6 @@ from ats_pages.jobs.job_position_details import JobPositionDetails
 @pytest.mark.usefixtures("setup")
 class TestJobEditFromTemp:
 
-    @pytest.mark.skip(reason="Job test create 1 is failing")
     @allure.title("ATS Edit from Template")
     @allure.description("Edit the Job from a Template in ATS - JIRA: RND-7362")
     def test_job_edit_from_temp(self, get_test_info):
