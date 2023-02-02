@@ -1,4 +1,5 @@
 import os
+import math
 import json
 import random
 import randominfo
@@ -79,4 +80,9 @@ def get_resumes(parent_folder, specify_resume="", file_ext=""):
     return random.choice(resume_files)
 
 
+def round_up(float_number):
+    """Round up a number to the nearest whole number
+    :param: float number: Any float 1.2, 4.1
+    """
+    return math.ceil(float_number)
 

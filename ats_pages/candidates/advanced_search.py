@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 from common.common import Common
-from helpers.utils import BaseError
+from helpers.utils import BaseError, round_up
 import time
 import datetime
 from test_data.test_data_details import CandidateData
@@ -38,7 +38,7 @@ class CandidateAdvancedSearch(Common, Elements):
         record_count = int(self.get_text(self.record_count))
         return record_count
 
-    def get_check_box_elem(self, candidate_name):
+    def get_check_box_elem(self, candidate_name, records_per_page=25):
 
         def find_candidate_name(_candidate_name):
             check_box_elems = self.driver.find_elements_by_locator(self.check_box)
@@ -49,9 +49,9 @@ class CandidateAdvancedSearch(Common, Elements):
         result = find_candidate_name(_candidate_name=candidate_name)
         # TODO OPen submission and Same name
         if not result:
-            pagination_parent_elem = self.driver.find_element_by_locator(self.pagination_parent)
-            pagination_parent_elems = pagination_parent_elem.find_elements(*self.pagination_tags)
-            total_pages = len(pagination_parent_elems[1:-1])
+            tot_records_found = self.get_advanced_search_count()
+            total_pages = round_up(tot_records_found/records_per_page)
+
             for i in range(total_pages):
                 next_page_elem = self.driver.find_element_by_locator(self.next_page)
                 self.driver.execute_script("arguments[0].scrollIntoView();", next_page_elem)
