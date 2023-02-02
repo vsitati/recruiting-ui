@@ -34,23 +34,32 @@ class WebDriverExtended(EventFiringWebDriver):
         """
         self.get(url)
 
-    def find_element_by_locator(self, locator):
+    def find_element_by_locator(self, locator, wait=0):
         """
         Determine if the selected element is present.
         :param locator: Locator element.
+        :param wait: Set timeout
         :return: An instance of the selected element.
         """
 
+        if wait == 0:
+            wait = self.timeout
+
         locator_type, element = locator
-        return WebDriverWait(self.driver, self.timeout, poll_frequency=self.poll_freq).until(
+        return WebDriverWait(self.driver, wait, poll_frequency=self.poll_freq).until(
             ec.presence_of_element_located((locator_type, element)))
 
-    def find_elements_by_locator(self, locator):
+    def find_elements_by_locator(self, locator, wait=0):
         """
         Determine if the selected element is present.
         :param locator: Locator element.
+        :param wait: Set timeout
         :return: A list of the selected element instances.
         """
+
+        if wait == 0:
+            wait = self.timeout
+
         locator_type, element = locator
-        return WebDriverWait(self.driver, self.timeout, poll_frequency=self.poll_freq).until(
+        return WebDriverWait(self.driver, wait, poll_frequency=self.poll_freq).until(
             ec.presence_of_all_elements_located((locator_type, element)))

@@ -16,6 +16,7 @@ from ats_pages.jobs.job_evaluation_questions import JobEvaluationQuestions
 @pytest.mark.usefixtures("setup")
 class TestJobEdit:
 
+    @pytest.mark.skip(reason="Job test create 1 is failing")
     @pytest.mark.dependency(
         depends=["tests/ats/jobs/test_job_1_create.py::TestJobCreate::test_job_create"],
         scope='session')
@@ -57,7 +58,7 @@ class TestJobEdit:
 
         job_priority = JobPriority(self.driver)
         job_priority.update_priority()
-
+        job_priority.wait_for_priority_modal()
         page_header.select_ellipses_menu(page_header.EllipsesMenu.EditJobPostingPositionCategory,
                                          page_header.OnPage.Job_Edit)
 

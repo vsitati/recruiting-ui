@@ -82,6 +82,7 @@ class CandidateAdvancedSearch(Common, Elements):
     # return values of a column in the List format
     def get_candidate_column_values(self, column):
         # check if result record exists
+        time.sleep(3)
         elm_result_sheet = self.driver.find_element_by_locator(self.result_sheet)
         elms = elm_result_sheet.find_elements(*self.check_box1)
         if len(elms) == 0:

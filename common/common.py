@@ -130,6 +130,7 @@ class Common(Elements):
         :param locator: Locator element
         :param text: option from the dropdown
         """
+
         select = Select(self.driver.find_element_by_locator(locator))
         select.select_by_visible_text(text)
 
@@ -248,13 +249,16 @@ class Common(Elements):
             return self.do_click(elm)
         return
 
-    # isYes: True: Yes; False: No
-    def click_radio_yes_no(self, locator, is_yes):
-        if is_yes:
-            locator[1] = locator[1] + "1"
-        else:
-            locator[1] = locator[1] + "0"
-        return self.go_click(locator)
+    def click_radio_yes_no(self, yes_btn_elem, no_btn_elem, yes=False):
+        yes_btn = self.driver.find_element_by_locator(yes_btn_elem)
+        no_btn = self.driver.find_element_by_locator(no_btn_elem)
+
+        if yes:
+            if not yes_btn.get_attribute("checked") == "checked":  # If checked, then do nothing
+                self.do_click(yes_btn)
+        elif not yes:
+            if not no_btn.get_attribute("checked") == "checked":  # If checked, then do nothing
+                self.do_click(no_btn)
 
     def click_radio_list(self, locator, text):
         elms = self.driver.find_elements_by_locator(locator)

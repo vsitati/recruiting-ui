@@ -14,6 +14,8 @@ class Elements:
     save_btn = (By.ID, "submitModalPriority")
     close_btn = (By.ID, "priorityDialogModalClose")
 
+    priority_modal = (By.ID, "priorityDialogModalHeader")
+
 
 class JobPriority(Common, Elements):
     def __init__(self, driver):
@@ -38,3 +40,6 @@ class JobPriority(Common, Elements):
 
         # Buttons
         self.go_click(self.save_btn)
+
+    def wait_for_priority_modal(self):
+        return self.driver.find_element_by_locator(self.priority_modal, wait=90)

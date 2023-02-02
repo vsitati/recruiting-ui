@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from test_data.test_data_details import SrTestData
 from common.common import Common
 
+
 class Elements:
     username_id = (By.ID, 'login')
     password_id = (By.ID, 'password')

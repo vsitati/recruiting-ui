@@ -22,6 +22,8 @@ class TestQuickApplyRandomJobExternalSupportedFiles:
     @allure.description("Random Job Quick Apply External Supported File Types")
     @pytest.mark.parametrize("file_type", ["pdf", "doc", "docx", "htm", "html", "odt", "rtf", "txt"])
     def test_random_job_quick_apply_external_supported_file_type(self, get_test_info, file_type):
+        if file_type == "htm":
+            pytest.skip("We need to find an example for an htm resume")
         language = "english"
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)
