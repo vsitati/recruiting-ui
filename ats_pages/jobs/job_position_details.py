@@ -248,12 +248,16 @@ class JobPositionDetails(Common, Elements):
 
     def edit_job_posting_status(self, posting_status):
         self.select_from_dropdown(self.posting_status, posting_status)
+        self.select_from_dropdown(self.exemption_status, JobData.job_data.get("exemption_status"))
+        self.select_from_dropdown(self.collect_eeo_for_this_job, JobData.job_data.get("collect_eeo_for_this_job_edit"))
         self.go_click(self.save_btn)
         return
 
     def edit_job_title_clone(self):
         self.enter_text(self.internal_job_title, JobData.job_data.get("internal_job_title_clone"))
         self.enter_text(self.posted_job_title, JobData.job_data.get("posted_job_title_clone"))
+        self.select_from_dropdown(self.exemption_status, JobData.job_data.get("exemption_status"))
+        self.select_from_dropdown(self.collect_eeo_for_this_job, JobData.job_data.get("collect_eeo_for_this_job_edit"))
         self.go_click(self.save_btn)
         return
 
