@@ -16,14 +16,13 @@ from cx_pages.jobs_search import JobSearch
 @pytest.mark.usefixtures("setup")
 class TestJobClone:
 
-    @pytest.mark.skip(reason="Job test create 1 is failing")
     @allure.title("ATS Clone a Job")
     @allure.description("Clone the Job in ATS - JIRA: RND-7347")
     def test_job_clone(self, get_test_info):
         login = Login(self.driver)
         login.do_login(get_test_info)
 
-        search_input = JobData.job_data.get("internal_job_title")
+        search_input = "Administrative Assistant"
 
         page_header = PageHeader(self.driver)
         page_header.quick_search("jobs", search_input)

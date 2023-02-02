@@ -16,14 +16,13 @@ from cx_pages.jobs_search import JobSearch
 @pytest.mark.usefixtures("setup")
 class TestJobEdit2ExtInt:
 
-    @pytest.mark.skip(reason="Job test create 1 is failing")
     @allure.title("ATS Edit a Job to External")
     @allure.description("Edit the Job in ATS - JIRA: RND-7327")
     def test_job_edit_2ext(self, get_test_info):
         login = Login(self.driver)
         login.do_login(get_test_info)
 
-        search_input = JobData.job_data.get("internal_job_title")
+        search_input = "Customer Service Representative"
 
         page_header = PageHeader(self.driver)
         page_header.quick_search("jobs", search_input)
@@ -55,12 +54,12 @@ class TestJobEdit2ExtInt:
         assert cx_career_sites.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 
         cx_job_search = JobSearch(self.driver)
-        job_elem, job_title = cx_job_search.find_job(title=JobData.job_data.get("posted_job_title"))
+        job_elem, job_title = cx_job_search.find_job(title=search_input)
         cx_job_search.open_job(job_elem=job_elem)
         assert job_title in cx_job_search.get_title()
 
         cx_job_details = CXJobDetails(self.driver)
-        cx_job_details.verify_page_title(JobData.job_data.get("posted_job_title"))
+        cx_job_details.verify_page_title(search_input)
 
         # The following is to verify the CX page - NOT existing in Internal
         cx_login.new_tab()
@@ -72,7 +71,7 @@ class TestJobEdit2ExtInt:
         cx_career_sites.open_url(portal_url)
         assert cx_career_sites.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 
-        result = cx_job_search.find_job(title=JobData.job_data.get("posted_job_title"))
+        result = cx_job_search.find_job(title=search_input)
         assert result == ""
 
         cx_login.close_tab()
@@ -86,7 +85,7 @@ class TestJobEdit2ExtInt:
         login = Login(self.driver)
         login.do_login(get_test_info)
 
-        search_input = JobData.job_data.get("internal_job_title")
+        search_input = "Customer Service Representative"
 
         page_header = PageHeader(self.driver)
         page_header.quick_search("jobs", search_input)
@@ -118,12 +117,12 @@ class TestJobEdit2ExtInt:
         assert cx_career_sites.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 
         cx_job_search = JobSearch(self.driver)
-        job_elem, job_title = cx_job_search.find_job(title=JobData.job_data.get("posted_job_title"))
+        job_elem, job_title = cx_job_search.find_job(title=search_input)
         cx_job_search.open_job(job_elem=job_elem)
         assert job_title in cx_job_search.get_title()
 
         cx_job_details = CXJobDetails(self.driver)
-        cx_job_details.verify_page_title(JobData.job_data.get("posted_job_title"))
+        cx_job_details.verify_page_title(search_input)
 
         # The following is to verify the CX page - NOT existing in External
         cx_login.new_tab()
@@ -135,7 +134,7 @@ class TestJobEdit2ExtInt:
         cx_career_sites.open_url(portal_url)
         assert cx_career_sites.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 
-        result = cx_job_search.find_job(title=JobData.job_data.get("posted_job_title"))
+        result = cx_job_search.find_job(title=search_input)
         assert result == ""
 
         cx_login.close_tab()
