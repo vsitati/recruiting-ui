@@ -1,17 +1,19 @@
+import base64
+import os
+import re
+from time import sleep
+
 import allure
-from config import Config
-from selenium.webdriver.support.ui import Select
-from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException
-from selenium.webdriver.common.by import By
 import requests
 from bs4 import BeautifulSoup
-import re
-import os
-import base64
-from time import sleep
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver import Keys
-from helpers.webdriver_listener import WebDriverListener
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.window import WindowTypes
+from selenium.webdriver.support.ui import Select
+
+from config import Config
+from helpers.webdriver_listener import WebDriverListener
 
 
 class Elements:
@@ -28,8 +30,20 @@ class Elements:
     all_hrefs = (By.XPATH, "//a[@href]")
     cx_settings_back_btn = (By.ID, "Admin_BackLink")
     cx_view_other_job_openings = (By.ID, "Apply_Success_JobsLink")
-    quick_search_btn = (By.ID, 'quick_search_button')
-    quick_search_text = (By.ID, 'quick_search_input')
+    custom_apply_form = (By.ID, "Admin_ApplicationForms__CustomApplyFormTrue")
+    Admin_ApplicationForms_SaveButton = (By.ID, "Admin_ApplicationForms__SaveButton")
+    Admin_ApplicationForm_Name = (By.ID, "Admin_ApplicationForm__Name")
+    Admin_Application_Form_Description = (By.ID, "Admin_ApplicationForm__Description")
+    icon_add_options = (By.XPATH, "//a[@data-action='addField']/i[contains(@class, 'material-icons sr-button__icon') and text()='add']")
+    fields = (By.CLASS_NAME, "material-icons sr-button__icon")
+    page_title = (By.ID, "page_1")
+    first_name_configured_apply = (By.ID, "application_field_FirstName")
+    last_name_configured_apply = (By.ID, "application_field_LastName")
+    email_id_configured_apply = (By.ID, "application_field_EmailAddress")
+    application_form_modal = (By.ID, "Admin_ApplicationForm_Modal__ApplicationField")
+    Modal_Primary_Button = (By.ID, "Admin_ApplicationForm_Modal__Modal_Primary_Button")
+    save_button_modal = (By.ID, "Admin_ApplicationForm__SaveButton")
+    cancel_button_modal = (By.ID, "Admin_ApplicationForm_Modal__Modal_Outside_Cancel_Link")
 
 
 class Common(Elements):
@@ -252,13 +266,16 @@ class Common(Elements):
             return self.do_click(elm)
         return
 
-    # isYes: True: Yes; False: No
-    def click_radio_yes_no(self, locator, is_yes):
-        if is_yes:
-            locator[1] = locator[1] + "1"
-        else:
-            locator[1] = locator[1] + "0"
-        return self.go_click(locator)
+    def click_radio_yes_no(self, yes_btn_elem, no_btn_elem, yes=False):
+        yes_btn = self.driver.find_element_by_locator(yes_btn_elem)
+        no_btn = self.driver.find_element_by_locator(no_btn_elem)
+
+        if yes:
+            if not yes_btn.get_attribute("checked") == "checked":  # If checked, then do nothing
+                self.do_click(yes_btn)
+        elif not yes:
+            if not no_btn.get_attribute("checked") == "checked":  # If checked, then do nothing
+                self.do_click(no_btn)
 
     def click_radio_list(self, locator, text):
         elms = self.driver.find_elements_by_locator(locator)
@@ -278,12 +295,6 @@ class Common(Elements):
             if text in elm.text:
                 return self.do_click(elm)
         return
-
-    def slow_typing(self, element, text):
-        text_list = list(text)
-        for _char in text_list:
-            element.send_keys(_char)
-            sleep(self.sleep_time / 2)
 
     def pick_datepicker(self, locator, text):
         self.enter_text(locator, text)
@@ -336,6 +347,22 @@ class Common(Elements):
         if elm.text.lower() != search_object.lower():
             self.do_click(elm)
 
-        elm = self.driver.find_element_by_locator(self.quick_search_text)
-        elm.send_keys(search_input)
-        elm.send_keys(Keys.ENTER)
+    def click_save_button_modal(self):
+        button = self.driver.find_element_by_locator(self.Modal_Primary_Button)
+        self.driver.execute_script("arguments[0].scrollIntoView();", button)
+        return self.do_click(button)
+
+    def opt_group_select(self):
+        select_element = self.driver.find_element_by_locator(self.application_form_modal)
+        select = Select(select_element)
+        try:
+            for index in range(len(select.options)):
+                select.select_by_index(index)
+                sleep(6)
+                self.driver.find_element_by_locator(self.Modal_Primary_Button).click()
+                sleep(10)
+                self.click_add_options_button()
+        except Exception as e:
+            self.driver.find_element_by_locator(self.cancel_button_modal).click()
+            sleep(2)
+            self.driver.find_element_by_locator(self.save_button_modal).click()
