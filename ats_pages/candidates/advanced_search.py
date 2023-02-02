@@ -35,7 +35,8 @@ class CandidateAdvancedSearch(Common, Elements):
 
     def get_advanced_search_count(self):
         time.sleep(self.sleep_time)
-        return self.get_text(self.record_count)
+        record_count = int(self.get_text(self.record_count))
+        return record_count
 
     def get_check_box_elem(self, candidate_name):
 
