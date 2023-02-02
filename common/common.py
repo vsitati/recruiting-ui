@@ -1,7 +1,7 @@
 import allure
 from config import Config
 from selenium.webdriver.support.ui import Select
-from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException
 from selenium.webdriver.common.by import By
 import requests
 from bs4 import BeautifulSoup
@@ -37,9 +37,10 @@ class Elements:
     last_name_configured_apply = (By.ID, "application_field_LastName")
     email_id_configured_apply = (By.ID, "application_field_EmailAddress")
     application_form_modal = (By.ID, "Admin_ApplicationForm_Modal__ApplicationField")
-    Modal_Primary_Button = (By.ID, "Admin_ApplicationForm_Modal__Modal_Primary_Button")
+    modal_primary_button = (By.ID, "Admin_ApplicationForm_Modal__Modal_Primary_Button")
     save_button_modal = (By.ID, "Admin_ApplicationForm__SaveButton")
     cancel_button_modal = (By.ID, "Admin_ApplicationForm_Modal__Modal_Outside_Cancel_Link")
+    configure_field_parent = (By.CSS_SELECTOR, ".sr-modal__container")
 
 
 class Common(Elements):
@@ -352,21 +353,30 @@ class Common(Elements):
         return self.do_click(elem)
 
     def click_save_button_modal(self):
-        button = self.driver.find_element_by_locator(self.Modal_Primary_Button)
+        button = self.driver.find_element_by_locator(self.modal_primary_button)
         self.driver.execute_script("arguments[0].scrollIntoView();", button)
         return self.do_click(button)
 
     def opt_group_select(self):
-        select_element = self.driver.find_element_by_locator(self.application_form_modal)
+        parent_modal_elem = self.driver.find_element_by_locator(self.configure_field_parent)
+        select_element = parent_modal_elem.find_element(*self.application_form_modal)
         select = Select(select_element)
-        try:
-            for index in range(len(select.options)):
+
+        len_options = len(select.options)
+        for index in range(len_options):
+            if index == len_options - 1:
+                return True
+            self.driver.find_element_by_locator(self.configure_field_parent)
+            try:
                 select.select_by_index(index)
-                sleep(6)
-                self.driver.find_element_by_locator(self.Modal_Primary_Button).click()
-                sleep(10)
-                self.click_add_options_button()
-        except Exception as e:
-            self.driver.find_element_by_locator(self.cancel_button_modal).click()
-            sleep(2)
-            self.driver.find_element_by_locator(self.save_button_modal).click()
+            except NoSuchElementException:
+                pass
+            primary_btn = self.driver.wait_for_element_to_be_clickable(self.modal_primary_button)
+            sleep(0.2)
+            self.driver.execute_script("arguments[0].scrollIntoView();", primary_btn)
+            parent_modal_elem.find_element(*self.modal_primary_button).click()
+            self.driver.wait_for_element_to_be_clickable(self.icon_add_options)
+            sleep(0.1)
+            self.click_add_options_button()
+            sleep(0.1)
+        return False

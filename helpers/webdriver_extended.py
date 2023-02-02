@@ -54,3 +54,13 @@ class WebDriverExtended(EventFiringWebDriver):
         locator_type, element = locator
         return WebDriverWait(self.driver, self.timeout, poll_frequency=self.poll_freq).until(
             ec.presence_of_all_elements_located((locator_type, element)))
+
+    def wait_for_element_to_be_clickable(self, locator):
+        """
+        Determine if the selected element is clickable.
+        :param locator: Locator element.
+        :return: A list of the selected element instances.
+        """
+        locator_type, element = locator
+        return WebDriverWait(self.driver, self.timeout, poll_frequency=self.poll_freq).until(
+            ec.element_to_be_clickable((locator_type, element)))
