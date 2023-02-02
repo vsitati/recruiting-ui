@@ -26,6 +26,20 @@ class Elements:
     all_hrefs = (By.XPATH, "//a[@href]")
     cx_settings_back_btn = (By.ID, "Admin_BackLink")
     cx_view_other_job_openings = (By.ID, "Apply_Success_JobsLink")
+    custom_apply_form = (By.ID, "Admin_ApplicationForms__CustomApplyFormTrue")
+    Admin_ApplicationForms_SaveButton = (By.ID, "Admin_ApplicationForms__SaveButton")
+    Admin_ApplicationForm_Name = (By.ID, "Admin_ApplicationForm__Name")
+    Admin_Application_Form_Description = (By.ID, "Admin_ApplicationForm__Description")
+    icon_add_options = (By.XPATH, "//a[@data-action='addField']/i[contains(@class, 'material-icons sr-button__icon') and text()='add']")
+    fields = (By.CLASS_NAME, "material-icons sr-button__icon")
+    page_title = (By.ID, "page_1")
+    first_name_configured_apply = (By.ID, "application_field_FirstName")
+    last_name_configured_apply = (By.ID, "application_field_LastName")
+    email_id_configured_apply = (By.ID, "application_field_EmailAddress")
+    application_form_modal = (By.ID, "Admin_ApplicationForm_Modal__ApplicationField")
+    Modal_Primary_Button = (By.ID, "Admin_ApplicationForm_Modal__Modal_Primary_Button")
+    save_button_modal = (By.ID, "Admin_ApplicationForm__SaveButton")
+    cancel_button_modal = (By.ID, "Admin_ApplicationForm_Modal__Modal_Outside_Cancel_Link")
 
 
 class Common(Elements):
@@ -318,3 +332,41 @@ class Common(Elements):
 
     def get_page_source(self):
         return self.driver.page_source
+
+    def custom_apply_form_switch(self):
+        return self.do_click(self.driver.find_element_by_locator(self.custom_apply_form))
+
+    def application_forms_save_button(self):
+        elem = self.driver.find_element_by_locator(self.Admin_ApplicationForms_SaveButton)
+        self.driver.execute_script("arguments[0].scrollIntoView();", elem)
+        return self.do_click(elem)
+
+    def click_add_options_button(self):
+        elem = self.driver.find_element_by_locator(self.icon_add_options)
+        self.driver.execute_script("arguments[0].scrollIntoView();", elem)
+        return self.do_click(elem)
+
+    def click_opt_group(self):
+        elem = self.driver.find_element_by_locator(self.application_form_modal)
+        self.driver.execute_script("arguments[0].scrollIntoView();", elem)
+        return self.do_click(elem)
+
+    def click_save_button_modal(self):
+        button = self.driver.find_element_by_locator(self.Modal_Primary_Button)
+        self.driver.execute_script("arguments[0].scrollIntoView();", button)
+        return self.do_click(button)
+
+    def opt_group_select(self):
+        select_element = self.driver.find_element_by_locator(self.application_form_modal)
+        select = Select(select_element)
+        try:
+            for index in range(len(select.options)):
+                select.select_by_index(index)
+                sleep(6)
+                self.driver.find_element_by_locator(self.Modal_Primary_Button).click()
+                sleep(10)
+                self.click_add_options_button()
+        except Exception as e:
+            self.driver.find_element_by_locator(self.cancel_button_modal).click()
+            sleep(2)
+            self.driver.find_element_by_locator(self.save_button_modal).click()
