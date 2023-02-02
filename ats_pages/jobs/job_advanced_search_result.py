@@ -30,7 +30,9 @@ class JobAdvancedSearchResult(Common, Elements):
         return
 
     def verify_record_count(self):
-        return self.get_text(self.record_count)
+        time.sleep(self.sleep_time)
+        record_count = self.get_text(self.record_count)
+        return record_count
 
     def open_job(self, internal_job_title):
         def _find_job_name(_job_name):
@@ -58,7 +60,7 @@ class JobAdvancedSearchResult(Common, Elements):
             next_page_elm = self.driver.find_element_by_locator(self.next_page)
             while next_page_elm_tip.get_attribute("class") != "active":
                 self.do_click(next_page_elm)
-                time.sleep(1)
+                time.sleep(self.sleep_time)
                 result = _find_job_name(_job_name=internal_job_title)
                 if result is True:
                     return True

@@ -33,7 +33,8 @@ class CandidateAdvancedSearch(Common, Elements):
 
         return
 
-    def verify_record_count(self):
+    def get_advanced_search_count(self):
+        time.sleep(self.sleep_time)
         return self.get_text(self.record_count)
 
     def get_check_box_elem(self, candidate_name):
@@ -125,29 +126,34 @@ class CandidateAdvancedSearch(Common, Elements):
 
     # alist: a list of string values or dates
     # direction: "asc", "desc"
-    def verify_ordering(self, alist, direction, date=""):
+    # date_time: date: date only; time: date and time; nothing: not a date format
+    def verify_ordering(self, alist, direction, date_time=""):
         if len(alist) == 0:
             return self.sr_logger.logger.error("There is 0 record.")
         date_format = "%m/%d/%y"
+        time_format = "%m/%d/%y, %I:%M %p"
         for i in range(len(alist)-1):
-            if date == "date":
+            if date_time == "date":
                 date1 = datetime.datetime.strptime(alist[i], date_format).date()
                 date2 = datetime.datetime.strptime(alist[i + 1], date_format).date()
+            if date_time == "time":
+                date1 = datetime.datetime.strptime(alist[i], time_format)
+                date2 = datetime.datetime.strptime(alist[i + 1], time_format)
+
             if direction == "asc":
-                if date == "date":
+                if date_time == "date" or date_time == "time":
                     if date1 > date2:
                         raise Exception(f"column values sorting: {alist[i]} and {alist[i + 1]}.")
                 else:
                     if alist[i].lower() > alist[i+1].lower():
                         raise Exception(f"column values sorting: {alist[i]} and {alist[i + 1]}.")
             elif direction == "desc":
-                if date == "date":
+                if date_time == "date" or date_time == "time":
                     if date1 < date2:
                         raise Exception(f"column values sorting: {alist[i]} and {alist[i + 1]}.")
                 else:
                     if alist[i].lower() < alist[i+1].lower():
                         raise Exception(f"column values sorting: {alist[i]} and {alist[i+1]}.")
-
         return
 
     def verify_value_exist(self, a_value, alist):
@@ -160,7 +166,7 @@ class CandidateAdvancedSearch(Common, Elements):
     # base_date: today - days_diff
     # dates: a list of dates
     # direction: "older", "newer"
-    def compare_date_range(self, days_diff, dates, direction):
+    def compare_in_last_days_range(self, days_diff, dates, direction):
         if len(dates) == 0:
             self.sr_logger.logger.error("There is 0 record.")
             return
@@ -172,6 +178,21 @@ class CandidateAdvancedSearch(Common, Elements):
                 assert the_date > base_date, "date NOT older than."
             elif direction == "newer":
                 assert the_date < base_date, "date NOT newer than."
+
+    def compare_date_range(self, dates, date_start, date_end):
+        if len(dates) == 0:
+            self.sr_logger.logger.error("There is 0 record.")
+            return
+        date_format = "%m/%d/%Y"
+        date_format1 = "%m/%d/%y"
+        date_start = datetime.datetime.strptime(date_start, date_format).date()
+        date_end = datetime.datetime.strptime(date_end, date_format).date()
+        for i in range(len(dates)):
+            the_date = datetime.datetime.strptime(dates[i], date_format1).date()
+            if date_start <= the_date <= date_end:
+                continue
+            else:
+                raise BaseError(f"{the_date} not within: {date_start}, {date_end}")
 
     def __comparing(self, source, target):
         if source == target:
