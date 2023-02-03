@@ -174,7 +174,7 @@ class CandidateAdvancedSearch(Common, Elements):
         latest_date = format_dates[-1]
 
         assert past_date <= oldest_date <= latest_date, \
-            f"oldest date: {oldest_date} CANNOT be older than past date: {past_date}"
+            f"past date: {past_date} <= oldest date: {oldest_date} <= latest date: {latest_date} "
         assert latest_date <= todays_date, \
             f"latest date: {latest_date} CANNOT be newer than today's date: {todays_date}"
 
