@@ -62,7 +62,7 @@ class TestQuickApplyRandomJobExternalSupportedFiles:
         qa.fill_in_quick_apply_form(**form_details)
         assert qa.get_success_message() == "Thank You for Applying"
 
-# Login to ATS
+        # Login to ATS
         ats_login = AtsLogin(driver=self.driver)
         ats_login.do_login(get_test_info)
 

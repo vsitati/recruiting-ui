@@ -9,6 +9,7 @@ from test_data.test_data_details import SrTestData
 class TestOpenAdminLoginAs:
     @allure.title("C754 - ATS Open Admin Login as")
     @allure.description("Scenario Login As a user from Open Admin")
+    @pytest.yield_fixture(scope='session')
     def test_can_login_as(self, get_test_info):
         get_test_info["ats"] = "openadmin"
         login = Login(driver=self.driver)
