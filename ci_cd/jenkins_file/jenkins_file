@@ -52,5 +52,18 @@ pipeline {
          }
       }
    }
+   post {
+        always {
+          echo "Publishing test results"
+          script {
+                  allure([
+                          includeProperties: false,
+                          jdk: '',
+                          reportBuildPolicy: 'ALWAYS',
+                          results: [[path: 'reporting']]
+                  ])
+          }
+        }
+   }
 }
 
