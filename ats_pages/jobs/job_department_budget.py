@@ -35,8 +35,10 @@ class JobDepartmentBudget(Common, Elements):
     def fill_out_all_job_departments_fields(self):
         # Department Information
         # self.select_from_dropdown(self.business_unit, JobData.job_data.get("business_unit"))
+        sleep(self.sleep_time)
         self.select_auto_complete(self.department, JobData.job_data.get("department"))
         self.select_auto_complete(self.hiring_manager, JobData.job_data.get("hiring_manager"))
+        sleep(self.sleep_time)
         self.select_auto_complete(self.recruiting_team, JobData.job_data.get("recruiting_team"))
         self.select_from_dropdown(self.industry, JobData.job_data.get("industry"))
         self.select_from_dropdown(self.business_function, JobData.job_data.get("business_function"))
@@ -55,8 +57,10 @@ class JobDepartmentBudget(Common, Elements):
         self.go_click(self.continue_btn)
 
     def fill_out_required_job_departments_fields(self):
+        sleep(self.sleep_time)
         self.select_auto_complete(self.department, JobData.job_data.get("department"))
         self.select_auto_complete(self.hiring_manager, JobData.job_data.get("hiring_manager"))
+        sleep(self.sleep_time)
         self.go_click(self.continue_btn)
 
     def edit_job_departments(self):
