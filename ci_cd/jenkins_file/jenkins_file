@@ -38,9 +38,6 @@ pipeline {
       stage('Smoke Tests') {
          steps {
           echo "Running smoke tests"
-          # bat """
-          #    .\\.env\\Scripts\\activate.bat && pytest -m smoke
-          # """
          }
       }
       stage('Full Regression Tests') {
