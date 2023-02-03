@@ -28,7 +28,7 @@ class TestQuickApplyRandomJobExternal:
 
         cs = CareerSites(driver=self.driver)
         data = cs.get_career_sites(site_section="external")
-        result = cs.filter_career_site(data=data, site_name="Corporate Career Portal111")
+        result = cs.filter_career_site(data=data, site_name="Corporate Career Portal")
         name, portal_url, settings_url = result
         cs.open_url(settings_url)
 
