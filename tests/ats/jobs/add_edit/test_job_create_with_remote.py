@@ -17,10 +17,10 @@ from test_data.test_data_details import JobData
 
 @pytest.mark.usefixtures("setup")
 class TestJobCreateWithRemote:
-    @pytest.mark.skip(reason="Job test create 1 is failing")
-    @allure.title("ATS Create a Job with remote location")
-    @allure.description("Create a Job with remote locations - JIRA: RND-7363")
-    def test_job_create_with_remote(self, get_test_info):
+
+    @allure.title("ATS Create a remote Job")
+    @allure.description("Using remote directly - JIRA: RND-7363")
+    def test_job_create_with_remote_direct(self, get_test_info):
         login = Login(driver=self.driver)
         login.do_login(get_test_info)
 
@@ -31,13 +31,124 @@ class TestJobCreateWithRemote:
         job_position_details = JobPositionDetails(self.driver)
         job_position_details.fill_out_required_job_details_fields()
 
-        # job_position_details.select_remote_country()
+        job_title = "Remote Job direct"
         job_position_details.select_remote_state()
+        job_position_details.edit_job_title(job_title)
 
-        # job_position_details.select_job_location_remote_state()
+        job_position_details.click_continue()
+
+        job_department_budget = JobDepartmentBudget(self.driver)
+        job_department_budget.fill_out_required_job_departments_fields()
+
+        job_priority = JobPriority(self.driver)
+        job_priority.setup_required_priority()
+
+        job_category = JobCategory(self.driver)
+        job_category.select_category()
+        # upon this step, the job is created
+
+        job_attachments = JobAttachments(self.driver)
+        job_attachments.upload_required_file()
+
+        job_evaluation_questions = JobEvaluationQuestions(self.driver)
+        job_evaluation_questions.click_return_to_job_lists_btn()
+
+        # verify the remote job on Job Details page
+        page_header = PageHeader(self.driver)
+        page_header.quick_search("jobs", job_title)
+
+        job_search_result = JobAdvancedSearchResult(self.driver)
+        job_search_result.verify_is_job_search_result_page()
+        job_search_result.open_job(job_title)
+
+        job_position_details_view = JobPositionDetailsView(self.driver)
+        job_position_details_view.verify_header()
+        job_position_details_view.verify_remote_country(job_title)
+
+        # Edit the remote job
+        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditThisJob, page_header.OnPage.Job_Details)
+
+        job_position_details.select_remote_country()
+        job_position_details.click_save()
+
+        # verify the remote job on Job Details page
+        job_position_details_view.verify_header()
+        job_position_details_view.verify_remote_country("Remote (Worldwide)")
+
+        return
+
+    @allure.title("ATS Create a remote Job")
+    @allure.description("Using remote code - JIRA: RND-7363")
+    def test_job_create_with_remote_code(self, get_test_info):
+        login = Login(driver=self.driver)
+        login.do_login(get_test_info)
+
+        left_menu = LeftMenus(self.driver)
+        left_menu.click_left_nav(left_menu.jobs)
+        left_menu.click_left_nav_sub(left_menu.create_job_postings)
+
+        job_position_details = JobPositionDetails(self.driver)
+        job_position_details.fill_out_required_job_details_fields()
+
+        job_title = "Remote Job code"
+        job_position_details.select_job_location_remote_state()
+        job_position_details.edit_job_title(job_title)
+
+        job_position_details.click_continue()
+
+        job_department_budget = JobDepartmentBudget(self.driver)
+        job_department_budget.fill_out_required_job_departments_fields()
+
+        job_priority = JobPriority(self.driver)
+        job_priority.setup_required_priority()
+
+        job_category = JobCategory(self.driver)
+        job_category.select_category()
+        # upon this step, the job is created
+
+        job_attachments = JobAttachments(self.driver)
+        job_attachments.upload_required_file()
+
+        job_evaluation_questions = JobEvaluationQuestions(self.driver)
+        job_evaluation_questions.click_return_to_job_lists_btn()
+
+        # verify the remote job on Job Details page
+        page_header = PageHeader(self.driver)
+        page_header.quick_search("jobs", job_title)
+
+        job_search_result = JobAdvancedSearchResult(self.driver)
+        job_search_result.verify_is_job_search_result_page()
+        job_search_result.open_job(job_title)
+
+        job_position_details_view = JobPositionDetailsView(self.driver)
+        job_position_details_view.verify_header()
+        job_position_details_view.verify_remote_country(job_title)
+
+        # Edit the remote job
+        page_header.select_ellipses_menu(page_header.EllipsesMenu.EditThisJob, page_header.OnPage.Job_Details)
+
         job_position_details.select_job_location_remote_country()
+        job_position_details.click_save()
 
-        # job_position_details.select_job_temp_remote_state()
+        # verify the remote job on Job Details page
+        job_position_details_view.verify_header()
+        job_position_details_view.verify_remote_country("Remote (Worldwide)")
+
+        return
+
+    @allure.title("ATS Create a remote Job")
+    @allure.description("Using remote template - JIRA: RND-7363")
+    def test_job_create_with_remote_temp(self, get_test_info):
+        login = Login(driver=self.driver)
+        login.do_login(get_test_info)
+
+        left_menu = LeftMenus(self.driver)
+        left_menu.click_left_nav_switch(left_menu.jobs)
+        left_menu.click_left_nav_switch(left_menu.create_job_postings)
+
+        job_position_details = JobPositionDetails(self.driver)
+        job_position_details.fill_out_required_job_details_fields()
+
         job_position_details.select_job_temp_remote_country()
 
         job_position_details.click_continue()

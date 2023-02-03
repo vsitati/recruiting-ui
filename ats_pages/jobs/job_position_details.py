@@ -253,6 +253,11 @@ class JobPositionDetails(Common, Elements):
         self.go_click(self.save_btn)
         return
 
+    def edit_job_title(self, job_title):
+        self.enter_text(self.internal_job_title, job_title)
+        self.enter_text(self.posted_job_title, job_title)
+        return
+
     def edit_job_title_clone(self):
         self.enter_text(self.internal_job_title, JobData.job_data.get("internal_job_title_clone"))
         self.enter_text(self.posted_job_title, JobData.job_data.get("posted_job_title_clone"))
@@ -300,6 +305,7 @@ class JobPositionDetails(Common, Elements):
         return
 
     def select_job_location_remote_country(self):
+        sleep(self.sleep_time)
         self.select_auto_complete(self.job_location_code, JobData.job_data.get("job_location_code_remote_worldwide"))
         sleep(self.sleep_time)
         assert self.is_element_displayed(self.country)
@@ -309,6 +315,7 @@ class JobPositionDetails(Common, Elements):
         return
 
     def select_job_location_remote_state(self):
+        sleep(self.sleep_time)
         self.select_auto_complete(self.job_location_code, JobData.job_data.get("job_location_code_remote_US_wide"))
         sleep(self.sleep_time)
         assert self.is_element_displayed(self.country)
