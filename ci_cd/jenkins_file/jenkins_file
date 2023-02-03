@@ -51,8 +51,8 @@ pipeline {
           """
          }
       }
-      stage('Publish test results') {
-         steps {
+      post {
+        always {
           echo "Publishing test results"
           script {
                   allure([
@@ -61,9 +61,9 @@ pipeline {
                           reportBuildPolicy: 'ALWAYS',
                           results: [[path: 'reporting']]
                   ])
-             }
-         }
-      }
+            }
+        }
+    }
    }
 }
 
