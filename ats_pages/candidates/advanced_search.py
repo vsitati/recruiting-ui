@@ -18,6 +18,9 @@ class Elements:
     saved_candidate_search_name = (By.XPATH, "//div[@id='pageHeader']//h1")
     filter_label = (By.XPATH, "//div[@id='appliedFilters']//h3")
     record_count = (By.ID, "bulkActionItemsRecordCount")
+    table_row = (By.TAG_NAME, "tr")
+    table_column = (By.TAG_NAME, "td")
+    table_heading = (By.TAG_NAME, "th")
 
 
 class CandidateAdvancedSearch(Common, Elements):
@@ -81,35 +84,23 @@ class CandidateAdvancedSearch(Common, Elements):
         return self.do_click(elem)
 
     # return values of a column in the List format
-    def get_candidate_column_values(self, column):
+    def get_candidate_column_values(self, column_name):
         # check if result record exists
         time.sleep(3)
         elm_result_sheet = self.driver.find_element_by_locator(self.result_sheet)
+        rows = [row.find_elements(*self.table_column) for row in elm_result_sheet.find_elements(*self.table_row)]
+
         elms = elm_result_sheet.find_elements(*self.check_box1)
         if len(elms) == 0:
             self.sr_logger.logger.info("-- Candidate Search returns 0 record.")
             return 0
 
-        # get the column position in the header
-        # elms = elm_result_sheet.find_elements(By.XPATH, self.result_sheet_header)
-        elms = self.driver.find_elements(*self.result_sheet_header)
-        count = len(elms)
-        pos = 0
-        for elm in elms:
-            if column in elm.text:
-                break
-            pos += 1
+        table_heading_elems = self.driver.find_elements_by_locator(self.table_heading)
+        table_headings = [table_heading_elem.text.replace("↑", "").replace("↓", "")
+                          for table_heading_elem in table_heading_elems]
 
-        # get column values list
-        # elms = elm_result_sheet.find_elements(By.XPATH, self.result_sheet_column)
-        elms = self.driver.find_elements(*self.result_sheet_column)
-        col_list = []
-        for i in range(len(elms)//count):
-            loc = pos + i * count
-            col_value = elms[loc].text
-            col_list.append(col_value)
-
-        return col_list
+        column_name_index = table_headings.index(column_name)
+        return [[col.text for col in row][column_name_index] for row in rows if row]
 
     def sort_candidate_column_header(self, column, ordering, date=""):
         # elm_result_sheet = self.driver.find_element_by_locator(self.result_sheet)
@@ -167,18 +158,24 @@ class CandidateAdvancedSearch(Common, Elements):
     # base_date: today - days_diff
     # dates: a list of dates
     # direction: "older", "newer"
-    def compare_in_last_days_range(self, days_diff, dates, direction):
+    def compare_in_last_days_range(self, days_diff, dates):
+        date_format = "%m/%d/%y"
+        past_date = datetime.date.today() - datetime.timedelta(days_diff)
+        todays_date = datetime.date.today()
+
         if len(dates) == 0:
             self.sr_logger.logger.error("There is 0 record.")
             return
-        date_format = "%m/%d/%y"
-        for i in range(len(dates)):
-            base_date = datetime.date.today() - datetime.timedelta(days_diff)
-            the_date = datetime.datetime.strptime(dates[i], date_format).date()
-            if direction == "older":
-                assert the_date > base_date, "date NOT older than."
-            elif direction == "newer":
-                assert the_date < base_date, "date NOT newer than."
+
+        format_dates = [datetime.datetime.strptime(date, date_format).date() for date in dates]
+        format_dates.sort()  # Sorted from oldest to newer date
+
+        oldest_date, *_ = format_dates
+        latest_date = format_dates[-1]
+
+        assert oldest_date <= past_date, f"oldest date: {oldest_date} CANNOT be older than past date: {past_date}"
+        assert latest_date >= todays_date, f"latest date: {latest_date} CANNOT be newer than today's date: {todays_date}"
+
 
     def compare_date_range(self, dates, date_start, date_end):
         if len(dates) == 0:

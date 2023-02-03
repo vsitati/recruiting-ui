@@ -68,7 +68,7 @@ class TestCandidateAdvancedSearch:
 
         candidate_advanced_search = CandidateAdvancedSearch(self.driver)
         col_list = candidate_advanced_search.get_candidate_column_values("Enter Date")
-        candidate_advanced_search.compare_in_last_days_range(entered_in_the_last, col_list, "older")
+        candidate_advanced_search.compare_in_last_days_range(entered_in_the_last, col_list)
 
         return
 
