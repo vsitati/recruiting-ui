@@ -10,10 +10,9 @@ from ats_pages.jobs.job_attachments import JobAttachments
 from ats_pages.jobs.job_evaluation_questions import JobEvaluationQuestions
 
 
-@pytest.mark.skip(reason="Jason must fix")
 @pytest.mark.usefixtures("setup")
 class TestJobCreate:
-    # @pytest.mark.skip()
+
     @pytest.mark.dependency()
     @allure.title("ATS Create a Job")
     @allure.description("Create a Standard Job - JIRA: RND-7268")
