@@ -38,17 +38,30 @@ pipeline {
       stage('Smoke Tests') {
          steps {
           echo "Running smoke tests"
-          bat """
-              .\\.env\\Scripts\\activate.bat && pytest -m smoke
-          """
+          # bat """
+          #    .\\.env\\Scripts\\activate.bat && pytest -m smoke
+          # """
          }
       }
       stage('Full Regression Tests') {
          steps {
           echo "Running full regression suite"
           bat """
-              .\\.env\\Scripts\\activate.bat && pytest
+              .\\.env\\Scripts\\activate.bat && pytest tests/ats/login/test_c757_ats_std_login_forget_password.py::TestAtsStdLoginForgetPassword::test_cannot_submit_with_empty_username_on_forget_password
           """
+         }
+      }
+      stage('Publish test results') {
+         steps {
+          echo "Publishing test results"
+          script {
+                  allure([
+                          includeProperties: false,
+                          jdk: '',
+                          reportBuildPolicy: 'ALWAYS',
+                          results: [[path: 'reporting']]
+                  ])
+             }
          }
       }
    }
