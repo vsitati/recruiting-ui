@@ -22,7 +22,7 @@ class TestQuickApplyOpenSubmissionSupportedFileTypes:
     @pytest.mark.parametrize("file_type", ["pdf", "doc", "docx", "htm", "html", "odt", "rtf", "txt"])
     def test_random_job_quick_apply_open_submission_supported_file_types(self, get_test_info, file_type):
         if file_type == "htm":
-            pytest.skip("Need to get htm resume test data")
+            pytest.skip("We need to find an example for an htm resume")
 
         language = "english"
         login = Login(driver=self.driver)
