@@ -3,6 +3,7 @@ from common.common import Common
 from helpers.utils import BaseError, round_up
 import time
 import datetime
+import itertools
 from test_data.test_data_details import CandidateData
 
 
@@ -92,7 +93,9 @@ class CandidateAdvancedSearch(Common, Elements):
         # check if result record exists
         time.sleep(3)
         elm_result_sheet = self.driver.find_element_by_locator(self.result_sheet)
-        rows = [row.find_elements(*self.table_column) for row in elm_result_sheet.find_elements(*self.table_row)]
+        _rows = elm_result_sheet.find_elements(*self.table_row)
+
+        rows = (row.find_elements(*self.table_column) for row in _rows)
 
         elms = elm_result_sheet.find_elements(*self.check_box1)
         if len(elms) == 0:
@@ -102,9 +105,23 @@ class CandidateAdvancedSearch(Common, Elements):
         table_heading_elems = self.driver.find_elements_by_locator(self.table_heading)
         table_headings = [table_heading_elem.text.replace("↑", "").replace("↓", "")
                           for table_heading_elem in table_heading_elems]
-
         column_name_index = table_headings.index(column_name)
-        return [[col.text for col in row][column_name_index] for row in rows if row]
+
+        row_info = [[col.text for col in row][column_name_index] for row in rows if row]
+        # row_info = list()
+        # column_name_index = table_headings.index(column_name)
+        # col_text_list = ((col.text for col in row) for row in rows if row)
+        # for col_text in col_text_list:
+        #     row_info.append(list(col_text)[column_name_index])
+        # # for _rows in rows:
+        # #     if _rows:
+        # #         col_text = list()
+        # #         for _row in _rows:
+        # #             col_text.append(_row.text)
+        # #         row_info.append(col_text[column_name_index])
+        return row_info
+
+        # return [[col.text for col in row][column_name_index] for row in rows if row]
 
     def sort_candidate_column_header(self, column, ordering, date=""):
         # elm_result_sheet = self.driver.find_element_by_locator(self.result_sheet)
@@ -149,15 +166,15 @@ class CandidateAdvancedSearch(Common, Elements):
                         raise Exception(f"column values sorting: {alist[i]} and {alist[i + 1]}.")
                 else:
                     if alist[i].lower() < alist[i+1].lower():
-                        raise Exception(f"column values sorting: {alist[i]} and {alist[i+1]}.")
+                        raise Exception(f"column values sorting: {alist[i]} and {alist[i + 1]}.")
         return
 
     def verify_value_exist(self, a_value, alist):
         if len(alist) == 0:
-            self.sr_logger.logger.error("There is 0 record.")
-            return
-        for i in range(len(alist)):
-            assert a_value in alist[i], "value NOT exist."
+            return self.sr_logger.logger.error("There is 0 record.")
+
+        for list_val in alist:
+            assert a_value in list_val, "value DOES NOT exist."
 
     # base_date: today - days_diff
     # dates: a list of dates
