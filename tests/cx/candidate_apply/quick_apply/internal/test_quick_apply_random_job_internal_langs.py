@@ -20,10 +20,9 @@ from utils.drivers import Drivers
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyRandomJobInternalLangs:
 
-    @pytest.mark.parametrize("lang", ["French", "Spanish", "German"])
+    @pytest.mark.parametrize("language", ["french", "spanish", "german"])
     @allure.description("Random Job Quick Apply Internal - foreign languages: TestRail: c843, c844, c845")
-    def test_random_job_quick_apply_internal_langs(self, get_test_info, lang):
-        language = lang
+    def test_random_job_quick_apply_internal_langs(self, get_test_info, language):
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)
 
@@ -48,7 +47,7 @@ class TestQuickApplyRandomJobInternalLangs:
         ml.click_language_setting_save_btn()
 
         config = Config.env_config
-        driver2 = Drivers.get_driver(config, lang)
+        driver2 = Drivers.get_driver(config, language)
         cs2 = CareerSites(driver=driver2)
         cs2.open_url(portal_url)
         assert cs2.get_title() == "QA Automation Only - SilkRoad Talent Activation"
