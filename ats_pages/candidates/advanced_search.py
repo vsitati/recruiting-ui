@@ -37,8 +37,12 @@ class CandidateAdvancedSearch(Common, Elements):
         return
 
     def get_advanced_search_count(self):
-        time.sleep(self.sleep_time)
-        record_count = int(self.get_text(self.record_count))
+        self.driver.find_element_by_locator(self.record_count)
+        try:
+            record_count = int(self.get_text(self.record_count))
+        except ValueError:
+            time.sleep(self.sleep_time)
+            record_count = int(self.get_text(self.record_count))
         return record_count
 
     def get_check_box_elem(self, candidate_name, records_per_page=25):

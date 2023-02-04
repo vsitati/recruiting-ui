@@ -8,7 +8,7 @@ class Elements:
     select_checkbox = "evalquestionid"
     select_question_quickly_btn = (By.ID, "selectQuestionsQuicklyButton")
     update_question_settings_btn = (By.ID, "updateQuestionSettingsButton")
-    return_to_job_lists_btn = ".lifesuite__button.lifesuite__float-right"
+    return_to_job_lists_btn = (By.CSS_SELECTOR, ".lifesuite__button.lifesuite__float-right")
     save_btn = (By.XPATH, "//span[text()='Save']")
 
 
