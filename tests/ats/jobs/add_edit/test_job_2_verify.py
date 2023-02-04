@@ -14,7 +14,6 @@ from cx_pages.jobs_search import JobSearch
 from time import sleep
 
 
-@pytest.mark.skip(reason="Job test create 1 is failing")
 @pytest.mark.usefixtures("setup")
 class TestJobVerify:
 
@@ -23,6 +22,7 @@ class TestJobVerify:
         scope='session')
     @allure.title("ATS Verify Job Creation")
     @allure.description("Verify the Job in ATS - JIRA: RND-7269")
+    @pytest.mark.xfail()
     def test_job_verify_in_ats(self, get_test_info):
         login = Login(driver=self.driver)
         login.do_login(get_test_info)
@@ -49,6 +49,7 @@ class TestJobVerify:
         scope='session')
     @allure.title("ATS Verify Job Creation")
     @allure.description("Verify the Job in CX - JIRA: RND-7321")
+    @pytest.mark.xfail()
     def test_job_verify_in_cx(self, get_test_info):
         # The following is to verify the CX page - External
         cx_login = CX_Login(self.driver)     # cx_login = cx_pages.login.Login(self.driver)
