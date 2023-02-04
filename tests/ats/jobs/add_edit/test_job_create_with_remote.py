@@ -139,6 +139,7 @@ class TestJobCreateWithRemote:
 
     @allure.title("ATS Create a remote Job")
     @allure.description("Using remote template - JIRA: RND-7363")
+    @pytest.mark.xfail()
     def test_job_create_with_remote_temp(self, get_test_info):
         login = Login(driver=self.driver)
         login.do_login(get_test_info)

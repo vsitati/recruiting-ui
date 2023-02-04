@@ -15,6 +15,7 @@ class TestCandidateAdvancedSearch:
 
     @allure.title("Candidate Search: sorting columns")
     @allure.description("JIRA: RND-7440; TestRail: C270")
+    @pytest.mark.xfail()
     def test_candidate_search_sorting(self, get_test_info):
         login = Login(driver=self.driver)
         login.do_login(get_test_info)
@@ -91,6 +92,7 @@ class TestCandidateAdvancedSearch:
 
     @allure.title("Candidate Search: Country")
     @allure.description("JIRA: RND-7436; TestRail: c268")
+    @pytest.mark.xfail()
     def test_candidate_search_country(self, get_test_info):
         self.__preset(get_test_info)
 

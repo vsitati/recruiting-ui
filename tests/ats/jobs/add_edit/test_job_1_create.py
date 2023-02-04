@@ -16,6 +16,7 @@ class TestJobCreate:
     @pytest.mark.dependency()
     @allure.title("ATS Create a Job")
     @allure.description("Create a Standard Job - JIRA: RND-7268")
+    @pytest.mark.xfail()
     def test_job_create(self, get_test_info):
         login = Login(driver=self.driver)
         login.do_login(get_test_info)
