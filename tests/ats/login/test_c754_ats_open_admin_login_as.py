@@ -5,6 +5,7 @@ from openadmin_pages.user_management import UserManagement
 from test_data.test_data_details import SrTestData
 
 
+@pytest.mark.regression_grp_d
 @pytest.mark.usefixtures("setup")
 class TestOpenAdminLoginAs:
     @allure.title("C754 - ATS Open Admin Login as")

@@ -6,6 +6,7 @@ from ats_pages.login.change_password import ChangePassword
 from test_data.test_data_details import SrTestData
 
 
+@pytest.mark.regression_grp_d
 @pytest.mark.usefixtures("setup")
 class TestAtsStdLoginResetPasswordTests:
     @allure.title("ATS Standard Login Tests - Reset Password")

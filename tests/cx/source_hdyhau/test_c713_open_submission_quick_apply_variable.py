@@ -16,6 +16,7 @@ from cx_pages.career_site_settings.career_site_settings import CareerSiteSetting
 from cx_pages.career_site_settings.manage_languages import ManageLanguages
 
 
+@pytest.mark.regression_grp_d
 @pytest.mark.usefixtures("setup")
 class TestOpenSubmissionQuickApplyVariable:
     @allure.description("Test C713 - Open Submission Quick Apply - Variable")
