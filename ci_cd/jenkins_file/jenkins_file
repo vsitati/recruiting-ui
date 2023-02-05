@@ -25,7 +25,7 @@ pipeline {
          steps {
           echo "Setting up virtual environment and install required libraries"
           bat """
-              python -m venv .env
+              call python -m venv .env
               call .\\.env\\Scripts\\activate.bat
               call python -m pip install -r requirements.txt --use-pep517
           """
