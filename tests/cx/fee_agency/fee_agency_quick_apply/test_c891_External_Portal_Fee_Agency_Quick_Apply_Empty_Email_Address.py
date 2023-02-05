@@ -6,6 +6,7 @@ from ats_pages.login.login import Login as AtsLogin
 from ats_pages.left_menus import LeftMenus
 
 
+@pytest.mark.regression_grp_b
 @pytest.mark.usefixtures("setup")
 class TestFeeAgencyQuickApplyEmptyEmailAddress:
     @allure.description("Fee Agency Quick Apply Empty Email Address")

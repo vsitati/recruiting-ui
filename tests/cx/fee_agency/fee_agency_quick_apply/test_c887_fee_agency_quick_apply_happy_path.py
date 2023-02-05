@@ -18,6 +18,7 @@ from ats_pages.candidates.candidate_resume_profile import CandidateResumeProfile
 from helpers.utils import get_basename_from_file_path
 
 
+@pytest.mark.regression_grp_a
 @pytest.mark.usefixtures("setup")
 class TestFeeAgencyQuickApplyHappyPath:
     @allure.description("Fee Agency Quick Apply Happy Path")

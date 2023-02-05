@@ -15,6 +15,7 @@ from ats_pages.candidates.candidate_resume_profile import CandidateResumeProfile
 from helpers.utils import get_basename_from_file_path
 
 
+@pytest.mark.regression_grp_e
 @pytest.mark.usefixtures("setup")
 class TestFeeAgencyQuickApplyAllowSameDuplicates:
     @allure.description("Fee Agency Quick Apply allow job duplicates")

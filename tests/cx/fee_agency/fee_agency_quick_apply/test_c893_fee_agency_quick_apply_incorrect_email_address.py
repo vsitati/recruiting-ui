@@ -6,6 +6,7 @@ from ats_pages.login.login import Login as AtsLogin
 from ats_pages.left_menus import LeftMenus
 
 
+@pytest.mark.regression_grp_d
 @pytest.mark.usefixtures("setup")
 class TestFeeAgencyQuickApplyIncorrectEmailAddress:
     @allure.description("Fee Agency Quick Apply Incorrect Email Address")
