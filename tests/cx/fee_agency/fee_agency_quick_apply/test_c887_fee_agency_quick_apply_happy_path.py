@@ -86,9 +86,6 @@ class TestFeeAgencyQuickApplyHappyPath:
         ats_login = AtsLogin(driver=self.driver)
         ats_login.do_login(get_test_info)
 
-        left_menu = LeftMenus(driver=self.driver)
-        left_menu.click_left_nav(left_menu.candidates)
-        left_menu.click_left_nav(left_menu.candidates_advanced_search)
         cas = CandidateAdvancedSearch(driver=self.driver)
         candidate_name = f"{form_details.get('firstname')} {form_details.get('lastname')}"
         cas.open_candidate_profile(candidate_name=candidate_name)
