@@ -60,18 +60,20 @@ class CandidateAdvancedSearch(Common, Elements):
             tot_records_found = self.get_advanced_search_count()
             total_pages = round_up(tot_records_found/records_per_page)
 
+            print(f"Total pages: {total_pages}")
             for i in range(total_pages):
                 next_page_elem = self.driver.find_element_by_locator(self.next_page)
                 self.driver.execute_script("arguments[0].scrollIntoView();", next_page_elem)
                 self.do_click(next_page_elem)
                 time.sleep(2)
+                print(f"Page: {i}/{total_pages}")
                 result = find_candidate_name(_candidate_name=candidate_name)
                 if result:
                     return result
 
         if not result:
             # TODO need to add logging
-            raise BaseError(f"Candidate Name: {candidate_name} not found.")
+            assert False, f"Candidate Name: {candidate_name} not found."
         return result
 
     def open_candidate_profile(self, candidate_name):
