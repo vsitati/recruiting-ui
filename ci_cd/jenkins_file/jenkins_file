@@ -39,7 +39,7 @@ pipeline {
          steps {
           echo "Running smoke tests"
           bat """
-              .\\.env\\Scripts\\activate.bat && pytest -m smoke -n auto
+              .\\.env\\Scripts\\activate.bat && pytest -m smoke -n 4
           """
          }
       }
@@ -47,7 +47,7 @@ pipeline {
          steps {
           echo "Running full regression suite"
           bat """
-              .\\.env\\Scripts\\activate.bat && pytest -n auto
+              .\\.env\\Scripts\\activate.bat && pytest -n 4
           """
          }
       }
