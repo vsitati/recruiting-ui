@@ -47,7 +47,7 @@ pipeline {
          steps {
           echo "Running full regression suite"
           bat """
-              .\\.env\\Scripts\\activate.bat && pytest -m regression_grp_a -n 4 && pytest -m regression_grp_b && pytest -m regression_grp_c -n 3 && pytest -m regression_grp_d -n 4 && pytest -m regression_grp_e && pytest -m regression_grp_f -n 3 && pytest -m regression_grp_g -n 3 && pytest -m regression_grp_h -n 3
+              .\\.env\\Scripts\\activate.bat && pytest -m regression_grp_a -n 4; pytest -m regression_grp_b; pytest -m regression_grp_c -n 3; pytest -m regression_grp_d -n 4; pytest -m regression_grp_e; pytest -m regression_grp_f -n 3; pytest -m regression_grp_g -n 3; pytest -m regression_grp_h -n 3
           """
          }
       }
