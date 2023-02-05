@@ -41,7 +41,7 @@ pipeline {
           echo "Running smoke tests"
           bat """
               call .\\.env\\Scripts\\activate.bat
-              call pytest pytest --cache-clear -m regression_grp_e-m smoke -n 3
+              call pytest --cache-clear -m regression_grp_e -m smoke -n 3
           """
          }
       }
