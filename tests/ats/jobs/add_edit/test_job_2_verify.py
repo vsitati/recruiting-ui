@@ -14,6 +14,7 @@ from cx_pages.jobs_search import JobSearch
 from time import sleep
 
 
+@pytest.mark.regression_grp_b
 @pytest.mark.usefixtures("setup")
 class TestJobVerify:
 

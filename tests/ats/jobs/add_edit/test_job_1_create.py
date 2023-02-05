@@ -10,9 +10,9 @@ from ats_pages.jobs.job_attachments import JobAttachments
 from ats_pages.jobs.job_evaluation_questions import JobEvaluationQuestions
 
 
+@pytest.mark.regression_grp_b
 @pytest.mark.usefixtures("setup")
 class TestJobCreate:
-
     @pytest.mark.dependency()
     @allure.title("ATS Create a Job")
     @allure.description("Create a Standard Job - JIRA: RND-7268")
