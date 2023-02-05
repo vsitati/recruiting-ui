@@ -22,7 +22,6 @@ class TestQuickApplyOpenSubmissionLangs:
 
     @pytest.mark.parametrize("language", ["french", "spanish", "german"])
     @allure.description("Quick Apply Open Submission foreign languages, TestRail c805, c807, c890, ")
-    @pytest.fixture(scope='session')
     def test_random_job_quick_apply_open_submission_langs(self, get_test_info, language):
         submit_resume_message = \
             "Vous ne trouvez pas l'offre que vous recherchez ?Soumettre votre curriculum vitae / CV."

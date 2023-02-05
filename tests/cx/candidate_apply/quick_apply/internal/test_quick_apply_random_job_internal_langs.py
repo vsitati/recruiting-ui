@@ -19,10 +19,8 @@ from utils.drivers import Drivers
 
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyRandomJobInternalLangs:
-
     @pytest.mark.parametrize("language", ["french", "spanish", "german"])
     @allure.description("Random Job Quick Apply Internal - foreign languages: TestRail: c843, c844, c845")
-    @pytest.fixture(scope='session')
     def test_random_job_quick_apply_internal_langs(self, get_test_info, language):
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)

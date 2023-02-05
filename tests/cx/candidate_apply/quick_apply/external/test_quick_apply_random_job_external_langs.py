@@ -18,10 +18,8 @@ from cx_pages.career_site_settings.manage_languages import ManageLanguages
 
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyRandomJobExternalLangs:
-
     @pytest.mark.parametrize("language", ["french", "spanish", "german"])
     @allure.description("Random Job Quick Apply External - foreign languages: TestRail: c839, c840, c841")
-    @pytest.fixture(scope='session')
     def test_random_job_quick_apply_external_langs(self, get_test_info, language):
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)

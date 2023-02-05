@@ -19,7 +19,6 @@ from cx_pages.career_site_settings.manage_languages import ManageLanguages
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyOpenSubmissionDefaultPortalLanguage:
     @allure.description("Quick Apply Open Submission Default Portal Language")
-    @pytest.fixture(scope='session')
     def test_random_job_quick_apply_open_submission_default_portal_language(self, get_test_info):
         language = "english"
         login = Login(driver=self.driver)
