@@ -46,15 +46,18 @@ class CandidateAdvancedSearch(Common, Elements):
             record_count = int(self.get_text(self.record_count))
         return record_count
 
+    def quick_search_candidate_profile(self, candidate_name):
+        self.quick_search(search_object="Candidates", search_input=candidate_name)
+        return self.find_candidate_name(_candidate_name=candidate_name)
+
+    def find_candidate_name(self, _candidate_name):
+        check_box_elems = self.driver.find_elements_by_locator(self.check_box)
+        for check_box_elem in check_box_elems:
+            if check_box_elem.get_attribute("data-candidatename") == _candidate_name:
+                return check_box_elem
+
     def get_check_box_elem(self, candidate_name, records_per_page=25):
-
-        def find_candidate_name(_candidate_name):
-            check_box_elems = self.driver.find_elements_by_locator(self.check_box)
-            for check_box_elem in check_box_elems:
-                if check_box_elem.get_attribute("data-candidatename") == _candidate_name:
-                    return check_box_elem
-
-        result = find_candidate_name(_candidate_name=candidate_name)
+        result = self.find_candidate_name(_candidate_name=candidate_name)
         # TODO OPen submission and Same name
         if not result:
             tot_records_found = self.get_advanced_search_count()
@@ -67,7 +70,7 @@ class CandidateAdvancedSearch(Common, Elements):
                 self.do_click(next_page_elem)
                 time.sleep(2)
                 print(f"Page: {i}/{total_pages}")
-                result = find_candidate_name(_candidate_name=candidate_name)
+                result = self.find_candidate_name(_candidate_name=candidate_name)
                 if result:
                     return result
 
@@ -76,8 +79,12 @@ class CandidateAdvancedSearch(Common, Elements):
             assert False, f"Candidate Name: {candidate_name} not found."
         return result
 
-    def open_candidate_profile(self, candidate_name):
-        elem = self.get_check_box_elem(candidate_name=candidate_name)
+    def open_candidate_profile(self, candidate_name, paginate=False):
+        if paginate:
+            elem = self.get_check_box_elem(candidate_name=candidate_name)
+        else:
+            elem = self.quick_search_candidate_profile(candidate_name=candidate_name)
+
         resume_id = elem.get_attribute("value")
         return self.open_url(self.get_all_hrefs(specific_href=resume_id))
 

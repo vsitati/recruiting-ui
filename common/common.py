@@ -26,6 +26,8 @@ class Elements:
     all_hrefs = (By.XPATH, "//a[@href]")
     cx_settings_back_btn = (By.ID, "Admin_BackLink")
     cx_view_other_job_openings = (By.ID, "Apply_Success_JobsLink")
+    quick_search_btn = (By.ID, 'quick_search_button')
+    quick_search_text = (By.ID, 'quick_search_input')
 
 
 class Common(Elements):
@@ -322,3 +324,12 @@ class Common(Elements):
 
     def get_page_source(self):
         return self.driver.page_source
+
+    def quick_search(self, search_object, search_input=""):
+        elm = self.driver.find_element_by_locator(self.quick_search_btn)
+        if elm.text.lower() != search_object.lower():
+            self.do_click(elm)
+
+        elm = self.driver.find_element_by_locator(self.quick_search_text)
+        elm.send_keys(search_input)
+        elm.send_keys(Keys.ENTER)

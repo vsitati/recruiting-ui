@@ -68,7 +68,7 @@ class TestQuickApplyRandomJobInternal:
         left_menu.click_left_nav(left_menu.candidates_advanced_search)
         cas = CandidateAdvancedSearch(driver=self.driver)
         candidate_name = f"{form_details.get('firstname')} {form_details.get('lastname')}"
-        cas.open_candidate_profile(candidate_name=candidate_name)
+        cas.open_candidate_profile(candidate_name=candidate_name, paginate=True)
 
         crp = CandidateResumeProfile(driver=self.driver)
         assert crp.verify_candidate_name() == candidate_name
