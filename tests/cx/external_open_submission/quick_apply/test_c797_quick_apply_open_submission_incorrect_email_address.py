@@ -13,6 +13,7 @@ from cx_pages.career_site_settings.career_site_settings import CareerSiteSetting
 from cx_pages.career_site_settings.manage_languages import ManageLanguages
 
 
+@pytest.mark.regression_grp_h
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyOpenSubmissionIncorrectEmailAddress:
     @allure.description("Quick Apply Open Submission Incorrect Email Address")

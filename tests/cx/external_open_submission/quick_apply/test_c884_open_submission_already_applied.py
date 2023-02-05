@@ -13,6 +13,7 @@ from cx_pages.login import Login
 from test_data.test_data_details import SrTestData
 
 
+@pytest.mark.regression_grp_h
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyOpenSubmissionAlreadySubmitted:
     @allure.description("Quick Apply - Open Submission - Already Submitted")
