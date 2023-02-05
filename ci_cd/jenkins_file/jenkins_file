@@ -26,7 +26,8 @@ pipeline {
           echo "Setting up virtual environment and install required libraries"
           bat """
               python -m venv .env
-              .\\.env\\Scripts\\activate.bat && python -m pip install -r requirements.txt --use-pep517
+              call .\\.env\\Scripts\\activate.bat
+              call python -m pip install -r requirements.txt --use-pep517
           """
          }
       }
@@ -39,7 +40,8 @@ pipeline {
          steps {
           echo "Running smoke tests"
           bat """
-              .\\.env\\Scripts\\activate.bat && pytest -m smoke -n 3
+              call .\\.env\\Scripts\\activate.bat
+              call pytest -m smoke -n 3
           """
          }
       }
