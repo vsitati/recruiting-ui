@@ -51,21 +51,21 @@ pipeline {
           bat """
               call .\\.env\\Scripts\\activate.bat
               echo "Running regression_grp_a"
-              call pytest -m regression_grp_a -n 4
+              call pytest --cache-clear -m regression_grp_a -n 4
               echo "Running regression_grp_b"
-              call pytest -m regression_grp_b
+              call pytest --cache-clear -m regression_grp_b
               echo "Running regression_grp_c"
-              call pytest -m regression_grp_c -n 3
+              call pytest --cache-clear -m regression_grp_c -n 3
               echo "Running regression_grp_d"
-              call pytest -m regression_grp_d -n 4
+              call pytest --cache-clear -m regression_grp_d -n 4
               echo "Running regression_grp_e"
-              call  pytest -m regression_grp_e
+              call  pytest --cache-clear -m regression_grp_e
               echo "Running regression_grp_f"
-              call pytest -m regression_grp_f -n 3
+              call pytest --cache-clear -m regression_grp_f -n 3
               echo "Running regression_grp_g"
-              call pytest -m regression_grp_g -n 3
+              call pytest --cache-clear -m regression_grp_g -n 3
               echo "Running regression_grp_h"
-              call pytest -m regression_grp_h -n 3
+              call pytest --cache-clear -m regression_grp_h -n 3
           """
          }
       }
