@@ -17,6 +17,7 @@ from cx_pages.career_site_settings.career_site_settings import CareerSiteSetting
 from cx_pages.career_site_settings.manage_languages import ManageLanguages
 
 
+@pytest.mark.regression_grp_e
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyOpenSubmissionDefaultPortalLanguage:
     @allure.description("Quick Apply Open Submission Default Portal Language")

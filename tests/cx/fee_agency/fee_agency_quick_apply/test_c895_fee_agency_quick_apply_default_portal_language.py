@@ -15,6 +15,7 @@ from ats_pages.left_menus import LeftMenus
 from utils.drivers import Drivers
 
 
+@pytest.mark.regression_grp_e
 @pytest.mark.usefixtures("setup")
 class TestFeeAgencyQuickApplyDefaultPortalLanguage:
     @allure.description("C895 - Fee Agency Quick Apply Default Portal Language")

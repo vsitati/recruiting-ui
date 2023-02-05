@@ -17,6 +17,7 @@ from cx_pages.career_site_settings.manage_languages import ManageLanguages
 from ats_pages.administration.fee_agencies import FeeAgencies
 
 
+@pytest.mark.regression_grp_e
 @pytest.mark.usefixtures("setup")
 class TestFeeAgencyQuickApplyLangs:
     @pytest.mark.parametrize("language", ["french", "spanish", "german"])

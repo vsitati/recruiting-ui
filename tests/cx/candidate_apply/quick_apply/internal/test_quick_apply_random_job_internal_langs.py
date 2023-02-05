@@ -17,6 +17,7 @@ from cx_pages.career_site_settings.manage_languages import ManageLanguages
 from utils.drivers import Drivers
 
 
+@pytest.mark.regression_grp_e
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyRandomJobInternalLangs:
     @pytest.mark.parametrize("language", ["french", "spanish", "german"])
