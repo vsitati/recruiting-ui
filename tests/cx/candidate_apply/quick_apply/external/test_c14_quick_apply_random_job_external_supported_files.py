@@ -17,6 +17,7 @@ from ats_pages.login.login import Login as AtsLogin
 from helpers.utils import get_basename_from_file_path
 
 
+@pytest.mark.regression_grp_f
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyRandomJobExternalSupportedFiles:
     @allure.description("Random Job Quick Apply External Supported File Types")
