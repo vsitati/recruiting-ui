@@ -4,6 +4,7 @@ from ats_pages.login.login import Login
 from test_data.test_data_details import SrTestData
 
 
+@pytest.mark.regression_grp_a
 @pytest.mark.usefixtures("setup")
 class TestAtsSsoLogin:
     @allure.title("C755 - ATS SSO Login Tests")

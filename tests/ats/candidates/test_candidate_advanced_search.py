@@ -10,9 +10,9 @@ from ats_pages.candidates.advanced_search import CandidateAdvancedSearch
 from test_data.test_data_details import CandidateData
 
 
+@pytest.mark.regression_grp_a
 @pytest.mark.usefixtures("setup")
 class TestCandidateAdvancedSearch:
-
     @allure.title("Candidate Search: sorting columns")
     @allure.description("JIRA: RND-7440; TestRail: C270")
     @pytest.mark.xfail()

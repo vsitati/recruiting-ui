@@ -8,6 +8,7 @@ from common.common import Common
 from time import sleep
 
 
+@pytest.mark.regression_grp_a
 @pytest.mark.usefixtures("setup")
 class TestCandidateQuickSearch:
 
