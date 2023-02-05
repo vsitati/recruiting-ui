@@ -15,6 +15,7 @@ from ats_pages.jobs.job_position_details_view import JobPositionDetailsView
 from test_data.test_data_details import JobData
 
 
+@pytest.mark.regression_grp_c
 @pytest.mark.usefixtures("setup")
 class TestJobCreateWithRemote:
 

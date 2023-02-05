@@ -14,8 +14,8 @@ from cx_pages.jobs_search import JobSearch
 
 
 @pytest.mark.usefixtures("setup")
+@pytest.mark.regression_grp_c
 class TestJobEdit2ExtInt:
-
     @allure.title("ATS Edit a Job to External")
     @allure.description("Edit the Job in ATS - JIRA: RND-7327")
     def test_job_edit_2ext(self, get_test_info):
