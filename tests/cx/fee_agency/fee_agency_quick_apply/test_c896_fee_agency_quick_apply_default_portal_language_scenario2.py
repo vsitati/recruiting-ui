@@ -18,6 +18,7 @@ from utils.drivers import Drivers
 @pytest.mark.usefixtures("setup")
 class TestFeeAgencyQuickApplyDefaultPortalLanguageScenario2:
     @allure.description("C896 - Fee Agency Quick Apply Default Portal Language Scenario 2")
+    @pytest.fixture(scope='session')
     def test_fee_agency_quick_apply_default_portal_language_scenario2(self, get_test_info):
         language = "english"
         login = Login(driver=self.driver)

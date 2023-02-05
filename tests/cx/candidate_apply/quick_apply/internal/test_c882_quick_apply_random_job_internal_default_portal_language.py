@@ -14,6 +14,7 @@ from config import Config
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyRandomJobInternalDefaultPortalLanguage:
     @allure.description("Random Job Quick Apply Internal Default Portal Language")
+    @pytest.fixture(scope='session')
     def test_random_job_quick_apply_internal_default_portal_language(self, get_test_info):
         language = "english"
         login = Login(driver=self.driver)

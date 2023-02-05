@@ -18,6 +18,7 @@ from utils.drivers import Drivers
 @pytest.mark.usefixtures("setup")
 class TestFeeAgencyQuickApplyDefaultPortalLanguage:
     @allure.description("C895 - Fee Agency Quick Apply Default Portal Language")
+    @pytest.fixture(scope='session')
     def test_fee_agency_quick_apply_default_portal_language(self, get_test_info):
         # Set CX Portal Language to English and disable all other languages
         language = "english"

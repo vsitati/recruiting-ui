@@ -22,6 +22,7 @@ class TestFeeAgencyQuickApplyLangs:
 
     @pytest.mark.parametrize("language", ["french", "spanish", "german"])
     @allure.description("Fee Agency Quick Apply - foreign languages: TestRail: c888, c889, c890")
+    @pytest.fixture(scope='session')
     def test_fee_agency_quick_apply_langs(self, get_test_info, language):
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)
