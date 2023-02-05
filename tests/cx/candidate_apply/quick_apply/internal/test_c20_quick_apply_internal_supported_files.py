@@ -16,6 +16,7 @@ from ats_pages.candidates.candidate_resume_profile import CandidateResumeProfile
 from ats_pages.login.login import Login as AtsLogin
 from helpers.utils import get_basename_from_file_path
 
+@pytest.mark.regression_grp_g
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyRandomJobInternalSupportedFiles:
     @allure.description("Random Job Quick Apply Internal Supported Files")
