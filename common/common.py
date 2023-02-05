@@ -15,7 +15,6 @@ from selenium.webdriver.common.window import WindowTypes
 
 
 class Elements:
-    quick_search = (By.ID, 'quick_search_input')
     empty_field_validation_msg = (By.XPATH, ".//span[@class = 'help-block']")
     submit_btn = (By.ID, "submitButton")
     richtext = (By.ID, 'tinymce')

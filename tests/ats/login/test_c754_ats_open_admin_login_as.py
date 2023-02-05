@@ -21,4 +21,4 @@ class TestOpenAdminLoginAs:
         user_management.do_loginas(get_test_info)
 
         user_management.switch_tab()
-        assert login.is_element_visible(locator=user_management.quick_search) is True
+        assert login.is_element_visible(locator=user_management.quick_search_text) is True

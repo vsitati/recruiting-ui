@@ -18,7 +18,7 @@ class TestAtsSsoLogin:
         login.do_click(sso_link)
         login.switch_tab()
 
-        assert login.is_element_visible(locator=login.quick_search) is True
+        assert login.is_element_visible(locator=login.quick_search_text) is True
 
     @allure.description("Scenario Login via SSO with a invalid/non-existing user")
     def test_cannot_login_with_an_invalid_sso_user(self, get_test_info):

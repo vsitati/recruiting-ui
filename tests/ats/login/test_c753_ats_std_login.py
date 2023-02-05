@@ -13,7 +13,7 @@ class TestAtsStandardLogin:
         login = Login(driver=self.driver)
         login.do_login(get_test_info)
 
-        assert login.is_element_visible(locator=login.quick_search) is True
+        assert login.is_element_visible(locator=login.quick_search_text) is True
 
     @pytest.mark.smoke
     @allure.description("Scenario Login with an Inactive User with valid credentials")
