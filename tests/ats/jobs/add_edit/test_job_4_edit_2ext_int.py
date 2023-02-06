@@ -49,12 +49,15 @@ class TestJobEdit2ExtInt:
         cx_career_sites = CareerSites(self.driver)
         data = cx_career_sites.get_career_sites(site_section="external")
         result = cx_career_sites.filter_career_site(data=data, site_name="Corporate Career Portal")
+        assert result != []
         name, portal_url, settings_url = result
         cx_career_sites.open_url(portal_url)
         assert cx_career_sites.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 
         cx_job_search = JobSearch(self.driver)
-        job_elem, job_title = cx_job_search.find_job(title=search_input)
+        job_search_result = cx_job_search.find_job(title=search_input)
+        assert job_search_result != []
+        job_elem, job_title = job_search_result
         cx_job_search.open_job(job_elem=job_elem)
         assert job_title in cx_job_search.get_title()
 
@@ -67,6 +70,7 @@ class TestJobEdit2ExtInt:
 
         data = cx_career_sites.get_career_sites(site_section="internal")
         result = cx_career_sites.filter_career_site(data=data, site_name="Internal Career Page")
+        assert result != []
         name, portal_url, settings_url = result
         cx_career_sites.open_url(portal_url)
         assert cx_career_sites.get_title() == "QA Automation Only - SilkRoad Talent Activation"
@@ -112,12 +116,15 @@ class TestJobEdit2ExtInt:
         cx_career_sites = CareerSites(self.driver)
         data = cx_career_sites.get_career_sites(site_section="internal")
         result = cx_career_sites.filter_career_site(data=data, site_name="Internal Career Page")
+        assert result != []
         name, portal_url, settings_url = result
         cx_career_sites.open_url(portal_url)
         assert cx_career_sites.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 
         cx_job_search = JobSearch(self.driver)
-        job_elem, job_title = cx_job_search.find_job(title=search_input)
+        job_search_result = cx_job_search.find_job(title=search_input)
+        assert job_search_result != []
+        job_elem, job_title = job_search_result
         cx_job_search.open_job(job_elem=job_elem)
         assert job_title in cx_job_search.get_title()
 
@@ -130,6 +137,7 @@ class TestJobEdit2ExtInt:
 
         data = cx_career_sites.get_career_sites(site_section="external")
         result = cx_career_sites.filter_career_site(data=data, site_name="Corporate Career Portal")
+        assert result != []
         name, portal_url, settings_url = result
         cx_career_sites.open_url(portal_url)
         assert cx_career_sites.get_title() == "QA Automation Only - SilkRoad Talent Activation"

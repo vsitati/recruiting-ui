@@ -114,7 +114,11 @@ class CandidateAdvancedSearch(Common, Elements):
         table_heading_elems = self.driver.find_elements_by_locator(self.table_heading)
         table_headings = [table_heading_elem.text.replace("↑", "").replace("↓", "")
                           for table_heading_elem in table_heading_elems]
-        column_name_index = table_headings.index(column_name)
+        try:
+            column_name_index = table_headings.index(column_name)
+        except ValueError:
+            print(f"Current Table Headings: {table_headings}")
+            return []
 
         row_info = [[col.text for col in row][column_name_index] for row in rows if row]
         # row_info = list()
