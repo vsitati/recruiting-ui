@@ -1,5 +1,6 @@
 import pytest
 import allure
+import time
 from test_data.test_data_details import JobData
 from ats_pages.login.login import Login
 from ats_pages.page_header import PageHeader
@@ -14,8 +15,8 @@ from cx_pages.jobs_search import JobSearch
 
 
 @pytest.mark.usefixtures("setup")
+@pytest.mark.regression_grp_c
 class TestJobEdit2ExtInt:
-
     @allure.title("ATS Edit a Job to External")
     @allure.description("Edit the Job in ATS - JIRA: RND-7327")
     def test_job_edit_2ext(self, get_test_info):
@@ -26,7 +27,6 @@ class TestJobEdit2ExtInt:
 
         page_header = PageHeader(self.driver)
         page_header.quick_search("jobs", search_input)
-
         job_search_result = JobAdvancedSearchResult(self.driver)
         job_search_result.verify_is_job_search_result_page()
         job_search_result.open_job(search_input)
@@ -46,15 +46,20 @@ class TestJobEdit2ExtInt:
         cx_login.new_tab()
         cx_login.do_login(get_test_info)
 
+        time.sleep(cx_login.sleep_time + 4)
         cx_career_sites = CareerSites(self.driver)
         data = cx_career_sites.get_career_sites(site_section="external")
         result = cx_career_sites.filter_career_site(data=data, site_name="Corporate Career Portal")
+        assert len(result) == 3, f"Not all results returned: {result}"
         name, portal_url, settings_url = result
         cx_career_sites.open_url(portal_url)
         assert cx_career_sites.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 
         cx_job_search = JobSearch(self.driver)
-        job_elem, job_title = cx_job_search.find_job(title=search_input)
+        time.sleep(cx_job_search.sleep_time + 2)
+        job_search_result = cx_job_search.find_job(title=search_input)
+        assert len(job_search_result) == 2, f"Not all results returned: {job_search_result}"
+        job_elem, job_title = job_search_result
         cx_job_search.open_job(job_elem=job_elem)
         assert job_title in cx_job_search.get_title()
 
@@ -67,6 +72,7 @@ class TestJobEdit2ExtInt:
 
         data = cx_career_sites.get_career_sites(site_section="internal")
         result = cx_career_sites.filter_career_site(data=data, site_name="Internal Career Page")
+        assert len(result) == 3, f"Not all results returned: {result}"
         name, portal_url, settings_url = result
         cx_career_sites.open_url(portal_url)
         assert cx_career_sites.get_title() == "QA Automation Only - SilkRoad Talent Activation"
@@ -109,15 +115,20 @@ class TestJobEdit2ExtInt:
         cx_login.new_tab()
         cx_login.do_login(get_test_info)
 
+        time.sleep(cx_login.sleep_time + 4)
         cx_career_sites = CareerSites(self.driver)
         data = cx_career_sites.get_career_sites(site_section="internal")
         result = cx_career_sites.filter_career_site(data=data, site_name="Internal Career Page")
+        assert len(result) == 3, f"Not all results returned: {result}"
         name, portal_url, settings_url = result
         cx_career_sites.open_url(portal_url)
         assert cx_career_sites.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 
         cx_job_search = JobSearch(self.driver)
-        job_elem, job_title = cx_job_search.find_job(title=search_input)
+        time.sleep(cx_job_search.sleep_time + 2)
+        job_search_result = cx_job_search.find_job(title=search_input)
+        assert len(job_search_result) == 2, f"Not all results returned: {job_search_result}"
+        job_elem, job_title = job_search_result
         cx_job_search.open_job(job_elem=job_elem)
         assert job_title in cx_job_search.get_title()
 
@@ -130,6 +141,7 @@ class TestJobEdit2ExtInt:
 
         data = cx_career_sites.get_career_sites(site_section="external")
         result = cx_career_sites.filter_career_site(data=data, site_name="Corporate Career Portal")
+        assert len(result) == 3, f"Not all results returned: {result}"
         name, portal_url, settings_url = result
         cx_career_sites.open_url(portal_url)
         assert cx_career_sites.get_title() == "QA Automation Only - SilkRoad Talent Activation"

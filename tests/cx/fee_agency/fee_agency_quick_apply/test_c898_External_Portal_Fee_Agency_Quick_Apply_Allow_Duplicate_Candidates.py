@@ -15,6 +15,7 @@ from ats_pages.candidates.candidate_resume_profile import CandidateResumeProfile
 from helpers.utils import get_basename_from_file_path
 
 
+@pytest.mark.regression_grp_e
 @pytest.mark.usefixtures("setup")
 class TestFeeAgencyQuickApplyAllowSameDuplicates:
     @allure.description("Fee Agency Quick Apply allow job duplicates")
@@ -23,7 +24,7 @@ class TestFeeAgencyQuickApplyAllowSameDuplicates:
         login = AtsLogin(driver=self.driver)
         login.do_login(get_test_info)
 
-        assert login.is_element_visible(locator=login.quick_search) is True
+        assert login.is_element_visible(locator=login.quick_search_text) is True
 
         # Navigate to Administration->Fee Agency
         left_menu = LeftMenus(self.driver)

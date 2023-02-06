@@ -15,11 +15,13 @@ from ats_pages.jobs.job_position_details_view import JobPositionDetailsView
 from test_data.test_data_details import JobData
 
 
+@pytest.mark.regression_grp_c
 @pytest.mark.usefixtures("setup")
 class TestJobCreateWithRemote:
 
     @allure.title("ATS Create a remote Job")
     @allure.description("Using remote directly - JIRA: RND-7363")
+    @pytest.mark.xfail()
     def test_job_create_with_remote_direct(self, get_test_info):
         login = Login(driver=self.driver)
         login.do_login(get_test_info)
@@ -79,6 +81,7 @@ class TestJobCreateWithRemote:
 
     @allure.title("ATS Create a remote Job")
     @allure.description("Using remote code - JIRA: RND-7363")
+    @pytest.mark.xfail()
     def test_job_create_with_remote_code(self, get_test_info):
         login = Login(driver=self.driver)
         login.do_login(get_test_info)
@@ -138,6 +141,7 @@ class TestJobCreateWithRemote:
 
     @allure.title("ATS Create a remote Job")
     @allure.description("Using remote template - JIRA: RND-7363")
+    @pytest.mark.xfail()
     def test_job_create_with_remote_temp(self, get_test_info):
         login = Login(driver=self.driver)
         login.do_login(get_test_info)

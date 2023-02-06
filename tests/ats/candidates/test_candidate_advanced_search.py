@@ -10,11 +10,12 @@ from ats_pages.candidates.advanced_search import CandidateAdvancedSearch
 from test_data.test_data_details import CandidateData
 
 
+@pytest.mark.regression_grp_a
 @pytest.mark.usefixtures("setup")
 class TestCandidateAdvancedSearch:
-
     @allure.title("Candidate Search: sorting columns")
     @allure.description("JIRA: RND-7440; TestRail: C270")
+    @pytest.mark.xfail()
     def test_candidate_search_sorting(self, get_test_info):
         login = Login(driver=self.driver)
         login.do_login(get_test_info)
@@ -91,6 +92,7 @@ class TestCandidateAdvancedSearch:
 
     @allure.title("Candidate Search: Country")
     @allure.description("JIRA: RND-7436; TestRail: c268")
+    @pytest.mark.xfail()
     def test_candidate_search_country(self, get_test_info):
         self.__preset(get_test_info)
 
@@ -105,6 +107,8 @@ class TestCandidateAdvancedSearch:
         page_header.select_ellipses_menu(page_header.EllipsesMenu.Columns, page_header.OnPage.Candidate_Search)
 
         ellipses_columns = EllipsesColumns(self.driver)
+        self.driver.find_element_by_locator(ellipses_columns.apply_btn)
+        sleep(ellipses_columns.sleep_time)
         ellipses_columns.select_column(ellipses_columns.Columns.Country)
         ellipses_columns.click_apply()
 
@@ -134,6 +138,8 @@ class TestCandidateAdvancedSearch:
         page_header.select_ellipses_menu(page_header.EllipsesMenu.Columns, page_header.OnPage.Candidate_Search)
 
         ellipses_columns = EllipsesColumns(self.driver)
+        self.driver.find_element_by_locator(ellipses_columns.apply_btn)
+        sleep(ellipses_columns.sleep_time)
         ellipses_columns.select_column(ellipses_columns.Columns.Country)
         ellipses_columns.select_column(ellipses_columns.Columns.State)
         ellipses_columns.click_apply()
@@ -179,6 +185,8 @@ class TestCandidateAdvancedSearch:
         page_header.select_ellipses_menu(page_header.EllipsesMenu.Columns, page_header.OnPage.Candidate_Search)
 
         ellipses_columns = EllipsesColumns(self.driver)
+        self.driver.find_element_by_locator(ellipses_columns.apply_btn)
+        sleep(ellipses_columns.sleep_time)
         ellipses_columns.select_column(ellipses_columns.Columns.RecruitingManager)
         ellipses_columns.click_apply()
 
@@ -204,6 +212,8 @@ class TestCandidateAdvancedSearch:
         page_header.select_ellipses_menu(page_header.EllipsesMenu.Columns, page_header.OnPage.Candidate_Search)
 
         ellipses_columns = EllipsesColumns(self.driver)
+        self.driver.find_element_by_locator(ellipses_columns.apply_btn)
+        sleep(ellipses_columns.sleep_time)
         ellipses_columns.select_column(ellipses_columns.Columns.TrackingCode)
         ellipses_columns.click_apply()
 

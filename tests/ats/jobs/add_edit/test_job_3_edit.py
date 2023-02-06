@@ -14,9 +14,8 @@ from ats_pages.jobs.job_evaluation_questions import JobEvaluationQuestions
 
 
 @pytest.mark.usefixtures("setup")
+@pytest.mark.regression_grp_c
 class TestJobEdit:
-
-    @pytest.mark.skip(reason="Job test create 1 is failing")
     @pytest.mark.dependency(
         depends=["tests/ats/jobs/test_job_1_create.py::TestJobCreate::test_job_create"],
         scope='session')

@@ -25,8 +25,9 @@ pipeline {
          steps {
           echo "Setting up virtual environment and install required libraries"
           bat """
-              python -m venv .env
-              .\\.env\\Scripts\\activate.bat && python -m pip install -r requirements.txt
+              call python -m venv .env
+              call .\\.env\\Scripts\\activate.bat
+              call python -m pip install -r requirements.txt --use-pep517
           """
          }
       }
@@ -39,7 +40,9 @@ pipeline {
          steps {
           echo "Running smoke tests"
           bat """
-              .\\.env\\Scripts\\activate.bat && pytest -m smoke
+              call .\\.env\\Scripts\\activate.bat
+              echo "============================= RUNNING SMOKE TESTS ============================="
+              call pytest --cache-clear -m regression_grp_e -m smoke -n 3
           """
          }
       }
@@ -47,7 +50,23 @@ pipeline {
          steps {
           echo "Running full regression suite"
           bat """
-              .\\.env\\Scripts\\activate.bat && pytest
+              call .\\.env\\Scripts\\activate.bat
+              echo "============================= RUNNING regression_grp_a ============================="
+              call pytest --cache-clear -m regression_grp_a -n 4
+              echo "============================= RUNNING regression_grp_b ============================="
+              call pytest --cache-clear -m regression_grp_b
+              echo "============================= RUNNING regression_grp_c ============================="
+              call pytest --cache-clear -m regression_grp_c -n 3
+              echo "============================= RUNNING regression_grp_d ============================="
+              call pytest --cache-clear -m regression_grp_d -n 4
+              echo "============================= RUNNING regression_grp_e ============================="
+              call  pytest --cache-clear -m regression_grp_e
+              echo "============================= RUNNING regression_grp_f ============================="
+              call pytest --cache-clear -m regression_grp_f -n 3
+              echo "============================= RUNNING regression_grp_g ============================="
+              call pytest --cache-clear -m regression_grp_g -n 3
+              echo "============================= RUNNING regression_grp_h ============================="
+              call pytest --cache-clear -m regression_grp_h -n 3
           """
          }
       }

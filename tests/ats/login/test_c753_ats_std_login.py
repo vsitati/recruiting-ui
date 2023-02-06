@@ -4,6 +4,7 @@ from ats_pages.login.login import Login
 from test_data.test_data_details import SrTestData
 
 
+@pytest.mark.regression_grp_d
 @pytest.mark.usefixtures("setup")
 class TestAtsStandardLogin:
     @allure.title("C753 - ATS Standard Login Tests")
@@ -12,7 +13,7 @@ class TestAtsStandardLogin:
         login = Login(driver=self.driver)
         login.do_login(get_test_info)
 
-        assert login.is_element_visible(locator=login.quick_search) is True
+        assert login.is_element_visible(locator=login.quick_search_text) is True
 
     @pytest.mark.smoke
     @allure.description("Scenario Login with an Inactive User with valid credentials")

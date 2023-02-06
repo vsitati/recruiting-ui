@@ -17,6 +17,7 @@ from cx_pages.career_site_settings.career_site_settings import CareerSiteSetting
 from cx_pages.career_site_settings.manage_languages import ManageLanguages
 
 
+@pytest.mark.regression_grp_f
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyRandomJobExternal:
     @pytest.mark.smoke
@@ -64,9 +65,6 @@ class TestQuickApplyRandomJobExternal:
         ats_login = AtsLogin(driver=self.driver)
         ats_login.do_login(get_test_info)
 
-        left_menu = LeftMenus(driver=self.driver)
-        left_menu.click_left_nav(left_menu.candidates)
-        left_menu.click_left_nav(left_menu.candidates_advanced_search)
         cas = CandidateAdvancedSearch(driver=self.driver)
         candidate_name = f"{form_details.get('firstname')} {form_details.get('lastname')}"
         cas.open_candidate_profile(candidate_name=candidate_name)

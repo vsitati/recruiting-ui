@@ -9,6 +9,7 @@ from cx_pages.career_site_settings.career_site_settings import CareerSiteSetting
 from cx_pages.career_site_settings.manage_languages import ManageLanguages
 
 
+@pytest.mark.regression_grp_f
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyRandomJobExternalFormNotCompleted:
     @allure.description("C11 - Random Job Quick Apply External Form Not Completed")

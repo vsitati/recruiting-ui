@@ -6,6 +6,7 @@ from ats_pages.login.login import Login as AtsLogin
 from ats_pages.left_menus import LeftMenus
 
 
+@pytest.mark.regression_grp_d
 @pytest.mark.usefixtures("setup")
 class TestFeeAgencyQuickApplyIncorrectEmailAddress:
     @allure.description("Fee Agency Quick Apply Incorrect Email Address")
@@ -14,7 +15,7 @@ class TestFeeAgencyQuickApplyIncorrectEmailAddress:
         login = AtsLogin(driver=self.driver)
         login.do_login(get_test_info)
 
-        assert login.is_element_visible(locator=login.quick_search) is True
+        assert login.is_element_visible(locator=login.quick_search_text) is True
 
         # Navigate to Administration->Fee Agency
         left_menu = LeftMenus(self.driver)

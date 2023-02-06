@@ -17,13 +17,12 @@ from cx_pages.career_site_settings.manage_languages import ManageLanguages
 from ats_pages.administration.fee_agencies import FeeAgencies
 
 
+@pytest.mark.regression_grp_e
 @pytest.mark.usefixtures("setup")
 class TestFeeAgencyQuickApplyLangs:
-
-    @pytest.mark.parametrize("lang", ["french", "spanish", "german"])
+    @pytest.mark.parametrize("language", ["french", "spanish", "german"])
     @allure.description("Fee Agency Quick Apply - foreign languages: TestRail: c888, c889, c890")
-    def test_fee_agency_quick_apply_langs(self, get_test_info, lang):
-        language = lang
+    def test_fee_agency_quick_apply_langs(self, get_test_info, language):
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)
 
@@ -88,9 +87,6 @@ class TestFeeAgencyQuickApplyLangs:
         ats_login = AtsLogin(driver=self.driver)
         ats_login.do_login(get_test_info)
 
-        left_menu = LeftMenus(driver=self.driver)
-        left_menu.click_left_nav(left_menu.candidates)
-        left_menu.click_left_nav(left_menu.candidates_advanced_search)
         cas = CandidateAdvancedSearch(driver=self.driver)
         candidate_name = f"{form_details.get('firstname')} {form_details.get('lastname')}"
         cas.open_candidate_profile(candidate_name=candidate_name)

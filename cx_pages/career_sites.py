@@ -23,15 +23,15 @@ class CareerSites(Elements, Common):
 
         # Career Site URL
         career_site_elems = career_sites_parent.find_elements(*self.career_site)
-        career_sites = [site.get_attribute("href") for site in career_site_elems]
+        career_sites = (site.get_attribute("href") for site in career_site_elems)
 
         # Career Site Settings URL
         career_sites_setting_elems = career_sites_parent.find_elements(*self.career_site_settings)
-        career_sites_settings = [site_setting.get_attribute("href") for site_setting in career_sites_setting_elems]
+        career_sites_settings = (site_setting.get_attribute("href") for site_setting in career_sites_setting_elems)
 
         # Career Site Title
         career_site_title_elems = career_sites_parent.find_elements(*self.career_site_title)
-        career_site_titles = [career_site_title.text for career_site_title in career_site_title_elems]
+        career_site_titles = (career_site_title.text for career_site_title in career_site_title_elems)
         return list(zip(career_site_titles, career_sites, career_sites_settings))
 
     @staticmethod

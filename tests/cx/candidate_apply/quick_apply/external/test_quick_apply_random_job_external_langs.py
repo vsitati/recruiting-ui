@@ -16,13 +16,12 @@ from cx_pages.career_site_settings.career_site_settings import CareerSiteSetting
 from cx_pages.career_site_settings.manage_languages import ManageLanguages
 
 
+@pytest.mark.regression_grp_e
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyRandomJobExternalLangs:
-
-    @pytest.mark.parametrize("lang", ["French", "Spanish", "German"])
+    @pytest.mark.parametrize("language", ["french", "spanish", "german"])
     @allure.description("Random Job Quick Apply External - foreign languages: TestRail: c839, c840, c841")
-    def test_random_job_quick_apply_external_langs(self, get_test_info, lang):
-        language = lang
+    def test_random_job_quick_apply_external_langs(self, get_test_info, language):
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)
 
@@ -73,9 +72,6 @@ class TestQuickApplyRandomJobExternalLangs:
         ats_login = AtsLogin(driver=self.driver)
         ats_login.do_login(get_test_info)
 
-        left_menu = LeftMenus(driver=self.driver)
-        left_menu.click_left_nav(left_menu.candidates)
-        left_menu.click_left_nav(left_menu.candidates_advanced_search)
         cas = CandidateAdvancedSearch(driver=self.driver)
         candidate_name = f"{form_details.get('firstname')} {form_details.get('lastname')}"
         cas.open_candidate_profile(candidate_name=candidate_name)

@@ -8,6 +8,7 @@ from ats_pages.jobs.job_position_details_view import JobPositionDetailsView
 from ats_pages.jobs.job_position_details import JobPositionDetails
 
 
+@pytest.mark.regression_grp_c
 @pytest.mark.usefixtures("setup")
 class TestJobEditFromTemp:
 

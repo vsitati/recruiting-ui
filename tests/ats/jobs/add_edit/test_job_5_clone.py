@@ -13,6 +13,7 @@ from cx_pages.career_sites import CareerSites
 from cx_pages.jobs_search import JobSearch
 
 
+@pytest.mark.regression_grp_c
 @pytest.mark.usefixtures("setup")
 class TestJobClone:
 

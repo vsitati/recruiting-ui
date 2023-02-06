@@ -16,11 +16,15 @@ from ats_pages.candidates.candidate_resume_profile import CandidateResumeProfile
 from ats_pages.login.login import Login as AtsLogin
 from helpers.utils import get_basename_from_file_path
 
+@pytest.mark.regression_grp_g
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyRandomJobInternalSupportedFiles:
     @allure.description("Random Job Quick Apply Internal Supported Files")
     @pytest.mark.parametrize("file_type", ["pdf", "doc", "docx", "htm", "html", "odt", "rtf", "txt"])
     def test_random_job_quick_apply_internal_supported_files(self, get_test_info, file_type):
+        if file_type == "htm":
+            pytest.skip("We need to find an example for an htm resume")
+
         language = "english"
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)

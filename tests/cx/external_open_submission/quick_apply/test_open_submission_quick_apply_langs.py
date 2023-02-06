@@ -17,26 +17,24 @@ from cx_pages.career_site_settings.manage_languages import ManageLanguages
 from utils.drivers import Drivers
 
 
+@pytest.mark.regression_grp_e
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyOpenSubmissionLangs:
 
-    @pytest.mark.parametrize("lang", ["French", "Spanish", "German"])
+    @pytest.mark.parametrize("language", ["french", "spanish", "german"])
     @allure.description("Quick Apply Open Submission foreign languages, TestRail c805, c807, c890, ")
-    def test_random_job_quick_apply_open_submission_langs(self, get_test_info, lang):
-        if lang == "French":
-            submit_resume_message = \
-                "Vous ne trouvez pas l'offre que vous recherchez ?Soumettre votre curriculum vitae / CV."
-            success_message = "Merci d’avoir soumis votre curriculum vitae"
-        elif lang == "Spanish":
+    def test_random_job_quick_apply_open_submission_langs(self, get_test_info, language):
+        submit_resume_message = \
+            "Vous ne trouvez pas l'offre que vous recherchez ?Soumettre votre curriculum vitae / CV."
+        success_message = "Merci d’avoir soumis votre curriculum vitae"
+
+        if language == "spanish":
             submit_resume_message = "¿No encuentras la oportunidad perfecta? Enviar su CV/currículum."
             success_message = "Gracias por enviar su CV/currículum vitae"
-        elif lang == "German":
+        elif language == "german":
             submit_resume_message = "Haben Sie keine passende Stelle gefunden? Reichen Sie Ihren Lebenslauf ein."
             success_message = "Danke das Sie Ihren Lebenslauf eingereicht haben"
-        else:
-            raise Exception("Please use French, Spanish or German")
 
-        language = lang
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)
 

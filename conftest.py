@@ -15,7 +15,7 @@ def pytest_addoption(parser):
                                                                                    "english, french, german, spanish")
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='function', autouse=True)
 def get_test_info(request):
     return dict(
         company=request.config.getoption("--company"),
@@ -37,7 +37,7 @@ def pytest_collection_modifyitems(config, items):
             item.add_marker(skip_marker)
 
 
-@pytest.fixture()
+@pytest.fixture(scope="function", autouse=True)
 def setup(request):
     config = Config.env_config
     driver = Drivers.get_driver(config, request.config.getoption("--browser_language"))

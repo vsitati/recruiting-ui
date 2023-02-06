@@ -9,9 +9,9 @@ from common.common import Common
 from time import sleep
 
 
+@pytest.mark.regression_grp_a
 @pytest.mark.usefixtures("setup")
 class TestJobQuickSearch:
-
     @allure.title("Job Quick Search for All")
     @allure.description("JIRA: RND-7458; TestRail: c237")
     def test_job_quick_search_all(self, get_test_info):

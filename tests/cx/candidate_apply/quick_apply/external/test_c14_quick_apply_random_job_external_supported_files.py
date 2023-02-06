@@ -17,6 +17,7 @@ from ats_pages.login.login import Login as AtsLogin
 from helpers.utils import get_basename_from_file_path
 
 
+@pytest.mark.regression_grp_f
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyRandomJobExternalSupportedFiles:
     @allure.description("Random Job Quick Apply External Supported File Types")
@@ -62,7 +63,7 @@ class TestQuickApplyRandomJobExternalSupportedFiles:
         qa.fill_in_quick_apply_form(**form_details)
         assert qa.get_success_message() == "Thank You for Applying"
 
-# Login to ATS
+        # Login to ATS
         ats_login = AtsLogin(driver=self.driver)
         ats_login.do_login(get_test_info)
 

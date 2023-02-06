@@ -3,6 +3,7 @@ from common.common import Common
 from helpers.utils import BaseError, round_up
 import time
 import datetime
+import itertools
 from test_data.test_data_details import CandidateData
 
 
@@ -37,40 +38,53 @@ class CandidateAdvancedSearch(Common, Elements):
         return
 
     def get_advanced_search_count(self):
-        time.sleep(self.sleep_time)
-        record_count = int(self.get_text(self.record_count))
+        self.driver.find_element_by_locator(self.record_count)
+        try:
+            record_count = int(self.get_text(self.record_count))
+        except ValueError:
+            time.sleep(self.sleep_time)
+            record_count = int(self.get_text(self.record_count))
         return record_count
 
+    def quick_search_candidate_profile(self, candidate_name):
+        self.quick_search(search_object="Candidates", search_input=candidate_name)
+        return self.find_candidate_name(_candidate_name=candidate_name)
+
+    def find_candidate_name(self, _candidate_name):
+        check_box_elems = self.driver.find_elements_by_locator(self.check_box)
+        for check_box_elem in check_box_elems:
+            if check_box_elem.get_attribute("data-candidatename") == _candidate_name:
+                return check_box_elem
+
     def get_check_box_elem(self, candidate_name, records_per_page=25):
-
-        def find_candidate_name(_candidate_name):
-            check_box_elems = self.driver.find_elements_by_locator(self.check_box)
-            for check_box_elem in check_box_elems:
-                if check_box_elem.get_attribute("data-candidatename") == _candidate_name:
-                    return check_box_elem
-
-        result = find_candidate_name(_candidate_name=candidate_name)
+        result = self.find_candidate_name(_candidate_name=candidate_name)
         # TODO OPen submission and Same name
         if not result:
             tot_records_found = self.get_advanced_search_count()
             total_pages = round_up(tot_records_found/records_per_page)
 
+            print(f"Total pages: {total_pages}")
             for i in range(total_pages):
                 next_page_elem = self.driver.find_element_by_locator(self.next_page)
                 self.driver.execute_script("arguments[0].scrollIntoView();", next_page_elem)
                 self.do_click(next_page_elem)
                 time.sleep(2)
-                result = find_candidate_name(_candidate_name=candidate_name)
+                print(f"Page: {i}/{total_pages}")
+                result = self.find_candidate_name(_candidate_name=candidate_name)
                 if result:
                     return result
 
         if not result:
             # TODO need to add logging
-            raise BaseError(f"Candidate Name: {candidate_name} not found.")
+            assert False, f"Candidate Name: {candidate_name} not found."
         return result
 
-    def open_candidate_profile(self, candidate_name):
-        elem = self.get_check_box_elem(candidate_name=candidate_name)
+    def open_candidate_profile(self, candidate_name, paginate=False):
+        if paginate:
+            elem = self.get_check_box_elem(candidate_name=candidate_name)
+        else:
+            elem = self.quick_search_candidate_profile(candidate_name=candidate_name)
+
         resume_id = elem.get_attribute("value")
         return self.open_url(self.get_all_hrefs(specific_href=resume_id))
 
@@ -88,7 +102,9 @@ class CandidateAdvancedSearch(Common, Elements):
         # check if result record exists
         time.sleep(3)
         elm_result_sheet = self.driver.find_element_by_locator(self.result_sheet)
-        rows = [row.find_elements(*self.table_column) for row in elm_result_sheet.find_elements(*self.table_row)]
+        _rows = elm_result_sheet.find_elements(*self.table_row)
+
+        rows = (row.find_elements(*self.table_column) for row in _rows)
 
         elms = elm_result_sheet.find_elements(*self.check_box1)
         if len(elms) == 0:
@@ -98,9 +114,27 @@ class CandidateAdvancedSearch(Common, Elements):
         table_heading_elems = self.driver.find_elements_by_locator(self.table_heading)
         table_headings = [table_heading_elem.text.replace("↑", "").replace("↓", "")
                           for table_heading_elem in table_heading_elems]
+        try:
+            column_name_index = table_headings.index(column_name)
+        except ValueError:
+            print(f"Current Table Headings: {table_headings}")
+            return []
 
-        column_name_index = table_headings.index(column_name)
-        return [[col.text for col in row][column_name_index] for row in rows if row]
+        row_info = [[col.text for col in row][column_name_index] for row in rows if row]
+        # row_info = list()
+        # column_name_index = table_headings.index(column_name)
+        # col_text_list = ((col.text for col in row) for row in rows if row)
+        # for col_text in col_text_list:
+        #     row_info.append(list(col_text)[column_name_index])
+        # # for _rows in rows:
+        # #     if _rows:
+        # #         col_text = list()
+        # #         for _row in _rows:
+        # #             col_text.append(_row.text)
+        # #         row_info.append(col_text[column_name_index])
+        return row_info
+
+        # return [[col.text for col in row][column_name_index] for row in rows if row]
 
     def sort_candidate_column_header(self, column, ordering, date=""):
         # elm_result_sheet = self.driver.find_element_by_locator(self.result_sheet)
@@ -145,15 +179,15 @@ class CandidateAdvancedSearch(Common, Elements):
                         raise Exception(f"column values sorting: {alist[i]} and {alist[i + 1]}.")
                 else:
                     if alist[i].lower() < alist[i+1].lower():
-                        raise Exception(f"column values sorting: {alist[i]} and {alist[i+1]}.")
+                        raise Exception(f"column values sorting: {alist[i]} and {alist[i + 1]}.")
         return
 
     def verify_value_exist(self, a_value, alist):
         if len(alist) == 0:
-            self.sr_logger.logger.error("There is 0 record.")
-            return
-        for i in range(len(alist)):
-            assert a_value in alist[i], "value NOT exist."
+            return self.sr_logger.logger.error("There is 0 record.")
+
+        for list_val in alist:
+            assert a_value in list_val, "value DOES NOT exist."
 
     # base_date: today - days_diff
     # dates: a list of dates
@@ -173,9 +207,10 @@ class CandidateAdvancedSearch(Common, Elements):
         oldest_date, *_ = format_dates
         latest_date = format_dates[-1]
 
-        assert oldest_date <= past_date, f"oldest date: {oldest_date} CANNOT be older than past date: {past_date}"
-        assert latest_date >= todays_date, f"latest date: {latest_date} CANNOT be newer than today's date: {todays_date}"
-
+        assert past_date <= oldest_date <= latest_date, \
+            f"past date: {past_date} <= oldest date: {oldest_date} <= latest date: {latest_date} "
+        assert latest_date <= todays_date, \
+            f"latest date: {latest_date} CANNOT be newer than today's date: {todays_date}"
 
     def compare_date_range(self, dates, date_start, date_end):
         if len(dates) == 0:

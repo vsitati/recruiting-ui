@@ -1,6 +1,7 @@
 
 import pytest
 import allure
+import time
 from cx_pages.career_sites import CareerSites
 from cx_pages.jobs_search import JobSearch
 from cx_pages.login import Login
@@ -17,6 +18,7 @@ from cx_pages.career_site_settings.career_site_settings import CareerSiteSetting
 from cx_pages.career_site_settings.manage_languages import ManageLanguages
 
 
+@pytest.mark.regression_grp_g
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyRandomJobInternal:
     @allure.description("Random Job Quick Apply Internal")
@@ -63,12 +65,14 @@ class TestQuickApplyRandomJobInternal:
         ats_login = AtsLogin(driver=self.driver)
         ats_login.do_login(get_test_info)
 
+        time.sleep(5)  # Give change for candidate to get added to DB
+
         left_menu = LeftMenus(driver=self.driver)
         left_menu.click_left_nav(left_menu.candidates)
         left_menu.click_left_nav(left_menu.candidates_advanced_search)
         cas = CandidateAdvancedSearch(driver=self.driver)
         candidate_name = f"{form_details.get('firstname')} {form_details.get('lastname')}"
-        cas.open_candidate_profile(candidate_name=candidate_name)
+        cas.open_candidate_profile(candidate_name=candidate_name, paginate=True)
 
         crp = CandidateResumeProfile(driver=self.driver)
         assert crp.verify_candidate_name() == candidate_name

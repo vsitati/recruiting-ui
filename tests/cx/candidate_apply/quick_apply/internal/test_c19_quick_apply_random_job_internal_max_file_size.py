@@ -12,6 +12,7 @@ from cx_pages.career_site_settings.career_site_settings import CareerSiteSetting
 from cx_pages.career_site_settings.manage_languages import ManageLanguages
 
 
+@pytest.mark.regression_grp_g
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyRandomJobInternalMaxFileSize:
     @allure.description("Random Job Quick Apply Internal max file size")

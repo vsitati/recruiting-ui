@@ -18,6 +18,7 @@ from ats_pages.candidates.candidate_resume_profile import CandidateResumeProfile
 from helpers.utils import get_basename_from_file_path
 
 
+@pytest.mark.regression_grp_a
 @pytest.mark.usefixtures("setup")
 class TestFeeAgencyQuickApplyHappyPath:
     @allure.description("Fee Agency Quick Apply Happy Path")
@@ -50,7 +51,7 @@ class TestFeeAgencyQuickApplyHappyPath:
         login = AtsLogin(driver=self.driver)
         login.do_login(get_test_info)
 
-        assert login.is_element_visible(locator=login.quick_search) is True
+        assert login.is_element_visible(locator=login.quick_search_text) is True
 
         # Navigate to Administration->Fee Agency
         left_menu = LeftMenus(self.driver)
@@ -86,9 +87,6 @@ class TestFeeAgencyQuickApplyHappyPath:
         ats_login = AtsLogin(driver=self.driver)
         ats_login.do_login(get_test_info)
 
-        left_menu = LeftMenus(driver=self.driver)
-        left_menu.click_left_nav(left_menu.candidates)
-        left_menu.click_left_nav(left_menu.candidates_advanced_search)
         cas = CandidateAdvancedSearch(driver=self.driver)
         candidate_name = f"{form_details.get('firstname')} {form_details.get('lastname')}"
         cas.open_candidate_profile(candidate_name=candidate_name)

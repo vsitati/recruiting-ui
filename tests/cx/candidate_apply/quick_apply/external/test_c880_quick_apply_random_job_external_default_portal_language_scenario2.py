@@ -11,6 +11,7 @@ from utils.drivers import Drivers
 from config import Config
 
 
+@pytest.mark.regression_grp_e
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyRandomJobExternalDefaultPortalLanguageScenario2:
     @allure.description("Random Job Quick Apply External Default Portal Language Scenario 2")

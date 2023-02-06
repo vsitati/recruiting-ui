@@ -4,6 +4,7 @@ from ats_pages.login.login import Login
 from ats_pages.login.forget_password import ForgetPassword
 
 
+@pytest.mark.regression_grp_d
 @pytest.mark.usefixtures("setup")
 class TestAtsStdLoginForgetPassword:
     @allure.title("ATS Standard Login Tests - Forget Password")

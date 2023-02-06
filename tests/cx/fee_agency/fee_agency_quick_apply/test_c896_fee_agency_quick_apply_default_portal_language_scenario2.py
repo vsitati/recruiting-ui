@@ -15,6 +15,7 @@ from ats_pages.left_menus import LeftMenus
 from utils.drivers import Drivers
 
 
+@pytest.mark.regression_grp_e
 @pytest.mark.usefixtures("setup")
 class TestFeeAgencyQuickApplyDefaultPortalLanguageScenario2:
     @allure.description("C896 - Fee Agency Quick Apply Default Portal Language Scenario 2")
@@ -48,7 +49,7 @@ class TestFeeAgencyQuickApplyDefaultPortalLanguageScenario2:
         login = AtsLogin(driver=self.driver)
         login.do_login(get_test_info)
 
-        assert login.is_element_visible(locator=login.quick_search) is True
+        assert login.is_element_visible(locator=login.quick_search_text) is True
 
         # Navigate to Administration->Fee Agency
         left_menu = LeftMenus(driver=self.driver)
