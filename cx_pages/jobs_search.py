@@ -30,8 +30,7 @@ class JobSearch(Elements, Common):
 
             if _random:
                 page_numbers = list(range(1, last_page + 1))
-                random_page_number = random.choice(page_numbers[1:])
-                # [1:] Skipping the first page, this is the most used page
+                random_page_number = random.choice(page_numbers)
                 current_url = self.driver.current_url
                 self.open_url(f"{current_url}?page={random_page_number}")
                 title_elems = self.driver.find_elements_by_locator(self.job_titles)

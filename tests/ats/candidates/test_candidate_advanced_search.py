@@ -107,6 +107,8 @@ class TestCandidateAdvancedSearch:
         page_header.select_ellipses_menu(page_header.EllipsesMenu.Columns, page_header.OnPage.Candidate_Search)
 
         ellipses_columns = EllipsesColumns(self.driver)
+        self.driver.find_element_by_locator(ellipses_columns.apply_btn)
+        sleep(ellipses_columns.sleep_time)
         ellipses_columns.select_column(ellipses_columns.Columns.Country)
         ellipses_columns.click_apply()
 
@@ -136,10 +138,12 @@ class TestCandidateAdvancedSearch:
         page_header.select_ellipses_menu(page_header.EllipsesMenu.Columns, page_header.OnPage.Candidate_Search)
 
         ellipses_columns = EllipsesColumns(self.driver)
+        self.driver.find_element_by_locator(ellipses_columns.apply_btn)
         sleep(ellipses_columns.sleep_time)
         ellipses_columns.select_column(ellipses_columns.Columns.Country)
         ellipses_columns.select_column(ellipses_columns.Columns.State)
         ellipses_columns.click_apply()
+
         candidate_advanced_search = CandidateAdvancedSearch(self.driver)
         col_list = candidate_advanced_search.get_candidate_column_values("Country")
         candidate_advanced_search.verify_value_exist(country, col_list)
@@ -181,6 +185,8 @@ class TestCandidateAdvancedSearch:
         page_header.select_ellipses_menu(page_header.EllipsesMenu.Columns, page_header.OnPage.Candidate_Search)
 
         ellipses_columns = EllipsesColumns(self.driver)
+        self.driver.find_element_by_locator(ellipses_columns.apply_btn)
+        sleep(ellipses_columns.sleep_time)
         ellipses_columns.select_column(ellipses_columns.Columns.RecruitingManager)
         ellipses_columns.click_apply()
 
@@ -206,6 +212,8 @@ class TestCandidateAdvancedSearch:
         page_header.select_ellipses_menu(page_header.EllipsesMenu.Columns, page_header.OnPage.Candidate_Search)
 
         ellipses_columns = EllipsesColumns(self.driver)
+        self.driver.find_element_by_locator(ellipses_columns.apply_btn)
+        sleep(ellipses_columns.sleep_time)
         ellipses_columns.select_column(ellipses_columns.Columns.TrackingCode)
         ellipses_columns.click_apply()
 
