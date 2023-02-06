@@ -46,6 +46,7 @@ class TestJobEdit2ExtInt:
         cx_login.new_tab()
         cx_login.do_login(get_test_info)
 
+        time.sleep(cx_login.sleep_time + 4)
         cx_career_sites = CareerSites(self.driver)
         data = cx_career_sites.get_career_sites(site_section="external")
         result = cx_career_sites.filter_career_site(data=data, site_name="Corporate Career Portal")
@@ -114,6 +115,7 @@ class TestJobEdit2ExtInt:
         cx_login.new_tab()
         cx_login.do_login(get_test_info)
 
+        time.sleep(cx_login.sleep_time + 4)
         cx_career_sites = CareerSites(self.driver)
         data = cx_career_sites.get_career_sites(site_section="internal")
         result = cx_career_sites.filter_career_site(data=data, site_name="Internal Career Page")

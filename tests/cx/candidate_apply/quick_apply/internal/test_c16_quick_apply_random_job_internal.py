@@ -1,6 +1,7 @@
 
 import pytest
 import allure
+import time
 from cx_pages.career_sites import CareerSites
 from cx_pages.jobs_search import JobSearch
 from cx_pages.login import Login
@@ -63,6 +64,8 @@ class TestQuickApplyRandomJobInternal:
         # Login to ATS
         ats_login = AtsLogin(driver=self.driver)
         ats_login.do_login(get_test_info)
+
+        time.sleep(5)  # Give change for candidate to get added to DB
 
         left_menu = LeftMenus(driver=self.driver)
         left_menu.click_left_nav(left_menu.candidates)
