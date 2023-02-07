@@ -54,7 +54,7 @@ pipeline {
               echo "============================= RUNNING regression_grp_a ============================="
               call pytest --cache-clear -m regression_grp_a -n 4
               echo "============================= RUNNING regression_grp_b ============================="
-              call pytest --cache-clear -m regression_grp_b
+              call pytest -m regression_grp_b
               echo "============================= RUNNING regression_grp_c ============================="
               call pytest --cache-clear -m regression_grp_c -n 3
               echo "============================= RUNNING regression_grp_d ============================="
