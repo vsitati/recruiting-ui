@@ -2,6 +2,7 @@ import os
 import math
 import json
 import random
+import uuid
 import randominfo
 from glob import glob
 from itertools import chain
@@ -86,3 +87,13 @@ def round_up(float_number):
     """
     return math.ceil(float_number)
 
+
+def get_random_unique_short_id():
+    long_id = str(uuid.uuid1()).split("-")
+    return random.choice([long_id[0], long_id[3]])
+
+
+def read_db(db, query):
+    cursor = db.cursor()
+    cursor.execute(query)
+    return cursor.fetchone()

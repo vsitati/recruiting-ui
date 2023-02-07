@@ -10,6 +10,7 @@ from cx_pages.login import Login as CX_Login    # import cx_pages.login
 from cx_pages.cx_jobs_details import CXJobDetails
 from cx_pages.career_sites import CareerSites
 from cx_pages.jobs_search import JobSearch
+from helpers.utils import read_db
 
 from time import sleep
 
@@ -23,12 +24,13 @@ class TestJobVerify:
         scope='session')
     @allure.title("ATS Verify Job Creation")
     @allure.description("Verify the Job in ATS - JIRA: RND-7269")
-    @pytest.mark.xfail()
-    def test_job_verify_in_ats(self, get_test_info):
+    def test_job_verify_in_ats(self, get_test_info, db):
         login = Login(driver=self.driver)
         login.do_login(get_test_info)
 
-        search_input = JobData.job_data.get("internal_job_title")
+        search_input = read_db(db=db, query="SELECT * FROM jobs_data")[1]
+
+        # search_input = JobData.job_data.get("internal_job_title")
         page_header = PageHeader(self.driver)
         page_header.quick_search("jobs", search_input)
 

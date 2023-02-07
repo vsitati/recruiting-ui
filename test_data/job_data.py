@@ -1,4 +1,5 @@
 class JobData:
+
     job_data = {
         # Job Administration
         "recruiting_manager": "auto_rm_01 Silkroad",

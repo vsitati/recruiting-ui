@@ -16,8 +16,7 @@ class TestJobCreate:
     @pytest.mark.dependency()
     @allure.title("ATS Create a Job")
     @allure.description("Create a Standard Job - JIRA: RND-7268")
-    @pytest.mark.xfail()
-    def test_job_create(self, get_test_info):
+    def test_job_create(self, get_test_info, db):
         login = Login(driver=self.driver)
         login.do_login(get_test_info)
 
@@ -26,7 +25,7 @@ class TestJobCreate:
         left_menu.click_left_nav_sub(left_menu.create_job_postings)
 
         job_position_details = JobPositionDetails(self.driver)
-        job_position_details.fill_out_all_job_details_fields()
+        job_position_details.fill_out_all_job_details_fields(db=db)
 
         job_department_budget = JobDepartmentBudget(self.driver)
         job_department_budget.fill_out_all_job_departments_fields()
