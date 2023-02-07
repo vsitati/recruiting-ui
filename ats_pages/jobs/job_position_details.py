@@ -1,6 +1,7 @@
 from common.common import Common
 from selenium.webdriver.common.by import By
 from test_data.test_data_details import JobData
+from helpers.utils import get_random_unique_short_id
 from time import sleep
 
 
@@ -95,8 +96,14 @@ class JobPositionDetails(Common, Elements):
     def __init__(self, driver):
         super().__init__(driver)
 
+    def fill_out_all_job_details_fields(self, db):
+        short_uuid = get_random_unique_short_id()
 
-    def fill_out_all_job_details_fields(self):
+        def save_job_name(_db, name):
+            cursor = _db.cursor()
+            cursor.execute(f"UPDATE jobs_data SET job_name=\'{name}\' WHERE id=1")
+            _db.commit()
+
         # Job Administration
         self.select_from_dropdown(self.recruiting_manager, JobData.job_data.get("recruiting_manager"))
         self.select_from_dropdown(self.assigned_recruiter, JobData.job_data.get("assigned_recruiter"))
@@ -108,8 +115,12 @@ class JobPositionDetails(Common, Elements):
         self.click_radio_yes_no(yes_btn_elem=self.evergreen_job_yes_radio_btn,
                                 no_btn_elem=self.evergreen_job_no_radio_btn,
                                 yes=JobData.job_data.get("evergreen_job_edit"))
-        self.enter_text(self.internal_job_title, JobData.job_data.get("internal_job_title"))
-        self.enter_text(self.posted_job_title, JobData.job_data.get("posted_job_title"))
+
+        job_name = f"{JobData.job_data.get('internal_job_title')}_{short_uuid}"
+        save_job_name(_db=db, name=job_name)
+
+        self.enter_text(self.internal_job_title, job_name)
+        self.enter_text(self.posted_job_title, f"{JobData.job_data.get('posted_job_title')}_{short_uuid}")
         self.enter_text(self.tracking_code, JobData.job_data.get("tracking_code"))
         self.enter_richtext_integer(self.number_of_positions, JobData.job_data.get("number_of_positions"))
         # self.click_radio_yes_no(self.require_eForm_submission, JobData.job_data.get("require_eForm_submission"))

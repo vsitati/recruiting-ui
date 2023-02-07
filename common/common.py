@@ -271,13 +271,20 @@ class Common(Elements):
     def select_auto_complete(self, locator, text):
         elm = self.driver.find_element_by_locator(locator)
         elm.clear()
-        elm.send_keys(text)
-        sleep(self.sleep_time)  # TODO: find a better way to wait
+        # elm.send_keys(text)
+        # sleep(self.sleep_time)  # TODO: find a better way to wait
+        self.slow_typing(element=elm, text=text)
         elms = self.driver.find_elements_by_locator(self.auto_complete)
         for elm in elms:
             if text in elm.text:
                 return self.do_click(elm)
         return
+
+    def slow_typing(self, element, text):
+        text_list = list(text)
+        for _char in text_list:
+            element.send_keys(_char)
+            sleep(self.sleep_time / 2)
 
     def pick_datepicker(self, locator, text):
         self.enter_text(locator, text)

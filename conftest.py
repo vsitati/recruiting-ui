@@ -3,6 +3,7 @@ import pytest
 from allure_commons.types import AttachmentType
 from utils.drivers import Drivers
 from config import Config
+import sqlite3
 
 
 def pytest_addoption(parser):
@@ -53,3 +54,19 @@ def setup(request):
                       name=request.function.__name__,
                       attachment_type=AttachmentType.PNG)
     driver.quit()
+
+
+def seed_db():
+    conn = sqlite3.connect('test_data_db.sqlite')
+    cursor = conn.cursor()
+    cursor.execute("CREATE TABLE IF NOT EXISTS jobs_data (id INTEGER PRIMARY KEY, job_name TEXT)")
+    cursor.execute("INSERT OR IGNORE INTO jobs_data (id, job_name) VALUES (1, 'placeholder_name')")
+    conn.commit()
+    return conn
+
+
+@pytest.fixture(scope="session")
+def db():
+    conn = seed_db()
+    yield conn
+    conn.close()
