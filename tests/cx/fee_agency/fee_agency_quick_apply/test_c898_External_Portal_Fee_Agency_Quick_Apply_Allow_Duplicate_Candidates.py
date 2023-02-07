@@ -21,6 +21,7 @@ class TestFeeAgencyQuickApplyAllowSameDuplicates:
     @allure.description("Fee Agency Quick Apply allow job duplicates")
     def test_fee_agency_quick_apply_allow_job_duplicates(self, get_test_info):
         # Login to ATS as RM
+        fee_agency_name = "Apple One"
         login = AtsLogin(driver=self.driver)
         login.do_login(get_test_info)
 
@@ -33,11 +34,11 @@ class TestFeeAgencyQuickApplyAllowSameDuplicates:
 
         # Open Fee Agency Profile
         fee_agency = FeeAgencies(self.driver)
-        fee_agency.open_fee_agency_profile(fee_agency_name="Apple One")
+        fee_agency.open_fee_agency_profile(fee_agency_name=fee_agency_name)
         fee_agency_email = fee_agency.get_fee_agency_email()
         fee_agency.get_duplicate_option_1()
         fee_agency.save_button_duplicate()
-        fee_agency.open_fee_agency_profile(fee_agency_name="Apple One")
+        fee_agency.open_fee_agency_profile(fee_agency_name=fee_agency_name)
 
         # Login To Cx
         cx_link = fee_agency.get_cx_link(site_name="CorporateCareerPortal")
@@ -87,7 +88,7 @@ class TestFeeAgencyQuickApplyAllowSameDuplicates:
         left_menu.click_left_nav(left_menu.fee_agencies)
         # Open Fee Agency Profile
         fee_agency = FeeAgencies(self.driver)
-        fee_agency.open_fee_agency_profile(fee_agency_name="Apple One")
+        fee_agency.open_fee_agency_profile(fee_agency_name=fee_agency_name)
         fee_agency_email = fee_agency.get_fee_agency_email()
 
         # Login To Cx
