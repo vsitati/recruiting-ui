@@ -54,6 +54,10 @@ class CommonConfiguredApply(ElementsConfiguredApply, Common):
             radio_button.click()
 
     def container_function(self):
+        publisher = self.driver.find_element(By.CSS_SELECTOR, "a[title='Publish application form']")
+        self.driver.execute_script("arguments[0].scrollIntoView();", publisher)
+        publisher.click()
+        #sleep(2.0)
         sleep(1.0)
         try:
             publisher = self.driver.find_element_by_locator(By.CSS_SELECTOR, "a[title='Publish application form']")

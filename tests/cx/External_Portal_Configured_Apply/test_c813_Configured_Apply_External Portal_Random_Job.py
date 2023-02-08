@@ -1,6 +1,10 @@
+from time import sleep
+
 import allure
 import pytest
 
+from common.common_configured_apply import CommonConfiguredApply
+# from cx_pages.career_site_settings.career_site_settings import CareerSiteSettings
 from ats_pages.candidates.advanced_search import CandidateAdvancedSearch
 from ats_pages.candidates.candidate_resume_profile import CandidateResumeProfile
 from ats_pages.left_menus import LeftMenus
@@ -38,7 +42,18 @@ class TestConfiguredApplyExternalPortalRandomJob:
         css.options_to()
         css.click_save_button_modal()
         css.save_page()
+        css.container_function()
+        publish_form = css.get_all_hrefs(link_text="PageGroupPublish")
+        css.open_url(publish_form)
+        css.options_to()
+        css.click_save_button_modal()
+        css.save_page()
 
+        # css.extract_data()
+        # js = JobSearch(driver=self.driver)
+        # job_elem, job_title = js.find_job(random_job=True)
+        # js.open_job(job_elem=job_elem)
+        # assert job_title in js.get_title()
         #
         # css.open_url(publish_form)
         mafs = ManageApplicationFormSettings(driver=self.driver)

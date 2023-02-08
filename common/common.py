@@ -21,7 +21,6 @@ from helpers.webdriver_listener import WebDriverListener
 
 
 class Elements:
-    quick_search = (By.ID, 'quick_search_input')
     empty_field_validation_msg = (By.XPATH, ".//span[@class = 'help-block']")
     submit_btn = (By.ID, "submitButton")
     richtext = (By.ID, 'tinymce')
@@ -49,6 +48,8 @@ class Elements:
     save_button_modal = (By.ID, "Admin_ApplicationForm__SaveButton")
     cancel_button_modal = (By.ID, "Admin_ApplicationForm_Modal__Modal_Outside_Cancel_Link")
     configure_field_parent = (By.CSS_SELECTOR, ".sr-modal__container")
+    quick_search_btn = (By.ID, 'quick_search_button')
+    quick_search_text = (By.ID, 'quick_search_input')
 
 
 class Common(Elements):
@@ -153,6 +154,7 @@ class Common(Elements):
         :param locator: Locator element
         :param text: option from the dropdown
         """
+
         select = Select(self.driver.find_element_by_locator(locator))
         select.select_by_visible_text(text)
 
@@ -347,6 +349,32 @@ class Common(Elements):
     def get_page_source(self):
         return self.driver.page_source
 
+    def quick_search(self, search_object, search_input=""):
+        elm = self.driver.find_element_by_locator(self.quick_search_btn)
+        if elm.text.lower() != search_object.lower():
+            self.do_click(elm)
+
+        elm = self.driver.find_element_by_locator(self.quick_search_text)
+        elm.send_keys(search_input)
+        elm.send_keys(Keys.ENTER)
+
+    def custom_apply_form_switch(self):
+        return self.do_click(self.driver.find_element_by_locator(self.custom_apply_form))
+
+    def application_forms_save_button(self):
+        elem = self.driver.find_element_by_locator(self.Admin_ApplicationForms_SaveButton)
+        self.driver.execute_script("arguments[0].scrollIntoView();", elem)
+        return self.do_click(elem)
+
+    def click_add_options_button(self):
+        elem = self.driver.find_element_by_locator(self.icon_add_options)
+        self.driver.execute_script("arguments[0].scrollIntoView();", elem)
+        return self.do_click(elem)
+
+    def click_opt_group(self):
+        elem = self.driver.find_element_by_locator(self.application_form_modal)
+        self.driver.execute_script("arguments[0].scrollIntoView();", elem)
+        return self.do_click(elem)
     def quick_search(self, search_object, search_input=""):
         elm = self.driver.find_element_by_locator(self.quick_search_btn)
         if elm.text.lower() != search_object.lower():
