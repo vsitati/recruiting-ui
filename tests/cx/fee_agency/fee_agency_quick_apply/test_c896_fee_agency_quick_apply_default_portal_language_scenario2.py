@@ -13,6 +13,7 @@ from cx_pages.cx_quick_apply import QuickApply
 from cx_pages.login import Login
 from ats_pages.left_menus import LeftMenus
 from utils.drivers import Drivers
+from cx_pages.career_site_settings.manage_application_form_settings import ManageApplicationFormSettings
 
 
 @pytest.mark.regression_grp_e
@@ -44,6 +45,11 @@ class TestFeeAgencyQuickApplyDefaultPortalLanguageScenario2:
         ml.enable_language("english", enable=True)
         ml.enable_language("french", enable=True)
         ml.click_language_setting_save_btn()
+
+        # Enable Quick Apply
+        css.open_setting(setting="application_form")
+        mafs = ManageApplicationFormSettings(driver=self.driver)
+        mafs.manage_application_form()
 
         # Login to ATS as RM
         login = AtsLogin(driver=self.driver)

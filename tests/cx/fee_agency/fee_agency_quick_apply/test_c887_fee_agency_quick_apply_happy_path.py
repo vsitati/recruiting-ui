@@ -16,6 +16,7 @@ from ats_pages.left_menus import LeftMenus
 from ats_pages.candidates.advanced_search import CandidateAdvancedSearch
 from ats_pages.candidates.candidate_resume_profile import CandidateResumeProfile
 from helpers.utils import get_basename_from_file_path
+from cx_pages.career_site_settings.manage_application_form_settings import ManageApplicationFormSettings
 
 
 @pytest.mark.regression_grp_a
@@ -46,6 +47,11 @@ class TestFeeAgencyQuickApplyHappyPath:
         ml = ManageLanguages(driver=self.driver)
         ml.set_given_langauge_to_default_only(language=language, enable=True)
         ml.click_language_setting_save_btn()
+
+        # Enable Quick Apply
+        css.open_setting(setting="application_form")
+        mafs = ManageApplicationFormSettings(driver=self.driver)
+        mafs.manage_application_form()
 
         # Login to ATS as RM
         login = AtsLogin(driver=self.driver)

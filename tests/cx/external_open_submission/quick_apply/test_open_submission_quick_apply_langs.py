@@ -15,6 +15,7 @@ from cx_pages.career_site_settings.manage_general_settings import ManageGeneralS
 from cx_pages.career_site_settings.career_site_settings import CareerSiteSettings
 from cx_pages.career_site_settings.manage_languages import ManageLanguages
 from utils.drivers import Drivers
+from cx_pages.career_site_settings.manage_application_form_settings import ManageApplicationFormSettings
 
 
 @pytest.mark.regression_grp_e
@@ -57,6 +58,13 @@ class TestQuickApplyOpenSubmissionLangs:
         ml = ManageLanguages(driver=self.driver)
         ml.set_given_langauge_to_default_only(language=language, enable=True)
         ml.click_language_setting_save_btn()
+
+        if language == "french":
+            # Enable Quick Apply
+            css.open_setting(setting="application_form")
+            mafs = ManageApplicationFormSettings(driver=self.driver)
+            mafs.manage_application_form()
+
         cs.open_url(portal_url)
         assert cs.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 
