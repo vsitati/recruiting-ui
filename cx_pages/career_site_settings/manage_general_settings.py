@@ -16,6 +16,9 @@ class Elements:
     save_btn = (By.ID, "Admin_JobBoardsEdit__SaveButton")
     open_submission_switch = (By.ID, "Admin_OpenSubmissionForms__OpenSubmissionEnabled")
     open_submission_savebtn = (By.ID, "Admin_OpenSubmissionForms__SaveButton")
+    quick_apply_radio_btn = (By.ID, "Admin_ApplicationForms__CustomApplyFormFalse")
+    custom_apply_radio_btn = (By.ID, "Admin_ApplicationForms__CustomApplyFormTrue")
+    application_form_save_btn = (By.ID, "Admin_ApplicationForms__SaveButton")
 
 
 class ManageGeneralSettings(Elements, Common):
@@ -60,3 +63,22 @@ class ManageGeneralSettings(Elements, Common):
     def open_submission_click(self):
         checkbox = self.driver.find_element_by_locator(self.open_submission_switch)
         checkbox.click()
+
+    @staticmethod
+    def is_checked(element):
+        if not element.get_attribute("checked") == "checked":
+            return False
+        else:
+            return True
+
+    def manage_application_form(self, enable_quick_apply=True):
+        if enable_quick_apply:
+            elem = self.driver.find_element_by_locator(self.quick_apply_radio_btn)
+            if not self.is_checked(element=elem):
+                self.do_click(elem)
+        else:
+            elem = self.driver.find_element_by_locator(self.custom_apply_radio_btn)
+            if not self.is_checked(element=elem):
+                self.do_click(elem)
+
+        return self.do_click(self.application_form_save_btn)

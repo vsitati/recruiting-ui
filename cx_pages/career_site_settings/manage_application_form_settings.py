@@ -1,3 +1,5 @@
+from common.common import Common
+from selenium.webdriver.common.by import By
 import random
 import string
 
@@ -53,6 +55,7 @@ class ManageApplicationFormSettings(Elements, Common):
         else:
             return True
 
+    def manage_application_form(self, enable_quick_apply=True):
     def enable_application_form_type(self, enable_quick_apply=False):
         if enable_quick_apply:
             elem = self.driver.find_element_by_locator(self.quick_apply_radio_btn)

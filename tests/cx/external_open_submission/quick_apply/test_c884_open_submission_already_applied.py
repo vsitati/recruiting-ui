@@ -11,6 +11,7 @@ from cx_pages.career_sites import CareerSites
 from cx_pages.cx_quick_apply import QuickApply
 from cx_pages.login import Login
 from test_data.test_data_details import SrTestData
+from cx_pages.career_site_settings.manage_application_form_settings import ManageApplicationFormSettings
 
 
 @pytest.mark.regression_grp_h
@@ -39,6 +40,12 @@ class TestQuickApplyOpenSubmissionAlreadySubmitted:
         ml = ManageLanguages(driver=self.driver)
         ml.set_given_langauge_to_default_only(language=language, enable=True)
         ml.click_language_setting_save_btn()
+
+        # Enable Quick Apply
+        css.open_setting(setting="application_form")
+        mafs = ManageApplicationFormSettings(driver=self.driver)
+        mafs.manage_application_form()
+
         cs.open_url(portal_url)
         assert cs.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 

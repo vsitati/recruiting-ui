@@ -23,6 +23,7 @@ class Elements:
     datepicker = (By.CSS_SELECTOR, "[id='ui-datepicker-div'] [class^='ui-datepicker-close']")
     openadmin_banner = (By.CLASS_NAME, 'ui-layout-banner')
     cx_apply_btn = (By.ID, "Base_BackToJobs_ApplyLink")
+    cx_multiform_apply_btn = (By.ID, "Base_BackToJobs_Multiform_ApplyLink")
     multi_form_apply_button = (By.ID, "Base_BackToJobs_Multiform_ApplyLink")
     all_hrefs = (By.XPATH, "//a[@href]")
     cx_settings_back_btn = (By.ID, "Admin_BackLink")
