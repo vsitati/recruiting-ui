@@ -15,6 +15,7 @@ from selenium.webdriver.common.window import WindowTypes
 
 
 class Elements:
+    quick_search = (By.ID, 'quick_search_input')
     empty_field_validation_msg = (By.XPATH, ".//span[@class = 'help-block']")
     submit_btn = (By.ID, "submitButton")
     richtext = (By.ID, 'tinymce')
@@ -25,6 +26,8 @@ class Elements:
     all_hrefs = (By.XPATH, "//a[@href]")
     cx_settings_back_btn = (By.ID, "Admin_BackLink")
     cx_view_other_job_openings = (By.ID, "Apply_Success_JobsLink")
+    quick_search_btn = (By.ID, 'quick_search_button')
+    quick_search_text = (By.ID, 'quick_search_input')
 
 
 class Common(Elements):
@@ -129,7 +132,6 @@ class Common(Elements):
         :param locator: Locator element
         :param text: option from the dropdown
         """
-
         select = Select(self.driver.find_element_by_locator(locator))
         select.select_by_visible_text(text)
 
@@ -248,16 +250,13 @@ class Common(Elements):
             return self.do_click(elm)
         return
 
-    def click_radio_yes_no(self, yes_btn_elem, no_btn_elem, yes=False):
-        yes_btn = self.driver.find_element_by_locator(yes_btn_elem)
-        no_btn = self.driver.find_element_by_locator(no_btn_elem)
-
-        if yes:
-            if not yes_btn.get_attribute("checked") == "checked":  # If checked, then do nothing
-                self.do_click(yes_btn)
-        elif not yes:
-            if not no_btn.get_attribute("checked") == "checked":  # If checked, then do nothing
-                self.do_click(no_btn)
+    # isYes: True: Yes; False: No
+    def click_radio_yes_no(self, locator, is_yes):
+        if is_yes:
+            locator[1] = locator[1] + "1"
+        else:
+            locator[1] = locator[1] + "0"
+        return self.go_click(locator)
 
     def click_radio_list(self, locator, text):
         elms = self.driver.find_elements_by_locator(locator)
@@ -321,3 +320,12 @@ class Common(Elements):
 
     def get_page_source(self):
         return self.driver.page_source
+
+    def quick_search(self, search_object, search_input=""):
+        elm = self.driver.find_element_by_locator(self.quick_search_btn)
+        if elm.text.lower() != search_object.lower():
+            self.do_click(elm)
+
+        elm = self.driver.find_element_by_locator(self.quick_search_text)
+        elm.send_keys(search_input)
+        elm.send_keys(Keys.ENTER)

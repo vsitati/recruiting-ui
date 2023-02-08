@@ -3,13 +3,14 @@ from helpers.utils import BaseError
 from functools import partial
 from common.common import Common
 from selenium.webdriver.common.by import By
+from common.common_configured_apply import CommonConfiguredApply
 
 
 class Elements:
     career_site_settings_list = (By.CSS_SELECTOR, ".sr-wrapper.sr-wrapper--large")
 
 
-class CareerSiteSettings(Elements, Common):
+class CareerSiteSettings(Elements, CommonConfiguredApply, Common):
     def __init__(self, driver):
         super().__init__(driver)
 

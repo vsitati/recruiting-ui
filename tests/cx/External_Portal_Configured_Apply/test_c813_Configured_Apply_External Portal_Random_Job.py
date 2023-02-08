@@ -1,6 +1,10 @@
+from time import sleep
+
 import allure
 import pytest
 
+from common.common_configured_apply import CommonConfiguredApply
+# from cx_pages.career_site_settings.career_site_settings import CareerSiteSettings
 from cx_pages.career_site_settings.career_site_settings import CareerSiteSettings
 from cx_pages.career_sites import CareerSites
 from cx_pages.cx_quick_apply import QuickApply
@@ -10,9 +14,9 @@ from test_data.test_data_details import SrTestData
 
 
 @pytest.mark.usefixtures("setup")
-class TestQuickApplyOpenSubmissionDefaultPortalLanguage:
-    @allure.description("Quick Apply Open Submission Default Portal Language")
-    def test_random_job_quick_apply_open_submission_default_portal_language(self, get_test_info):
+class TestConfiguredApplyExternalPortalRandomJob:
+    @allure.description("Test Configured Apply External Portal Random Job")
+    def test_configured_apply_external_portal_random_job(self, get_test_info):
         language = "english"
         login = Login(driver=self.driver)
         login.do_login(env_info=get_test_info)
@@ -29,9 +33,16 @@ class TestQuickApplyOpenSubmissionDefaultPortalLanguage:
         css.custom_apply_form_switch()
         os_link = css.get_all_hrefs(specific_href="ApplicationForm")
         css.open_url(os_link)
+        css.names_pages()
         css.click_add_options_button()
-        css.opt_group_select()
+        css.options_to()
+        css.click_save_button_modal()
+        css.save_page()
+        css.container_function()
+        publish_form = css.get_all_hrefs(link_text="PageGroupPublish")
+        css.open_url(publish_form)
 
+        # css.extract_data()
         # js = JobSearch(driver=self.driver)
         # job_elem, job_title = js.find_job(random_job=True)
         # js.open_job(job_elem=job_elem)
