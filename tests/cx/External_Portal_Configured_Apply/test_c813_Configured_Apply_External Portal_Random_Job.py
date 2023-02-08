@@ -38,9 +38,11 @@ class TestConfiguredApplyExternalPortalRandomJob:
         css.options_to()
         css.click_save_button_modal()
         css.save_page()
+        input("ENTER.......")
         css.container_function()
         publish_form = css.get_all_hrefs(link_text="PageGroupPublish")
         css.open_url(publish_form)
+        input("ENTER.......")
 
         # css.extract_data()
         # js = JobSearch(driver=self.driver)
