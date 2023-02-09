@@ -42,8 +42,9 @@ class TestConfiguredApplyExternalPortalRandomJob:
         # css.container_function()
         # publish_form = css.get_all_hrefs(link_text="PageGroupPublish")
         mafs = ManageApplicationFormSettings(driver=self.driver)
-        result = mafs.configure_application_form(form_name="Contact Custom Fields", function="visibility", view=True)
-        assert result == "Contact Custom Fields"
+        form_name = "Contact Custom Fields"  # this is the form name you generate
+        result = mafs.configure_application_form(form_name=form_name, function="visibility", view=True)
+        assert result == form_name
         # css.open_url(publish_form)
 
 
