@@ -6,6 +6,7 @@ import pytest
 from common.common_configured_apply import CommonConfiguredApply
 # from cx_pages.career_site_settings.career_site_settings import CareerSiteSettings
 from cx_pages.career_site_settings.career_site_settings import CareerSiteSettings
+from cx_pages.career_site_settings.manage_application_form_settings import ManageApplicationFormSettings
 from cx_pages.career_sites import CareerSites
 from cx_pages.cx_quick_apply import QuickApply
 from cx_pages.jobs_search import JobSearch
@@ -31,18 +32,20 @@ class TestConfiguredApplyExternalPortalRandomJob:
         css = CareerSiteSettings(driver=self.driver)
         css.open_setting(setting="application_form")
         css.custom_apply_form_switch()
-        os_link = css.get_all_hrefs(specific_href="ApplicationForm")
-        css.open_url(os_link)
-        css.names_pages()
-        css.click_add_options_button()
-        css.options_to()
-        css.click_save_button_modal()
-        css.save_page()
-        input("ENTER.......")
-        css.container_function()
-        publish_form = css.get_all_hrefs(link_text="PageGroupPublish")
-        css.open_url(publish_form)
-        input("ENTER.......")
+        # os_link = css.get_all_hrefs(specific_href="ApplicationForm")
+        # css.open_url(os_link)
+        # css.names_pages()
+        # css.click_add_options_button()
+        # css.options_to()
+        # css.click_save_button_modal()
+        # css.save_page()
+        # css.container_function()
+        # publish_form = css.get_all_hrefs(link_text="PageGroupPublish")
+        mafs = ManageApplicationFormSettings(driver=self.driver)
+        result = mafs.configure_application_form(form_name="Contact Custom Fields", function="visibility", view=True)
+        assert result == "Contact Custom Fields"
+        # css.open_url(publish_form)
+
 
         # css.extract_data()
         # js = JobSearch(driver=self.driver)
