@@ -15,7 +15,6 @@ from test_data.test_data_details import CandidateData
 class TestCandidateAdvancedSearch:
     @allure.title("Candidate Search: sorting columns")
     @allure.description("JIRA: RND-7440; TestRail: C270")
-    @pytest.mark.xfail()
     def test_candidate_search_sorting(self, get_test_info):
         login = Login(driver=self.driver)
         login.do_login(get_test_info)
@@ -23,7 +22,7 @@ class TestCandidateAdvancedSearch:
         left_menu = LeftMenus(self.driver)
         left_menu.click_left_nav_switch(left_menu.candidates)
         left_menu.click_left_nav_switch(left_menu.candidates_advanced_search)
-        sleep(left_menu.sleep_time)
+        sleep(left_menu.sleep_time * 2)
 
         candidate_advanced_search = CandidateAdvancedSearch(self.driver)
         candidate_advanced_search.sort_candidate_column_header("Candidate", "desc")
@@ -56,7 +55,7 @@ class TestCandidateAdvancedSearch:
 
         return
 
-    @allure.title("Candidate Search: enter date")
+    @allure.title("Candidate Search: enter in the last")
     @allure.description("JIRA: RND-7539; TestRail: c266")
     def test_candidate_search_enter_in_the_last(self, get_test_info):
         self.__preset(get_test_info)
@@ -92,12 +91,11 @@ class TestCandidateAdvancedSearch:
 
     @allure.title("Candidate Search: Country")
     @allure.description("JIRA: RND-7436; TestRail: c268")
-    @pytest.mark.xfail()
     def test_candidate_search_country(self, get_test_info):
         self.__preset(get_test_info)
 
         candidate_advanced_search_edit = CandidateAdvancedSearchEdit(self.driver)
-        country = "Canada"
+        country = "United States"
         candidate_advanced_search_edit.select_country(country)
         sleep(candidate_advanced_search_edit.sleep_time)
 
@@ -152,7 +150,7 @@ class TestCandidateAdvancedSearch:
 
         return
 
-    @allure.title("Candidate Search: ")
+    @allure.title("Candidate Search: enter date")
     @allure.description("JIRA: RND-7433; TestRail: c5503")
     def test_candidate_search_enter_date(self, get_test_info):
         self.__preset(get_test_info)
@@ -223,7 +221,7 @@ class TestCandidateAdvancedSearch:
 
         return
 
-    @allure.title("Candidate Advanced Search: no result")
+    @allure.title("Candidate Search: no result")
     @allure.description("JIRA: RND-7629; TestRail: c5515")
     def test_candidate_search_none(self, get_test_info):
         self.__preset(get_test_info)

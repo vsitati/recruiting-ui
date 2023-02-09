@@ -44,7 +44,7 @@ class TestCandidateQuickSearch:
         candidate_advanced_search.verify_value_exist(candidate_name, col_list)
         return
 
-    @allure.title("Candidate Quick Search for All")
+    @allure.title("Candidate Quick Search for none")
     @allure.description("JIRA: RND-7465; TestRail: C297")
     def test_candidate_quick_search_none(self, get_test_info):
         login = Login(driver=self.driver)
