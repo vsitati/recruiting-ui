@@ -11,6 +11,7 @@ from utils.drivers import Drivers
 from config import Config
 from cx_pages.career_site_settings.manage_application_form_settings import ManageApplicationFormSettings
 
+
 @pytest.mark.regression_grp_e
 @pytest.mark.usefixtures("setup")
 class TestQuickApplyRandomJobExternalDefaultPortalLanguage:
