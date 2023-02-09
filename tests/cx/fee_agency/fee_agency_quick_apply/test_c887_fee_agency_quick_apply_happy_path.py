@@ -19,7 +19,7 @@ from helpers.utils import get_basename_from_file_path
 from cx_pages.career_site_settings.manage_application_form_settings import ManageApplicationFormSettings
 
 
-@pytest.mark.regression_grp_a
+@pytest.mark.regression_grp_f
 @pytest.mark.usefixtures("setup")
 class TestFeeAgencyQuickApplyHappyPath:
     @allure.description("Fee Agency Quick Apply Happy Path")
