@@ -75,7 +75,7 @@ class TestFeeAgencyQuickApplyDoNotAllowSystemDuplicates:
         crp = CandidateResumeProfile(driver=self.driver)
         assert crp.verify_candidate_name() == candidate_name
         assert crp.verify_candidate_email() == f"{form_details.get('email')}"
-        assert crp.verify_source() == "Apple One"
+        assert crp.verify_source() == fee_agency_name
 
         crp.open_attachment_tab()
         crp.get_attachment_names()
@@ -106,7 +106,6 @@ class TestFeeAgencyQuickApplyDoNotAllowSystemDuplicates:
         qa.click_cx_job_apply_btn()
         qa.fill_in_quick_apply_form(**form_details)
         assert fee_agency.candidate_already_exists() == "Candidate Already Exists"
-        # qa.click_view_other_job_openings()
         link = js.get_all_hrefs(specific_href="useSavedSearch")
         js.open_url(link)
 
