@@ -34,7 +34,8 @@ class EllipsesColumns(Common, Elements):
     def select_column(self, column: Columns):
         elm = self.driver.find_element_by_locator(column)
         self.do_click(elm)
-
+        sleep(self.sleep_time)
+        
     def remove_column(self, column: Columns):
         elm = self.driver.find_element_by_locator(column)
         elm = elm.find_element(*self.remove_x)
