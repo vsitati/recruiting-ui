@@ -35,6 +35,20 @@ class TestConfiguredApplyExternalPortalRandomJob:
         css = CareerSiteSettings(driver=self.driver)
         css.open_setting(setting="application_form")
         css.custom_apply_form_switch()
+        # os_link = css.get_all_hrefs(specific_href="ApplicationForm")
+        # css.open_url(os_link)
+        # css.names_pages()
+        # css.click_add_options_button()
+        # css.options_to()
+        # css.click_save_button_modal()
+        # css.save_page()
+        # css.container_function()
+        # publish_form = css.get_all_hrefs(link_text="PageGroupPublish")
+        mafs = ManageApplicationFormSettings(driver=self.driver)
+        result = mafs.configure_application_form(form_name="Contact Custom Fields", function="visibility", view=True)
+        assert result == "Contact Custom Fields"
+        # css.open_url(publish_form)
+
         os_link = css.get_all_hrefs(specific_href="ApplicationForm")
         css.open_url(os_link)
         css.names_pages()
@@ -91,7 +105,6 @@ class TestConfiguredApplyExternalPortalRandomJob:
         cas = CandidateAdvancedSearch(driver=self.driver)
         candidate_name = first_name
         cas.open_candidate_profile(candidate_name=candidate_name)
-        input("wstwt4r")
         crp = CandidateResumeProfile(driver=self.driver)
         assert crp.verify_candidate_name() == candidate_name
         assert crp.verify_candidate_email() == f"{form_details.get('email')}"
