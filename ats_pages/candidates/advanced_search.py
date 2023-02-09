@@ -38,6 +38,7 @@ class CandidateAdvancedSearch(Common, Elements):
         return
 
     def get_advanced_search_count(self):
+        time.sleep(self.sleep_time)
         self.driver.find_element_by_locator(self.record_count)
         try:
             record_count = int(self.get_text(self.record_count))
@@ -142,6 +143,7 @@ class CandidateAdvancedSearch(Common, Elements):
         for elm in elms:
             if column in elm.text:
                 self.do_click(elm)
+                time.sleep(self.sleep_time * 2)
                 break
         else:
             self.sr_logger.logger.error(f"There is no such a column {column}.")

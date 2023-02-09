@@ -28,8 +28,9 @@ class EllipsesColumns(Common, Elements):
         super().__init__(driver)
 
     def click_apply(self):
-        self.go_click(self.apply_btn)
         sleep(self.sleep_time)
+        self.go_click(self.apply_btn)
+        sleep(self.sleep_time * 3)
 
     def select_column(self, column: Columns):
         elm = self.driver.find_element_by_locator(column)
