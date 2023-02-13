@@ -23,6 +23,7 @@ class Elements:
     datepicker = (By.CSS_SELECTOR, "[id='ui-datepicker-div'] [class^='ui-datepicker-close']")
     openadmin_banner = (By.CLASS_NAME, 'ui-layout-banner')
     cx_apply_btn = (By.ID, "Base_BackToJobs_ApplyLink")
+    multi_form_apply_button = (By.ID, "Base_BackToJobs_Multiform_ApplyLink")
     all_hrefs = (By.XPATH, "//a[@href]")
     cx_settings_back_btn = (By.ID, "Admin_BackLink")
     cx_view_other_job_openings = (By.ID, "Apply_Success_JobsLink")
@@ -309,6 +310,7 @@ class Common(Elements):
 
     def click_cx_job_apply_btn(self):
         return self.do_click(self.driver.find_element_by_locator(self.cx_apply_btn))
+
 
     def click_cx_settings_back_btn(self):
         elem = self.driver.find_element_by_locator(self.cx_settings_back_btn)

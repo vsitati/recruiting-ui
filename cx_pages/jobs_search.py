@@ -66,3 +66,10 @@ class JobSearch(Elements, Common):
 
     def get_submit_resume_message(self):
         return self.driver.find_element_by_locator(self.submit_resume_message).text
+
+    def click_cx_multi_job_apply_btn(self):
+        element = self.driver.find_element_by_locator(self.multi_form_apply_button)
+        self.driver.execute_script("arguments[0].scrollIntoView();", element)
+        return self.do_click(element)
+
+
