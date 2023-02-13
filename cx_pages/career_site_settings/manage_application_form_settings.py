@@ -190,6 +190,7 @@ class ManageApplicationFormSettings(Elements, Common):
             return True
 
     def manage_application_form(self, enable_quick_apply=True):
+
     def enable_application_form_type(self, enable_quick_apply=False):
         if enable_quick_apply:
             elem = self.driver.find_element_by_locator(self.quick_apply_radio_btn)
