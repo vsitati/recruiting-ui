@@ -67,6 +67,15 @@ class CommonConfiguredApply(ElementsConfiguredApply, Common):
             sleep(2.0)
         except Exception as e:
             print("publish button not found", e)
+        sleep(1.0)
+        try:
+            publisher = self.driver.find_element_by_locator(By.CSS_SELECTOR, "a[title='Publish application form']")
+            self.driver.execute_script("arguments[0].scrollIntoView(true);", publisher)
+            sleep(1.0)
+            publisher.click()
+            sleep(2.0)
+        except Exception as e:
+            print("publish button not found", e)
 
     @staticmethod
     def generate_string(page_name):
