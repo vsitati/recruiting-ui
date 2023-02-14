@@ -338,7 +338,6 @@ class Common(Elements):
     def click_cx_job_apply_btn(self):
         return self.do_click(self.driver.find_element_by_locator(self.cx_apply_btn))
 
-
     def click_cx_settings_back_btn(self):
         elem = self.driver.find_element_by_locator(self.cx_settings_back_btn)
         self.driver.execute_script("arguments[0].scrollIntoView();", elem)
@@ -376,6 +375,7 @@ class Common(Elements):
         elem = self.driver.find_element_by_locator(self.application_form_modal)
         self.driver.execute_script("arguments[0].scrollIntoView();", elem)
         return self.do_click(elem)
+
     def quick_search(self, search_object, search_input=""):
         elm = self.driver.find_element_by_locator(self.quick_search_btn)
         if elm.text.lower() != search_object.lower():

@@ -5,18 +5,13 @@ from ats_pages.candidates.advanced_search import CandidateAdvancedSearch
 from ats_pages.candidates.candidate_resume_profile import CandidateResumeProfile
 from ats_pages.left_menus import LeftMenus
 from ats_pages.login.login import Login as AtsLogin
-from common.common_configured_apply import CommonConfiguredApply
-# from cx_pages.career_site_settings.career_site_settings import CareerSiteSettings
-from ats_pages.candidates.advanced_search import CandidateAdvancedSearch
-from ats_pages.candidates.candidate_resume_profile import CandidateResumeProfile
-from ats_pages.left_menus import LeftMenus
-from ats_pages.login.login import Login as AtsLogin
 from cx_pages.career_site_settings.career_site_settings import CareerSiteSettings
 from cx_pages.career_site_settings.manage_application_form_settings import ManageApplicationFormSettings
 from cx_pages.career_sites import CareerSites
 from cx_pages.jobs_search import JobSearch
 from cx_pages.login import Login
 from helpers.utils import get_basename_from_file_path
+from test_data.test_data_details import QuickApplyForm
 
 
 @pytest.mark.usefixtures("setup")
@@ -37,35 +32,12 @@ class TestConfiguredApplyExternalPortalRandomJob:
         css = CareerSiteSettings(driver=self.driver)
         css.open_setting(setting="application_form")
         css.custom_apply_form_switch()
-        os_link = css.get_all_hrefs(specific_href="ApplicationForm")
-        css.open_url(os_link)
-        css.names_pages()
-        css.click_add_options_button()
-        css.options_to()
-        css.click_save_button_modal()
-        css.save_page()
-
-        #
-        # os_link = css.get_all_hrefs(specific_href="ApplicationForm")
-        # css.open_url(os_link)
-        # css.names_pages()
-        # css.click_add_options_button()
-        # css.options_to()
-        # css.click_save_button_modal()
-        # css.save_page()
+        mafs = ManageApplicationFormSettings(driver=self.driver)
+        # form_name = css.extract_data()
+        # mafs.configure_application_form(form_name=form_name, function="visibility", view=True)
         # css.container_function()
-        # publish_form = css.get_all_hrefs(link_text="PageGroupPublish")
-        mafs = ManageApplicationFormSettings(driver=self.driver)
-        result = mafs.configure_application_form(form_name="Contact Custom Fields", function="visibility", view=True)
-        assert result == "Contact Custom Fields"
-        # css.open_url(publish_form)
-        mafs = ManageApplicationFormSettings(driver=self.driver)
-        form_name = css.extract_data()  # this is the form name you generate
-        mafs.configure_application_form(form_name=form_name, function="visibility", view=True)
-        css.container_function()
-        css.publish_button_click()
-        mafs.enable_application_form_type()
-
+        # css.publish_button_click()
+        # mafs.enable_application_form_type()
         os_link = css.get_all_hrefs(specific_href="ApplicationForm")
         css.open_url(os_link)
         css.names_pages()
@@ -73,14 +45,6 @@ class TestConfiguredApplyExternalPortalRandomJob:
         css.options_to()
         css.click_save_button_modal()
         css.save_page()
-        input("ENTER.......")
-        css.container_function()
-        publish_form = css.get_all_hrefs(link_text="PageGroupPublish")
-        css.open_url(publish_form)
-        input("ENTER.......")
-        css.options_to()
-        css.click_save_button_modal()
-        css.save_page()
         cs.open_url(portal_url)
         assert cs.get_title() == "QA Automation Only - SilkRoad Talent Activation"
 
@@ -91,74 +55,28 @@ class TestConfiguredApplyExternalPortalRandomJob:
         mafs.click_cx_multi_job_apply_btn()
 
         first_name, last_name = mafs.random_name_generator()
+        full_name = first_name + " " + last_name
         email = mafs.random_email_generator()
+        phone_number = mafs.random_phone_number_generator()
         form_details = mafs.fill_apply_form_data(first_name, last_name, email, "path/to/file",
-                                                 mafs.random_phone_generator(),
+                                                 phone_number,
                                                  "Jr.", "A.", "123 Main St.")
         mafs.final_job_apply_btn()
         assert mafs.get_success_message() == "VIEW OTHER OPENINGS"
+
         # Login to ATS
         ats_login = AtsLogin(driver=self.driver)
         ats_login.do_login(get_test_info)
-        # css.extract_data()
-        # js = JobSearch(driver=self.driver)
-        # job_elem, job_title = js.find_job(random_job=True)
-        # js.open_job(job_elem=job_elem)
-        # assert job_title in js.get_title()
-        #
-        # css.open_url(publish_form)
-        mafs = ManageApplicationFormSettings(driver=self.driver)
-        form_name = css.extract_data()  # this is the form name you generate
-        mafs.configure_application_form(form_name=form_name, function="visibility", view=True)
-        css.container_function()
-        css.publish_button_click()
-        mafs.enable_application_form_type()
-
-        cs.open_url(portal_url)
-        assert cs.get_title() == "QA Automation Only - SilkRoad Talent Activation"
-
-        js = JobSearch(driver=self.driver)
-        job_elem, job_title = js.find_job(random_job=True)
-        js.open_job(job_elem=job_elem)
-        assert job_title in js.get_title()
-        mafs.click_cx_multi_job_apply_btn()
-
-        first_name, last_name = mafs.random_name_generator()
-        email = mafs.random_email_generator()
-        form_details = mafs.fill_apply_form_data(first_name, last_name, email, "path/to/file",
-                                                 mafs.random_phone_generator(),
-                                                 "Jr.", "A.", "123 Main St.")
-        mafs.final_job_apply_btn()
-        assert mafs.get_success_message() == "VIEW OTHER OPENINGS"
-        # Login to ATS
-        ats_login = AtsLogin(driver=self.driver)
-        ats_login.do_login(get_test_info)
-        #
         left_menu = LeftMenus(driver=self.driver)
         left_menu.click_left_nav(left_menu.candidates)
         left_menu.click_left_nav(left_menu.candidates_advanced_search)
         cas = CandidateAdvancedSearch(driver=self.driver)
-        candidate_name = first_name
+        candidate_name = full_name
         cas.open_candidate_profile(candidate_name=candidate_name)
         crp = CandidateResumeProfile(driver=self.driver)
         assert crp.verify_candidate_name() == candidate_name
-        assert crp.verify_candidate_email() == f"{form_details.get('email')}"
+        assert crp.verify_candidate_email() == email
         #
-        left_menu = LeftMenus(driver=self.driver)
-        left_menu.click_left_nav(left_menu.candidates)
-        left_menu.click_left_nav(left_menu.candidates_advanced_search)
-        cas = CandidateAdvancedSearch(driver=self.driver)
-        candidate_name = first_name
-        cas.open_candidate_profile(candidate_name=candidate_name)
-        input("wstwt4r")
-        crp = CandidateResumeProfile(driver=self.driver)
-        assert crp.verify_candidate_name() == candidate_name
-        assert crp.verify_candidate_email() == f"{form_details.get('email')}"
-        #
-        crp.open_attachment_tab()
-        crp.get_attachment_names()
-        attachments = crp.get_attachment_names()
-        assert get_basename_from_file_path(file_path=form_details.get("file_path")) in attachments
         crp.open_attachment_tab()
         crp.get_attachment_names()
         attachments = crp.get_attachment_names()

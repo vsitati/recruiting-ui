@@ -54,20 +54,6 @@ class CommonConfiguredApply(ElementsConfiguredApply, Common):
             radio_button.click()
 
     def container_function(self):
-        publisher = self.driver.find_element(By.CSS_SELECTOR, "a[title='Publish application form']")
-        self.driver.execute_script("arguments[0].scrollIntoView();", publisher)
-        publisher.click()
-        #sleep(2.0)
-        sleep(1.0)
-        try:
-            publisher = self.driver.find_element_by_locator(By.CSS_SELECTOR, "a[title='Publish application form']")
-            self.driver.execute_script("arguments[0].scrollIntoView(true);", publisher)
-            sleep(1.0)
-            publisher.click()
-            sleep(2.0)
-        except Exception as e:
-            print("publish button not found", e)
-        sleep(1.0)
         try:
             publisher = self.driver.find_element_by_locator(By.CSS_SELECTOR, "a[title='Publish application form']")
             self.driver.execute_script("arguments[0].scrollIntoView(true);", publisher)
@@ -113,13 +99,13 @@ class CommonConfiguredApply(ElementsConfiguredApply, Common):
         page_name_element.send_keys(page_name)
 
     def save_page(self):
-        sleep(0.5)
+        sleep(1.0)
         try:
             button = self.driver.wait_for_element_to_be_clickable(self.save_button_modal)
             self.driver.execute_script("arguments[0].scrollIntoView(true);", button)
             button.click()
             sleep(2.0)
-            input("we have saved the page")
+
         except Exception as e:
             print("Error occurred while clicking the button: ", e)
 
